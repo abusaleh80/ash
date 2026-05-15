@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة المقارنة التشغيلية — أشرقت</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --brand: #1a3a5c;
+  --brand-light: #2563a8;
+  --accent: #c8972a;
+  --a: #2563a8;
+  --a-bg: #eff6ff;
+  --a-light: #dbeafe;
+  --b: #0f7a5a;
+  --b-bg: #f0fdf4;
+  --b-light: #d1fae5;
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --border: #e2e8f0;
+  --text: #1e2d3d;
+  --text2: #5a7184;
+  --text3: #94a3b8;
+  --r: 12px;
+  --r-sm: 8px;
+  --sh: 0 2px 12px rgba(0,0,0,0.07);
+  --sh-md: 0 4px 24px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: var(--text); direction: rtl; }
+
+/* HEADER */
+.header { background: var(--brand); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,0.2); }
+.header-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-box { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; font-weight: 700; font-family: 'Cairo', sans-serif; }
+.logo-title { color: white; font-size: 16px; font-weight: 600; font-family: 'Cairo', sans-serif; }
+.logo-sub { color: rgba(255,255,255,0.5); font-size: 11px; }
+.header-pills { display: flex; gap: 8px; align-items: center; }
+.pill { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+.pill-accent { background: var(--accent); color: white; }
+.pill-date { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); font-size: 11px; }
+
+/* MAIN */
+.main { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem 3rem; }
+
+/* COMPANY BANNER */
+.company-banner { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.company-card { border-radius: var(--r); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 12px; box-shadow: var(--sh); border: 1px solid var(--border); }
+.company-card.a { background: var(--a-bg); border-top: 3px solid var(--a); }
+.company-card.b { background: var(--b-bg); border-top: 3px solid var(--b); }
+.c-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.c-name { font-size: 15px; font-weight: 700; font-family: 'Cairo', sans-serif; }
+.company-card.a .c-name { color: var(--a); }
+.company-card.b .c-name { color: var(--b); }
+.c-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* SECTION */
+.section { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); margin-bottom: 1.25rem; overflow: hidden; box-shadow: var(--sh); animation: fadeUp 0.4s ease both; }
+.section:nth-child(3){ animation-delay:.05s }
+.section:nth-child(4){ animation-delay:.10s }
+.section:nth-child(5){ animation-delay:.15s }
+.section:nth-child(6){ animation-delay:.20s }
+.section:nth-child(7){ animation-delay:.25s }
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
+
+.sec-head { display: flex; align-items: center; gap: 10px; padding: .85rem 1.25rem; background: var(--surface2); border-bottom: 1px solid var(--border); }
+.sec-icon { width: 30px; height: 30px; border-radius: var(--r-sm); background: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.sec-head h2 { font-size: 13px; font-weight: 600; color: var(--brand); font-family: 'Cairo', sans-serif; }
+
+/* TABLE GRID */
+.tbl-head { display: grid; grid-template-columns: 220px 1fr 1fr; gap: 1px; background: var(--border); }
+.th { padding: 9px 1rem; font-size: 12px; font-weight: 600; font-family: 'Cairo', sans-serif; display: flex; align-items: center; gap: 6px; }
+.th:first-child { background: var(--surface2); color: var(--text2); }
+.th.a { background: var(--a-bg); color: var(--a); }
+.th.b { background: var(--b-bg); color: var(--b); }
+
+.field-row { display: grid; grid-template-columns: 220px 1fr 1fr; gap: 1px; background: var(--border); }
+.field-row:hover { background: #d8e4f0; }
+.flabel { padding: 9px 1.25rem; font-size: 13px; color: var(--text2); background: var(--surface); display: flex; align-items: center; }
+.fcell { padding: 6px 8px; display: flex; align-items: center; }
+.fcell.a { background: #fafcff; }
+.fcell.b { background: #fafffc; }
+
+/* SUB-GRID for 2-column values */
+.tbl-head-sub4 { display: grid; grid-template-columns: 220px 1fr 1fr 1fr 1fr; gap: 1px; background: var(--border); }
+.field-row-sub4 { display: grid; grid-template-columns: 220px 1fr 1fr 1fr 1fr; gap: 1px; background: var(--border); }
+.field-row-sub4:hover { background: #d8e4f0; }
+
+.inp {
+  width: 100%; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 7px 10px; font-size: 13px; font-family: 'Tajawal', sans-serif;
+  color: var(--text); background: white; text-align: center;
+  transition: border-color .2s, box-shadow .2s; outline: none;
+}
+.inp:focus { border-color: var(--brand-light); box-shadow: 0 0 0 3px rgba(37,99,168,.1); }
+.inp.a:focus { border-color: var(--a); }
+.inp.b:focus { border-color: var(--b); }
+.inp::placeholder { color: var(--text3); font-size: 12px; }
+.inp[data-pct]::after { content: '%'; }
+
+/* ACTIONS */
+.actions { display: flex; gap: .85rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.btn-primary { flex:1; min-width:200px; padding:13px 2rem; background:var(--brand); color:white; border:none; border-radius:var(--r); font-size:14px; font-weight:600; font-family:'Cairo',sans-serif; cursor:pointer; transition:all .2s; box-shadow:0 4px 14px rgba(26,58,92,.25); display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn-primary:hover { background:var(--brand-light); transform:translateY(-1px); }
+.btn-sec { padding:13px 1.25rem; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:var(--r); font-size:13px; font-weight:500; font-family:'Cairo',sans-serif; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:7px; box-shadow:var(--sh); }
+.btn-sec:hover { border-color:var(--brand-light); color:var(--brand-light); background:var(--a-bg); }
+
+/* RESULTS */
+.results { display:none; }
+.results.show { display:block; animation:fadeUp .5s ease; }
+.results-title { font-size:18px; font-weight:700; font-family:'Cairo',sans-serif; color:var(--brand); margin-bottom:1.25rem; display:flex; align-items:center; gap:8px; }
+
+/* KPI CARDS */
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:.85rem; margin-bottom:1.25rem; }
+.kpi { background:white; border:1px solid var(--border); border-radius:var(--r); padding:1rem; box-shadow:var(--sh); position:relative; overflow:hidden; transition:transform .2s,box-shadow .2s; }
+.kpi:hover { transform:translateY(-2px); box-shadow:var(--sh-md); }
+.kpi::before { content:''; position:absolute; top:0; right:0; left:0; height:3px; }
+.kpi.wa::before { background:var(--a); }
+.kpi.wb::before { background:var(--b); }
+.kpi.wt::before { background:var(--accent); }
+.kpi-lbl { font-size:11px; color:var(--text2); margin-bottom:7px; font-weight:500; }
+.kpi-vals { display:flex; align-items:baseline; gap:5px; margin-bottom:5px; flex-wrap:wrap; }
+.va { font-size:18px; font-weight:700; color:var(--a); font-family:'Cairo',sans-serif; }
+.vb { font-size:18px; font-weight:700; color:var(--b); font-family:'Cairo',sans-serif; }
+.vs-txt { font-size:10px; color:var(--text3); }
+.kpi-pill { display:inline-block; font-size:10px; font-weight:600; padding:2px 9px; border-radius:20px; }
+.pa { background:var(--a-light); color:var(--a); }
+.pb { background:var(--b-light); color:var(--b); }
+.pt { background:#fef3c7; color:#92400e; }
+
+/* CHARTS */
+.charts-row { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.25rem; }
+.chart-card { background:white; border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; box-shadow:var(--sh); }
+.chart-title { font-size:12px; font-weight:600; color:var(--brand); font-family:'Cairo',sans-serif; margin-bottom:.85rem; }
+.legend-row { display:flex; gap:14px; font-size:11px; color:var(--text2); margin-bottom:10px; }
+.leg { display:flex; align-items:center; gap:5px; }
+.leg-sq { width:10px; height:10px; border-radius:2px; }
+
+/* BAR COMPARE */
+.bar-card { background:white; border:1px solid var(--border); border-radius:var(--r); padding:1.25rem 1.5rem; box-shadow:var(--sh); margin-bottom:1.25rem; }
+.bar-item { margin-bottom:12px; }
+.bar-meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text2); margin-bottom:3px; }
+.bar-vals { display:flex; gap:10px; }
+.bva { color:var(--a); font-weight:600; }
+.bvb { color:var(--b); font-weight:600; }
+.bar-track { background:var(--bg); border-radius:4px; height:7px; overflow:hidden; margin-bottom:3px; }
+.bfa { background:var(--a); height:100%; border-radius:4px; transition:width .7s cubic-bezier(.4,0,.2,1); }
+.bfb { background:var(--b); height:100%; border-radius:4px; transition:width .7s cubic-bezier(.4,0,.2,1); }
+
+/* SCORE */
+.score-cards { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.25rem; }
+.sc { background:white; border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; box-shadow:var(--sh); }
+.sc.a { border-top:3px solid var(--a); }
+.sc.b { border-top:3px solid var(--b); }
+.sc-name { font-size:14px; font-weight:700; font-family:'Cairo',sans-serif; margin-bottom:.85rem; display:flex; align-items:center; gap:7px; }
+.sc.a .sc-name { color:var(--a); }
+.sc.b .sc-name { color:var(--b); }
+.sc-num { font-size:48px; font-weight:700; font-family:'Cairo',sans-serif; line-height:1; }
+.sc.a .sc-num { color:var(--a); }
+.sc.b .sc-num { color:var(--b); }
+.sc-sub { font-size:11px; color:var(--text3); margin-bottom:.75rem; }
+.sc-detail { font-size:12px; color:var(--text2); line-height:1.9; }
+
+/* CSV */
+.csv-box { display:none; background:white; border:1px solid var(--border); border-radius:var(--r); padding:1.25rem 1.5rem; box-shadow:var(--sh); margin-bottom:1.25rem; }
+.csv-box.show { display:block; animation:fadeUp .3s ease; }
+.csv-info { font-size:12px; color:var(--text2); margin-bottom:8px; }
+textarea.csv-ta { width:100%; height:180px; font-family:monospace; font-size:11px; border:1px solid var(--border); border-radius:var(--r-sm); padding:8px; background:var(--surface2); color:var(--text); resize:vertical; direction:ltr; }
+.csv-acts { display:flex; gap:8px; margin-top:8px; align-items:center; flex-wrap:wrap; }
+.btn-copy { padding:7px 18px; background:var(--brand); color:white; border:none; border-radius:var(--r-sm); font-size:12px; font-weight:600; font-family:'Cairo',sans-serif; cursor:pointer; }
+.btn-copy:hover { background:var(--brand-light); }
+.btn-close { padding:7px 16px; background:white; color:var(--text2); border:1px solid var(--border); border-radius:var(--r-sm); font-size:12px; cursor:pointer; }
+.copy-ok { font-size:12px; color:var(--b); font-weight:600; display:none; }
+
+/* DIVIDER */
+.divider { height:1px; background:var(--border); margin:.75rem 0; }
+
+/* footer */
+.footer { text-align:center; padding:2rem; color:var(--text3); font-size:12px; border-top:1px solid var(--border); }
+
+@media(max-width:700px){
+  .charts-row,.score-cards,.company-banner { grid-template-columns:1fr; }
+  .tbl-head,.field-row { grid-template-columns:1fr 1fr; }
+  .flabel,.th:first-child { display:none; }
+  .main { padding:1rem; }
+}
+@media print { .header{position:relative;} .actions,.csv-box{display:none!important;} .results{display:block!important;} }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img src="data:image/png;base64,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" style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0" alt="شعار أشرقت">
+      <div>
+        <div class="logo-title">لوحة المقارنة التشغيلية — شركة أشرقت حج عام 1447 هـ</div>
+        <div class="logo-sub">تصميم : أحمد حلواني</div>
+      </div>
+    </div>
+    <div class="header-pills">
+      <span class="pill pill-date" id="today-date"></span>
+      <span class="pill pill-accent">إكرام الضيف vs رحلات ومنافع</span>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="company-banner">
+    <div class="company-card a">
+      <div class="c-dot" style="background:var(--a)"></div>
+      <div><div class="c-name">إكرام الضيف</div><div class="c-sub">شركة فرعية — أشرقت</div></div>
+    </div>
+    <div class="company-card b">
+      <div class="c-dot" style="background:var(--b)"></div>
+      <div><div class="c-name">رحلات ومنافع</div><div class="c-sub">شركة فرعية — أشرقت</div></div>
+    </div>
+  </div>
+
+  <!-- ══ 1. مؤشرات عامة ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">🌍</div><h2>المؤشرات العامة</h2></div>
+    <div class="tbl-head">
+      <div class="th">المؤشر</div>
+      <div class="th a"><span style="width:9px;height:9px;border-radius:50%;background:var(--a);display:inline-block"></span>إكرام الضيف</div>
+      <div class="th b"><span style="width:9px;height:9px;border-radius:50%;background:var(--b);display:inline-block"></span>رحلات ومنافع</div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">عدد الدول</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_dول" value="9"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_dول" value="8"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">إجمالي التأشيرات</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_tasheera" value="87499"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_tasheera" value="38229"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">المستخدمون في النظام</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_users" value="1523"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_users" value="153"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">الواصلون</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_wosool" value="363426"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_wosool" value="20818"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">غير مثبت خدمتهم في المراكز</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_ghair" value="4528"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_ghair" value="8634"></div>
+    </div>
+  </div>
+
+  <!-- ══ 2. مراكز الخدمة والاستقبال ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">📍</div><h2>مراكز الخدمة والاستقبال</h2></div>
+    <div class="tbl-head-sub4">
+      <div class="th" style="background:var(--surface2);color:var(--text2)">المؤشر</div>
+      <div class="th a">مكة — إكرام</div>
+      <div class="th a" style="opacity:.75">المدينة — إكرام</div>
+      <div class="th b">مكة — رحلات</div>
+      <div class="th b" style="opacity:.75">المدينة — رحلات</div>
+    </div>
+    <div class="field-row-sub4">
+      <div class="flabel">مراكز الخدمة</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_marakiz_makkah" value="40"></div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_marakiz_madinah" value="4"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_marakiz_makkah" value="21"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_marakiz_madinah" value="0"></div>
+    </div>
+    <div class="field-row-sub4">
+      <div class="flabel">المستقبَلون</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_mustaqbal_makkah" value="16467"></div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_mustaqbal_madinah" value="15441"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_mustaqbal_makkah" value="12184"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_mustaqbal_madinah" value="0"></div>
+    </div>
+  </div>
+
+  <!-- ══ 3. جاهزية المساكن ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">🏨</div><h2>جاهزية المساكن</h2></div>
+    <div class="tbl-head">
+      <div class="th">المؤشر</div>
+      <div class="th a"><span style="width:9px;height:9px;border-radius:50%;background:var(--a);display:inline-block"></span>إكرام الضيف</div>
+      <div class="th b"><span style="width:9px;height:9px;border-radius:50%;background:var(--b);display:inline-block"></span>رحلات ومنافع</div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">جاهزية المساكن (مكة)</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masaken_jahiz" value="217"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masaken_jahiz" value="134"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">غير جاهز</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masaken_ghair" value="0"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masaken_ghair" value="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">إجمالي الاستمارات</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masaken_total" value="166"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masaken_total" value="566"></div>
+    </div>
+  </div>
+
+  <!-- ══ 4. جاهزية المشاعر المقدسة ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">⛺</div><h2>جاهزية المشاعر المقدسة</h2></div>
+    <div class="tbl-head-sub4" style="grid-template-columns:220px 1fr 1fr 1fr 1fr 1fr 1fr">
+      <div class="th" style="background:var(--surface2);color:var(--text2)">المشعر</div>
+      <div class="th a">منى — إكرام</div>
+      <div class="th a" style="opacity:.75">عرفة — إكرام</div>
+      <div class="th a" style="opacity:.6">مزدلفة — إكرام</div>
+      <div class="th b">منى — رحلات</div>
+      <div class="th b" style="opacity:.75">عرفة — رحلات</div>
+      <div class="th b" style="opacity:.6">مزدلفة — رحلات</div>
+    </div>
+    <div class="field-row" style="grid-template-columns:220px 1fr 1fr 1fr 1fr 1fr 1fr">
+      <div class="flabel">نسبة الجاهزية %</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masha_mina" value="84" min="0" max="100"></div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masha_arafa" value="81" min="0" max="100"></div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_masha_muzdalifa" value="0" min="0" max="100"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masha_mina" value="0" min="0" max="100"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masha_arafa" value="0" min="0" max="100"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_masha_muzdalifa" value="0" min="0" max="100"></div>
+    </div>
+  </div>
+
+  <!-- ══ 5. بطاقات نسك ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">🪪</div><h2>بطاقات نسك</h2></div>
+    <div class="tbl-head">
+      <div class="th">المؤشر</div>
+      <div class="th a"><span style="width:9px;height:9px;border-radius:50%;background:var(--a);display:inline-block"></span>إكرام الضيف</div>
+      <div class="th b"><span style="width:9px;height:9px;border-radius:50%;background:var(--b);display:inline-block"></span>رحلات ومنافع</div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">الإجمالي</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_nusuk_total" value="86407"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_nusuk_total" value="37232"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">المفعّلة (عدد)</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_nusuk_mufaal" value="48594"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_nusuk_mufaal" value="19453"></div>
+    </div>
+    <div class="field-row" style="background:var(--border)">
+      <div class="flabel" style="background:#f8fafc;font-size:11px;color:var(--text3)">النسبة المحسوبة تلقائياً %</div>
+      <div class="fcell a" style="background:#f5f9ff"><span id="a_nusuk_pct_calc" style="font-size:13px;font-weight:600;color:var(--a);padding:0 10px">—</span></div>
+      <div class="fcell b" style="background:#f5fff9"><span id="b_nusuk_pct_calc" style="font-size:13px;font-weight:600;color:var(--b);padding:0 10px">—</span></div>
+    </div>
+  </div>
+
+  <!-- ══ 6. البلاغات والوقوعات ══ -->
+  <div class="section">
+    <div class="sec-head"><div class="sec-icon">⚠️</div><h2>البلاغات والوقوعات والمهام</h2></div>
+    <div class="tbl-head">
+      <div class="th">المؤشر</div>
+      <div class="th a"><span style="width:9px;height:9px;border-radius:50%;background:var(--a);display:inline-block"></span>إكرام الضيف</div>
+      <div class="th b"><span style="width:9px;height:9px;border-radius:50%;background:var(--b);display:inline-block"></span>رحلات ومنافع</div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">إجمالي البلاغات</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_balaghat" value="2052"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_balaghat" value="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">وقوعات لم تُسدَّد</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_waqaat" value="3"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_waqaat" value="7"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">إجمالي الوقوعات</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_waqaat_total" value="144"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_waqaat_total" value="59"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">المحاضر</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_mahadir" value="156"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_mahadir" value="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">المهام المكتملة</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_mahام" value="130"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_mahام" value="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="flabel">المهام المكتملة المتأخرة</div>
+      <div class="fcell a"><input class="inp a" type="number" id="a_maha_muta" value="308"></div>
+      <div class="fcell b"><input class="inp b" type="number" id="b_maha_muta" value="0"></div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn-primary" onclick="calculate()">🔍 احسب المقارنة وأظهر النتائج</button>
+    <button class="btn-sec" onclick="showCSV()">📊 تصدير CSV</button>
+    <button class="btn-sec" onclick="window.print()">🖨️ طباعة</button>
+    <button class="btn-sec" onclick="resetToOriginal()">↩️ استعادة الأرقام الأصلية</button>
+  </div>
+
+  <!-- CSV BOX -->
+  <div class="csv-box" id="csv-box">
+    <div class="csv-info">📋 انسخ النص أدناه واحفظه كملف <strong>مقارنة.csv</strong> ثم افتحه في Excel أو Power BI</div>
+    <textarea class="csv-ta" id="csv-content" readonly></textarea>
+    <div class="csv-acts">
+      <button class="btn-copy" onclick="copyCSV()">📋 نسخ إلى الحافظة</button>
+      <button class="btn-close" onclick="document.getElementById('csv-box').classList.remove('show')">إغلاق</button>
+      <span class="copy-ok" id="copy-msg">✅ تم النسخ</span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="results-title">📊 نتائج المقارنة</div>
+
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title">🕸️ مخطط الأداء الشامل</div>
+        <div class="legend-row">
+          <div class="leg"><div class="leg-sq" style="background:var(--a)"></div>إكرام الضيف</div>
+          <div class="leg"><div class="leg-sq" style="background:var(--b)"></div>رحلات ومنافع</div>
+        </div>
+        <div style="position:relative;height:270px"><canvas id="radarChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">📊 مقارنة النسب المئوية</div>
+        <div class="legend-row">
+          <div class="leg"><div class="leg-sq" style="background:var(--a)"></div>إكرام الضيف</div>
+          <div class="leg"><div class="leg-sq" style="background:var(--b)"></div>رحلات ومنافع</div>
+        </div>
+        <div style="position:relative;height:270px"><canvas id="barChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="bar-card">
+      <div class="chart-title" style="margin-bottom:1rem">📏 تفصيل المقارنة بالأشرطة</div>
+      <div id="bar-section"></div>
+    </div>
+
+    <div class="score-cards">
+      <div class="sc a">
+        <div class="sc-name"><span style="width:11px;height:11px;border-radius:50%;background:var(--a);display:inline-block"></span>إكرام الضيف</div>
+        <div class="sc-num" id="score-a">—</div>
+        <div class="sc-sub">نقاط الأداء من أصل المؤشرات</div>
+        <div class="sc-detail" id="summary-a"></div>
+      </div>
+      <div class="sc b">
+        <div class="sc-name"><span style="width:11px;height:11px;border-radius:50%;background:var(--b);display:inline-block"></span>رحلات ومنافع</div>
+        <div class="sc-num" id="score-b">—</div>
+        <div class="sc-sub">نقاط الأداء من أصل المؤشرات</div>
+        <div class="sc-detail" id="summary-b"></div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="footer">لوحة المقارنة التشغيلية — شركة أشرقت حج عام 1447 هـ &nbsp;|&nbsp; تصميم: أحمد حلواني</footer>
+
+<script>
+// ── Original values from Excel ──
+const ORIG = {
+  a_dول:9, b_dول:8,
+  a_tasheera:87499, b_tasheera:38229,
+  a_users:1523, b_users:153,
+  a_wosool:363426, b_wosool:20818,
+  a_ghair:4528, b_ghair:8634,
+  a_marakiz_makkah:40, a_marakiz_madinah:4,
+  b_marakiz_makkah:21, b_marakiz_madinah:0,
+  a_mustaqbal_makkah:16467, a_mustaqbal_madinah:15441,
+  b_mustaqbal_makkah:12184, b_mustaqbal_madinah:0,
+  a_masaken_jahiz:217, b_masaken_jahiz:134,
+  a_masaken_ghair:0, b_masaken_ghair:0,
+  a_masaken_total:166, b_masaken_total:566,
+  a_masha_mina:84, a_masha_arafa:81, a_masha_muzdalifa:0,
+  b_masha_mina:0, b_masha_arafa:0, b_masha_muzdalifa:0,
+  a_nusuk_total:86407, b_nusuk_total:37232,
+  a_nusuk_mufaal:48594, b_nusuk_mufaal:19453,
+  a_balaghat:2052, b_balaghat:0,
+  a_waqaat:3, b_waqaat:7,
+  a_waqaat_total:144, b_waqaat_total:59,
+  a_mahadir:156, b_mahadir:0,
+  a_mahام:130, b_mahام:0,
+  a_maha_muta:308, b_maha_muta:0
+};
+
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('ar-SA', {day:'numeric',month:'long',year:'numeric'});
+
+// ── READONLY MODE: أضف ?view=1 للرابط لمنع التعديل ──
+const READONLY = new URLSearchParams(window.location.search).get('view') === '1';
+
+function applyReadonly(){
+  if(!READONLY) return;
+  document.querySelectorAll('input').forEach(inp=>{
+    inp.setAttribute('readonly','');
+    inp.style.pointerEvents='none';
+    inp.style.background='transparent';
+    inp.style.border='none';
+    inp.style.fontWeight='600';
+    inp.style.color = inp.classList.contains('a') ? '#2563a8' : '#0f7a5a';
+  });
+  document.querySelector('.actions').innerHTML = `
+    <div style="padding:10px 16px;background:#fef3c7;border:1px solid #f59e0b;border-radius:12px;font-size:13px;color:#92400e;display:flex;align-items:center;gap:8px;">
+      🔒 وضع العرض فقط — لا يمكن التعديل على البيانات
+    </div>
+    <button class="btn-primary" onclick="calculate()">🔍 عرض النتائج</button>
+    <button class="btn-sec" onclick="showCSV()">📊 تصدير CSV</button>
+    <button class="btn-sec" onclick="window.print()">🖨️ طباعة</button>`;
+}
+
+// ── حساب نسبة نسك تلقائياً ──
+function updateNusukPct(){
+  const aT=v('a_nusuk_total'), aM=v('a_nusuk_mufaal');
+  const bT=v('b_nusuk_total'), bM=v('b_nusuk_mufaal');
+  document.getElementById('a_nusuk_pct_calc').textContent = aT>0?((aM/aT)*100).toFixed(1)+'%':'—';
+  document.getElementById('b_nusuk_pct_calc').textContent = bT>0?((bM/bT)*100).toFixed(1)+'%':'—';
+}
+['a_nusuk_total','b_nusuk_total','a_nusuk_mufaal','b_nusuk_mufaal'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('input', updateNusukPct);
+});
+window.addEventListener('load',()=>{ applyReadonly(); updateNusukPct(); calculate(); });
+
+let rInst=null, bInst=null;
+function v(id){ return parseFloat(document.getElementById(id)?.value)||0; }
+function pct(n,d){ return d>0?Math.round(n/d*100):0; }
+
+function resetToOriginal(){
+  if(READONLY) return;
+  Object.entries(ORIG).forEach(([k,val])=>{
+    const el=document.getElementById(k);
+    if(el) el.value=val;
+  });
+  updateNusukPct();
+  calculate();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function calculate(){
+  // Derived
+  const aMustaqbalTotal = v('a_mustaqbal_makkah') + v('a_mustaqbal_madinah');
+  const bMustaqbalTotal = v('b_mustaqbal_makkah') + v('b_mustaqbal_madinah');
+  const aMarakizTotal = v('a_marakiz_makkah') + v('a_marakiz_madinah');
+  const bMarakizTotal = v('b_marakiz_makkah') + v('b_marakiz_madinah');
+  const aMashaAvg = Math.round((v('a_masha_mina') + v('a_masha_arafa') + v('a_masha_muzdalifa')) / 3);
+  const bMashaAvg = Math.round((v('b_masha_mina') + v('b_masha_arafa') + v('b_masha_muzdalifa')) / 3);
+  const aWaqaatPct = pct(v('a_waqaat'), v('a_waqaat_total'));
+  const bWaqaatPct = pct(v('b_waqaat'), v('b_waqaat_total'));
+  const aMasajenPct = pct(v('a_masaken_jahiz'), v('a_masaken_jahiz') + v('a_masaken_ghair'));
+  const bMasajenPct = pct(v('b_masaken_jahiz'), v('b_masaken_jahiz') + v('b_masaken_ghair'));
+
+  const kpis = [
+    {label:'الواصلون',      a:v('a_wosool'),       b:v('b_wosool'),        unit:'',  hi:true,  isNum:true},
+    {label:'إجمالي التأشيرات',a:v('a_tasheera'),   b:v('b_tasheera'),      unit:'',  hi:true,  isNum:true},
+    {label:'المستقبَلون',   a:aMustaqbalTotal,      b:bMustaqbalTotal,      unit:'',  hi:true,  isNum:true},
+    {label:'مراكز الخدمة',  a:aMarakizTotal,        b:bMarakizTotal,        unit:'',  hi:true,  isNum:true},
+    {label:'جاهزية المساكن',a:aMasajenPct,          b:bMasajenPct,          unit:'%', hi:true},
+    {label:'بطاقات نسك مفعّلة',a:v('a_nusuk_mufaal'), b:v('b_nusuk_mufaal'),     unit:'', hi:true, isNum:true},
+    {label:'جاهزية المشاعر', a:aMashaAvg,           b:bMashaAvg,            unit:'%', hi:true},
+    {label:'وقوعات غير مسدودة',a:aWaqaatPct,       b:bWaqaatPct,           unit:'%', hi:false},
+    {label:'المستخدمون',    a:v('a_users'),          b:v('b_users'),         unit:'',  hi:true,  isNum:true},
+  ];
+
+  let sA=0, sB=0;
+  const grid = document.getElementById('kpi-grid');
+  grid.innerHTML = '';
+  kpis.forEach(k=>{
+    const aW = k.hi ? k.a>k.b : k.a<k.b;
+    const bW = k.hi ? k.b>k.a : k.b<k.a;
+    if(aW) sA++; else if(bW) sB++;
+    const diff = Math.abs(k.a - k.b);
+    const cls = diff===0?'wt':aW?'wa':'wb';
+    const pill = diff===0?'<span class="kpi-pill pt">تعادل</span>':
+      aW?`<span class="kpi-pill pa">إكرام +${k.isNum?diff.toLocaleString():diff}${k.unit}</span>`:
+         `<span class="kpi-pill pb">رحلات +${k.isNum?diff.toLocaleString():diff}${k.unit}</span>`;
+    const fmt = n => k.isNum ? n.toLocaleString() : n;
+    grid.innerHTML += `<div class="kpi ${cls}">
+      <div class="kpi-lbl">${k.label}</div>
+      <div class="kpi-vals">
+        <span class="va">${fmt(k.a)}${k.unit}</span>
+        <span class="vs-txt">vs</span>
+        <span class="vb">${fmt(k.b)}${k.unit}</span>
+      </div>${pill}</div>`;
+  });
+
+  // Bars
+  const bars = [
+    {label:'نسك مفعّلة (نسبة محسوبة)',a:v('a_nusuk_total')>0?(v('a_nusuk_mufaal')/v('a_nusuk_total')*100):0, b:v('b_nusuk_total')>0?(v('b_nusuk_mufaal')/v('b_nusuk_total')*100):0},
+    {label:'جاهزية منى',      a:v('a_masha_mina'),b:v('b_masha_mina')},
+    {label:'جاهزية عرفة',     a:v('a_masha_arafa'),b:v('b_masha_arafa')},
+    {label:'جاهزية مزدلفة',  a:v('a_masha_muzdalifa'),b:v('b_masha_muzdalifa')},
+    {label:'متوسط جاهزية المشاعر',a:aMashaAvg,b:bMashaAvg},
+  ];
+  const bs = document.getElementById('bar-section');
+  bs.innerHTML = '';
+  bars.forEach(b=>{
+    const max = Math.max(100,b.a,b.b);
+    bs.innerHTML += `<div class="bar-item">
+      <div class="bar-meta"><span>${b.label}</span>
+        <div class="bar-vals"><span class="bva">${b.a}%</span><span class="bvb">${b.b}%</span></div>
+      </div>
+      <div class="bar-track"><div class="bfa" style="width:${Math.round(b.a/max*100)}%"></div></div>
+      <div class="bar-track"><div class="bfb" style="width:${Math.round(b.b/max*100)}%"></div></div>
+    </div>`;
+  });
+
+  // Scores
+  document.getElementById('score-a').textContent = sA+'/'+kpis.length;
+  document.getElementById('score-b').textContent = sB+'/'+kpis.length;
+  const stA = sA>sB?'متقدمة في معظم المؤشرات ✅':sA<sB?'بحاجة لمراجعة بعض المؤشرات ⚠️':'متقاربة مع المنافس';
+  const stB = sB>sA?'متقدمة في معظم المؤشرات ✅':sB<sA?'بحاجة لمراجعة بعض المؤشرات ⚠️':'متقاربة مع المنافس';
+  document.getElementById('summary-a').innerHTML =
+    `الواصلون: <strong>${v('a_wosool').toLocaleString()}</strong><br>المستخدمون: <strong>${v('a_users').toLocaleString()}</strong><br>البلاغات: <strong>${v('a_balaghat').toLocaleString()}</strong><br>المهام المتأخرة: <strong>${v('a_maha_muta')}</strong><br><br>${stA}`;
+  document.getElementById('summary-b').innerHTML =
+    `الواصلون: <strong>${v('b_wosool').toLocaleString()}</strong><br>المستخدمون: <strong>${v('b_users').toLocaleString()}</strong><br>البلاغات: <strong>${v('b_balaghat').toLocaleString()}</strong><br>المهام المتأخرة: <strong>${v('b_maha_muta')}</strong><br><br>${stB}`;
+
+  // Radar
+  if(rInst) rInst.destroy();
+  rInst = new Chart(document.getElementById('radarChart'),{
+    type:'radar',
+    data:{
+      labels:['الواصلون (آلاف)','التأشيرات (آلاف)','المستقبَلون (آلاف)','المراكز','نسك %','المشاعر %'],
+      datasets:[
+        {label:'إكرام الضيف',
+         data:[Math.round(v('a_wosool')/1000),Math.round(v('a_tasheera')/1000),Math.round(aMustaqbalTotal/1000),aMarakizTotal,v('a_nusuk_total')>0?Math.round(v('a_nusuk_mufaal')/v('a_nusuk_total')*100):0,aMashaAvg],
+         borderColor:'#2563a8',backgroundColor:'rgba(37,99,168,0.12)',pointBackgroundColor:'#2563a8',borderWidth:2,pointRadius:4},
+        {label:'رحلات ومنافع',
+         data:[Math.round(v('b_wosool')/1000),Math.round(v('b_tasheera')/1000),Math.round(bMustaqbalTotal/1000),bMarakizTotal,v('b_nusuk_total')>0?Math.round(v('b_nusuk_mufaal')/v('b_nusuk_total')*100):0,bMashaAvg],
+         borderColor:'#0f7a5a',backgroundColor:'rgba(15,122,90,0.10)',pointBackgroundColor:'#0f7a5a',borderWidth:2,pointRadius:4}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{r:{ticks:{font:{size:10},backdropColor:'transparent'},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10}}}}}
+  });
+
+  // Bar chart
+  if(bInst) bInst.destroy();
+  bInst = new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{
+      labels:['نسك %','منى %','عرفة %','مزدلفة %','مشاعر متوسط'],
+      datasets:[
+        {label:'إكرام',data:[v('a_nusuk_total')>0?Math.round(v('a_nusuk_mufaal')/v('a_nusuk_total')*100):0,v('a_masha_mina'),v('a_masha_arafa'),v('a_masha_muzdalifa'),aMashaAvg],backgroundColor:'rgba(37,99,168,.80)',borderRadius:4},
+        {label:'رحلات',data:[v('b_nusuk_total')>0?Math.round(v('b_nusuk_mufaal')/v('b_nusuk_total')*100):0,v('b_masha_mina'),v('b_masha_arafa'),v('b_masha_muzdalifa'),bMashaAvg],backgroundColor:'rgba(15,122,90,.80)',borderRadius:4}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{min:0,max:100,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:10}},grid:{display:false}}}}
+  });
+
+  document.getElementById('results').classList.add('show');
+  setTimeout(()=>document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function getAllRows(){
+  const aMT = v('a_mustaqbal_makkah')+v('a_mustaqbal_madinah');
+  const bMT = v('b_mustaqbal_makkah')+v('b_mustaqbal_madinah');
+  const aMA = Math.round((v('a_masha_mina')+v('a_masha_arafa')+v('a_masha_muzdalifa'))/3);
+  const bMA = Math.round((v('b_masha_mina')+v('b_masha_arafa')+v('b_masha_muzdalifa'))/3);
+  return [
+    ['المؤشر','إكرام الضيف','رحلات ومنافع'],
+    ['عدد الدول',v('a_dول'),v('b_dول')],
+    ['إجمالي التأشيرات',v('a_tasheera'),v('b_tasheera')],
+    ['المستخدمون في النظام',v('a_users'),v('b_users')],
+    ['الواصلون',v('a_wosool'),v('b_wosool')],
+    ['غير مثبت خدمتهم',v('a_ghair'),v('b_ghair')],
+    ['مراكز مكة',v('a_marakiz_makkah'),v('b_marakiz_makkah')],
+    ['مراكز المدينة',v('a_marakiz_madinah'),v('b_marakiz_madinah')],
+    ['المستقبلون مكة',v('a_mustaqbal_makkah'),v('b_mustaqbal_makkah')],
+    ['المستقبلون المدينة',v('a_mustaqbal_madinah'),v('b_mustaqbal_madinah')],
+    ['إجمالي المستقبلين',aMT,bMT],
+    ['جاهزية المساكن',v('a_masaken_jahiz'),v('b_masaken_jahiz')],
+    ['إجمالي الاستمارات',v('a_masaken_total'),v('b_masaken_total')],
+    ['جاهزية منى %',v('a_masha_mina'),v('b_masha_mina')],
+    ['جاهزية عرفة %',v('a_masha_arafa'),v('b_masha_arafa')],
+    ['جاهزية مزدلفة %',v('a_masha_muzdalifa'),v('b_masha_muzdalifa')],
+    ['متوسط جاهزية المشاعر %',aMA,bMA],
+    ['بطاقات نسك - الإجمالي',v('a_nusuk_total'),v('b_nusuk_total')],
+    ['بطاقات نسك مفعّلة (عدد)',v('a_nusuk_mufaal'),v('b_nusuk_mufaal')],
+    ['بطاقات نسك مفعّلة %',v('a_nusuk_total')>0?((v('a_nusuk_mufaal')/v('a_nusuk_total'))*100).toFixed(1):0, v('b_nusuk_total')>0?((v('b_nusuk_mufaal')/v('b_nusuk_total'))*100).toFixed(1):0],
+    ['إجمالي البلاغات',v('a_balaghat'),v('b_balaghat')],
+    ['وقوعات لم تسدد',v('a_waqaat'),v('b_waqaat')],
+    ['إجمالي الوقوعات',v('a_waqaat_total'),v('b_waqaat_total')],
+    ['المحاضر',v('a_mahadir'),v('b_mahadir')],
+    ['المهام المكتملة',v('a_mahام'),v('b_mahام')],
+    ['المهام المكتملة المتأخرة',v('a_maha_muta'),v('b_maha_muta')],
+  ];
+}
+
+function showCSV(){
+  const csv = '\uFEFF' + getAllRows().map(r=>r.join(',')).join('\n');
+  document.getElementById('csv-content').value = csv;
+  const box = document.getElementById('csv-box');
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function copyCSV(){
+  const ta = document.getElementById('csv-content');
+  ta.select();
+  document.execCommand('copy');
+  const msg = document.getElementById('copy-msg');
+  msg.style.display = 'inline';
+  setTimeout(()=>{ msg.style.display='none'; }, 2500);
+}
+</script>
+</body>
+</html>
