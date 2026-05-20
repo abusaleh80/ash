@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير موجز - شركة اكرام الضيف</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --dark: #0A0E1A;
+    --dark2: #111827;
+    --dark3: #1E293B;
+    --dark4: #263148;
+    --text: #F1F5F9;
+    --text-muted: #94A3B8;
+    --green: #10B981;
+    --red: #EF4444;
+    --blue: #3B82F6;
+    --purple: #8B5CF6;
+    --orange: #F59E0B;
+    --card-border: rgba(201,168,76,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* Background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.06) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .logo-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 0 30px rgba(201,168,76,0.4);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 30px rgba(201,168,76,0.4); }
+    50% { box-shadow: 0 0 50px rgba(201,168,76,0.7); }
+  }
+
+  .header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+  }
+
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .header .badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .kpi-card {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 0 16px 0 80px;
+    opacity: 0.15;
+  }
+
+  .kpi-card.gold::before { background: var(--gold); }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.red::before { background: var(--red); }
+  .kpi-card.blue::before { background: var(--blue); }
+  .kpi-card.purple::before { background: var(--purple); }
+  .kpi-card.orange::before { background: var(--orange); }
+
+  .kpi-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .kpi-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .kpi-card.gold .kpi-value { color: var(--gold-light); }
+  .kpi-card.green .kpi-value { color: #34D399; }
+  .kpi-card.red .kpi-value { color: #FC8181; }
+  .kpi-card.blue .kpi-value { color: #93C5FD; }
+  .kpi-card.purple .kpi-value { color: #C4B5FD; }
+  .kpi-card.orange .kpi-value { color: #FCD34D; }
+
+  .kpi-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold-light);
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  }
+
+  /* MAIN TABLE SECTION */
+  .table-section {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  /* Search & Filter */
+  .table-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--dark4);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    padding: 0.65rem 1rem 0.65rem 2.8rem;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus { border-color: var(--gold); }
+  .search-box input::placeholder { color: var(--text-muted); }
+
+  .search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  .sort-btn {
+    background: var(--dark4);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    padding: 0.65rem 1.2rem;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .sort-btn:hover, .sort-btn.active {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.1);
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.88rem;
+  }
+
+  thead th {
+    background: linear-gradient(135deg, var(--dark4), rgba(201,168,76,0.15));
+    color: var(--gold-light);
+    font-weight: 600;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    position: relative;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+  }
+
+  thead th:hover { background: rgba(201,168,76,0.2); }
+  thead th:first-child { border-radius: 12px 0 0 0; }
+  thead th:last-child { border-radius: 0 12px 0 0; }
+
+  thead th .sort-indicator {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    opacity: 0.4;
+  }
+
+  thead th.sorted .sort-indicator { opacity: 1; color: var(--gold); }
+
+  tbody tr {
+    transition: background 0.2s;
+  }
+
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  tbody tr:hover { background: rgba(201,168,76,0.07); }
+
+  tbody td {
+    padding: 0.85rem 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  .total-row td {
+    background: linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08));
+    font-weight: 700;
+    color: var(--gold-light) !important;
+    border-top: 1px solid rgba(201,168,76,0.3) !important;
+  }
+
+  .center-id {
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 0.85rem;
+  }
+
+  .num-cell {
+    font-weight: 500;
+  }
+
+  .num-zero { color: var(--text-muted); }
+  .num-high { color: #34D399; }
+  .num-low { color: var(--text); }
+
+  .badge-cell {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .badge-red { background: rgba(239,68,68,0.15); color: #FC8181; }
+  .badge-green { background: rgba(16,185,129,0.15); color: #34D399; }
+  .badge-yellow { background: rgba(245,158,11,0.15); color: #FCD34D; }
+
+  /* BOTTOM GRID */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  @media (max-width: 768px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+
+  .info-card {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 1.8rem;
+  }
+
+  /* Chart bars */
+  .bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .bar-label {
+    min-width: 90px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 24px;
+    background: var(--dark4);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    min-width: 40px;
+  }
+
+  .bar-gold { background: linear-gradient(90deg, var(--gold-dark), var(--gold)); }
+  .bar-blue { background: linear-gradient(90deg, #1D4ED8, #3B82F6); }
+  .bar-green { background: linear-gradient(90deg, #065F46, #10B981); }
+  .bar-purple { background: linear-gradient(90deg, #5B21B6, #8B5CF6); }
+  .bar-orange { background: linear-gradient(90deg, #92400E, #F59E0B); }
+  .bar-red { background: linear-gradient(90deg, #7F1D1D, #EF4444); }
+
+  /* Donut Chart */
+  .donut-area {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .donut-svg { width: 160px; height: 160px; }
+
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .legend-val {
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-right: 0.3rem;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 1rem;
+  }
+
+  .footer span { color: var(--gold); }
+
+  /* Animations stagger */
+  .kpi-card:nth-child(1) { animation: fadeUp 0.5s ease 0.05s both; }
+  .kpi-card:nth-child(2) { animation: fadeUp 0.5s ease 0.1s both; }
+  .kpi-card:nth-child(3) { animation: fadeUp 0.5s ease 0.15s both; }
+  .kpi-card:nth-child(4) { animation: fadeUp 0.5s ease 0.2s both; }
+  .kpi-card:nth-child(5) { animation: fadeUp 0.5s ease 0.25s both; }
+  .kpi-card:nth-child(6) { animation: fadeUp 0.5s ease 0.3s both; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .header h1 { font-size: 1.5rem; }
+    .kpi-value { font-size: 1.6rem; }
+    table { font-size: 0.78rem; }
+    thead th, tbody td { padding: 0.7rem 0.6rem; }
+  }
+
+  /* Highlight animation on load */
+  @keyframes highlight {
+    0% { background: rgba(201,168,76,0.3); }
+    100% { background: transparent; }
+  }
+
+  tr.highlight { animation: highlight 1s ease; }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-area">
+      <div class="logo-icon" style="background:none;box-shadow:none;width:80px;height:80px;padding:0;overflow:hidden;border-radius:0;animation:none;"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCADgAMADASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAYHAwQFAgEI/8QAPRAAAQMDAgMFBQYFAgcAAAAAAQACAwQFBgcREiExExRBUYEiMnGRsRVCYaHB0QgWJDRSJTMjNURVguHw/8QAGAEBAAMBAAAAAAAAAAAAAAAAAAECAwT/xAApEQACAgAEBgICAwEAAAAAAAAAAQIRAxIhMSJBUXGBsRMyYZEEUqHB/9oADAMBAAIRAxEAPwD8ZIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCLNR009ZVR01NE6WaR3CxjRuSVcdi0Dr6i2x1N8v9PaJnjcROiD/zLws8TFhh/Z0XjCU9kUsisDUjSu94fD35kjblbT/1MTQOH4gE8vxVfq0Jxms0XaKyi4umERFYgIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIuhjtpqr5e6S00beKepkDGqG6Vsblwfw2YvTxNq82u0YbT0bD3Zzum433P6Kv9Tc3uuWZHUVMlXK2jZIRTxNeQ1rRy3Vqa0XOLFMOtunNgb/UzsHeGM5uG4H1O6hdp0Xv1XQMqqqvpKFzxuI5RzH5riw5RzPFm99ux0yjKskfJJ/4fcwN5jqsHyOoNRTVMREDpXbkeHCN1Veo+NT4rltZapWFsbXl8BPjGTyXWyHDMlwKuprwxzJmQSB7KiHfZpB8VZGqlFBqHpfQZxbWNdXUce1Zt12AAcPmpUowxFKL4ZeyGnKOV7o/PyIi7TnCIiAIiIAiIgCIiAIiIAiIgCIiAIiIArz/AIdrFTWa03HUG9MaKWljIg4hzG3UqoMUs1RkGQ0dopmkvqJQ0kD3RvzKuvWup7tSWPSzHv8Ac2Z3js+Qd4bH5b+i5v5DzVhrnv2NsJVx9DU01hOSZNdtRL9zp4XONP2nTYbjx/BVvqDmlzyS/wA1S2qmipWuIgjY8tAHny8VYeq9dHi2H27ArNuamdg7w1o9rY7cviSovZdIr/W0YqKqaGj4hu1rtifXms8LKn8ktOnYtNS+i8nd0UyVt5p6nDL9IJ4qiM9g+U7n8RuV09IK04jn9ywG9Nc633EltO1/u7k8j6gbeire94tkeEXCnub2AthkD454zuNx5+SnmoTRlmGW7PbOSyvoQO8lvvNLdvoVGJCLem0vZMJNLXdeiv8AVbF5cTzOstpaewc7tIHbbAtPPYfBRRfoDP4odSdIKPKaKMG521vDOxvNx22BHn+K/P63wMRzhxbrRmWJHLLTYIiLczCIiAIiIAiIgCIiAIiIAiIgCIuxhtiqcjySjtFLG57p5AH8Pg3xPyUNpK2SlbotrQS102M4vdNRLu3gEUTmUgePe5dR8Sselg71cL3qfkPOOMvfFxc9jv4fkFk1oq21Fxs2lmOOPd6TgZUcP+fhv8BzWjqxUCjorRptYhu9gaang6PcegP1XArm7/t/iOr6+PZj09hkyTKLnnV7508BLouPpy8PQKHZrnV5vd4mkgr54KNr9oYo3loAHipbqTXRY1iVDhVrP9RKwGpDevPw9SuDZtLL/X0TKmaWCj4xuGS78Wy2hl+8vBnLN9V5JFpRkhySnqcSyGY1AnjPYySHc/BetMqk4xmdxwa8gmgryWRh/Tc9D6j6KFXjG8gwi5U1yc0ObFIHMnj5t3HgVM9R4o8kxa35zaCW1VOB3gt6t2/Yqs4RultL2TFutd16OjpxVOwLU6uxK5EC1XTdrS4+yNwdv2+Sr7V3FX4nmdXQsY7ukjjJTOI5Fp/b9lNcxcM006ocrothdLbs2cN9/wBnYb/luulkvBqbo5DfIm9re7MAydrepHPf8lWEnGSk+z7kyjayruiiERF3HMEREAREQBERAEREAREQBERAFeGjdFS4Xgdy1DujCJ3xmKhB8d9xy+JVVYPYZ8lyiitEDSTM/wBs+TRzKszVyubfMmtWnlg/sLeQyTszyLvE+nP5rnxuJqH77G2Eq4v0YtMd6OkvOpV+dxznj7DjHvvPPcfT0Wlpw3vFwuuoF85xQlz4y4/e38Ph0WXViqY+rtWndjcHQ0hayUt8X/j8BzWvqRL3K32rA7RzkAaZ+A++4jkD681klm8/4i708ez7p9TOyLJ6/MLwN6encXR8fTfw+QUazXN7tebtI6mrJqajY7aGON3DyHidlJ88rosXxCkxK3n+pmYDUFvUA9fUlRi16e5DXUrajsooWvG7RI7Zx9FrCnxPbkUlf1RLNM8h/mShqcWvrxOZIz2L37bkbdN/NNOan7DyS44PeATSVbiyLi6bnp8woRWWe/4hcae4TQGMxvDmSMO7Tt4EqY6gsbe7Bbs1tRIqIQBOW9W7ePoVWcVemz9kqT8oYXPJhmoFZjNxLW2+4Hszx9ADvwn9FvYlVnTnVKos1WXOsty3iIPukO5A+hO3yWpmwjy3BaLK6IAV1FsypDfeG23P9V6yB4zrTSnvUZ4rvado52tHMt8/kN1m+L7c9H36llpty1RGNYMXOLZnU00Tf6KoJmpXDoWE9FDVc07xqNpCJCGuvlhHtH7z4mj9d1TK6cGTcae6McRU7WzCIi1KBERAEREAREQBERAERdrCLFLkmT0VoiPCJnjjd/i3x/b1UNpK2SlbpFkaaNhwfT6vzarAFdWNMVtBHPcHY/VaenXBYMfumfXTnVS8TaUO6vc7fmPVY9Ra7+bMyoMTsrXfZ9BtEGN6cYAEjvyWlqNVsuN7t2HWc70dEWxDh6Fx23PouVJy3579je8u3L2ZtOW93jumd3hweY+Ls+P77zz3HryTTxgq7nc83vPOGn4nsLj94+Xw6LDqFPwutuDWnZzafhZLw/fkPTdZM/mFqs9uwi17ul2a6pDfvOPgfXmrVm8+iNvHs+YbTHJclrsouo3p4HFzQ7py6egC4eVZpdrhdJXUVZNS0rHbRMjcRy8ypBmFTHi2GUuOUrtqqobxTkHmAevz6Ks1pBKXF+is3SotLAr/APzLQ1GO3x4me+M9nI/bcjb6/isOBT/ZV7uOF3fnS1Rcxgd038PmFXltrJrfXw1lO4tkicHDZT/UGEXG127MbYSJAGiYtPuEdD81WUEnXJ+yVK1fQ+4RUuxfMq7GLoB3KtJiPF0G/uu9V4x+okwTUSotNXxG3VRMMgPQsdya703X3NQzI8UosrohtV020dXt1BHQ/Ne8j4cwwCnv0WxuVsAiqgOrh5/Lmq1e/PR9ydtuRntU7tOtUjHJv9j1x4JPJ8Lj+n0Ub1Xx7+Xstmji2NJVjvNOR04H89vRd6ocMz04bNyfdbONnebowOq9xTfzxpjJSvJfeLF/xeMjd0sXJoaPTf1CiLalmfZ/8YatUu6KxREXUYBERAEREAREQBERAFY+KStxLAqy/O/v7kOwph0LB1Dh9VC8Ztv2reIKV7i2Hfild/i0dV38trDf8kprVSkClpQImbHlsOp+SpNZtC8NNToYa9uO41W5TV/31SC2iLufEd+Z/NYMFDbZbrhl9ds97Q6OBrur3O33I9VoZdVtul2pLPQuLaSnAY1o6Ndt7RXnMawSyUWPUTm93pQGBwPvOPmq5b8lrrwdXT1rY33LMrq4PFOHcBf9+U814wpv2hea/LruSYaUmXc9C/wHoFp5fWdhQUOLUI5QAGo4fvyf/Fecoro7dYKTHaJ/h2lUQfecfBTV+RdeDhZHdZ7zd56+c83nZo8mjoFzkRaJUZN2FNdOLrFIJ8buL96OtaWsB+64qFL1FI+KRskbi17TuCPAqJK1RMXTsnGIVDrBktZjlzG9FVkwvDum/wB13qmNVTsQzSqtFaeKiqN4ZAehDvdd+a0MpqmXi10V8iO1ZGOzqdvAj3Svt9mbf8ehuoIFdRAR1Pm8eDvRZ1e/M0utuRu0shwrPXwSEutlQeF/k+Jx/RJZn4TqDHWxNJoJz2nAD7L4neH47dVpXKtZkGLxSSu/1CgHB+L2eayiZuQYaYpXF1wt+7g49XM6BqV1Jvp3Ro6g2hlpyCQ07uOkqh28Lx02dzI9Cfoo4ppbXHJMMfa3Hettu8lN5vaeoULV47UzOS5oIiKxUIiIAiIgCIiA3LbcaigE3dyAZW8JPkFhp6mankdJE8te4bF3isKILMkM8sM3bRvLZOftePNfGyPEnacR4999/wAV4RAZo6mVlUKkvLpQeLicdzuvNRK+eZ80h3e87krGiAIiIAiIgM0NRLFDJE1x4JBs4ea+0lVNTB4jPsyN4XNPQhYEQWZIJpIS7s3bcQ2P4heqSqnpXOdBIWFzeE7eIWFe4Y3zSNjjaXPdyACAy0NZVUM/b0kzoZNiOJvktdfXAtcWkbEHYhdfE47TJc/9YmEVOGnqCdypSt0ScdFuXmKliuEraKds0BO7HNBHLyWmoICIiAIiIAiIgM9DSzVtQIIA0vI39p2wWa72yqtc7YatrA9zeIcLgeS0wSDuCQUc5zju5xcfMlCdD4immd2yht+N2N9LEGySsLpH+LuQULVpRcXTElToIi6eK00FXkVDTVO3YyTAP38lCVuglZ0YaChqrZO2lt9UagMDmSHfbl1UbX6BkM0MFwp20lOykhi2iczmeniqRslmrr3VywUDGvfG0vdxO22C2xcLLSRpOFUcxF6lY6OR0bveaSD8V5WBkEREAW3bKiCmldJNC6R23sbHbYrUU0o7bbG4ALm6nD6kzcJcforwi5PQmKsjFS3v1dvQ0kjQ/owHiJK3MatDa/IG2usLoSQ4HzBAU0d2dFlFlhpImRsfDu5oHUlq4Vg45tSyX9TO8n5FaPDpq+pfLTIvcaY0dfPSl4eYpCziHjsVrreyAcN8rh5Tv+q0Vi9zNhERQAiIgCkWHVeOUvePt+jkqOIAR8I3281HUUp07JTpliU9fpw4gPoJ2jzcxbE0umTo+JkcrXfg1QGjioHUU0lTMRKOTGBaK0WL+EX+T8ItS6ZPgtypKekrIKl8VONo9o1zhX6ZtAAt9Y7z3Z/7VeIpeM3ukHiN8ixW1+mRPO31g/8AFZhXaZN4ZYYquGRvMcMZ3CrRFCxn0Q+T8FoPzPHbfaquC3OraiWdhAEjdgFxtHn8GRVD3f7fdncfwUIU20oY6OruNXI0iBlI4OeegKvDElPEjfImMnKSsz1FxwEVcpfbauQl53Ow26+HNeRd9Pmjb7Eq3fHb91BpCC9xHQkryqfK+iK530J4276e+Nkq/kP3Xr7X07/7HV/IfuoCifK+iGdk9N107I/5PWD0H7rbdleHttItcdurBTh3Ftwjr81W6KVjNbJD5GWZPmeLPqIKsUFX29Ozhi9keXxXAwOo75n0dU/ZvG57yPLkokskE0sEnaQyOY8Ajdp2Kh40pNN8hndm1fntkvdbIw7tdO8g+pWih5ncosmUCIiAIiIAiIgCIiAIiIAiIgC6T77dXW37ONWRS+LGta3f4kDcrmopTaF0ERFACIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiID/2Q==" style="width:100%;height:100%;object-fit:contain;" alt="logo"></div>
+    </div>
+    <h1>تقرير موجز - شركة اكرام الضيف</h1>
+    <p class="subtitle">إثبات الخدمة · عقود الخدمة</p>
+    <div class="badge">⚙️ فريق عمليات الحج</div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card gold">
+      <span class="kpi-icon">👥</span>
+      <div class="kpi-label">إجمالي مستلم نسك</div>
+      <div class="kpi-value">19,719</div>
+      <div class="kpi-sub">عبر جميع المراكز</div>
+    </div>
+    <div class="kpi-card red">
+      <span class="kpi-icon">⚠️</span>
+      <div class="kpi-label">غير مستلم</div>
+      <div class="kpi-value">189</div>
+      <div class="kpi-sub">يحتاج متابعة</div>
+    </div>
+    <div class="kpi-card orange">
+      <span class="kpi-icon">📋</span>
+      <div class="kpi-label">محاضر لم تسدد</div>
+      <div class="kpi-value">101</div>
+      <div class="kpi-sub">عدد المحاضر الكلي</div>
+    </div>
+    <div class="kpi-card purple">
+      <span class="kpi-icon">❌</span>
+      <div class="kpi-label">بلا عقود</div>
+      <div class="kpi-value">462</div>
+      <div class="kpi-sub">حالة غير منظمة</div>
+    </div>
+    <div class="kpi-card blue">
+      <span class="kpi-icon">🎟️</span>
+      <div class="kpi-label">التذاكر المغلقة</div>
+      <div class="kpi-value">861</div>
+      <div class="kpi-sub">تم معالجتها</div>
+    </div>
+    <div class="kpi-card green">
+      <span class="kpi-icon">📝</span>
+      <div class="kpi-label">عدد الإستمارات</div>
+      <div class="kpi-value">1,422</div>
+      <div class="kpi-sub">إجمالي الإستمارات</div>
+    </div>
+  </div>
+
+  <!-- MAIN TABLE -->
+  <div class="table-section">
+    <div class="section-title">
+      <span>📊</span> بيانات المراكز التفصيلية
+    </div>
+
+    <div class="table-controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="ابحث عن مركز..." oninput="filterTable()">
+      </div>
+      <button class="sort-btn" onclick="sortTable(1, this)" title="ترتيب حسب مستلم نسك">⬆ مستلم نسك</button>
+      <button class="sort-btn" onclick="sortTable(5, this)" title="ترتيب حسب التذاكر المغلقة">⬆ التذاكر</button>
+      <button class="sort-btn" onclick="sortTable(7, this)" title="ترتيب حسب الإستمارات">⬆ الإستمارات</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="mainTable">
+        <thead>
+          <tr>
+            <th onclick="sortByCol(0)">المركز <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(1)">مستلم نسك <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(2)">غير مستلم <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(3)">محاضر لم تسدد <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(4)">بلا عقود <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(5)">التذاكر المغلقة <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(6)">عدد الاسكانات <span class="sort-indicator">⇅</span></th>
+            <th onclick="sortByCol(7)">عدد الإستمارات <span class="sort-indicator">⇅</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+      <div id="noResults" class="no-results" style="display:none">
+        🔍 لا توجد نتائج مطابقة للبحث
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM GRID: Chart + Extra Info -->
+  <div class="bottom-grid">
+
+    <!-- Bar Chart: مستلم نسك by center -->
+    <div class="info-card">
+      <div class="section-title">
+        <span>📈</span> أعلى المراكز - مستلم نسك
+      </div>
+      <div class="bar-chart" id="barChart"></div>
+    </div>
+
+    <!-- Second card: إثبات الخدمة + جاهزية السكن -->
+    <div class="info-card">
+      <div class="section-title">
+        <span>🏠</span> إثبات الخدمة والإسكان
+      </div>
+
+      <div class="donut-area">
+        <svg class="donut-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#1E293B" stroke-width="18"/>
+          <!-- Green segment: مسكن -->
+          <circle cx="60" cy="60" r="46" fill="none" 
+            stroke="#10B981" stroke-width="18"
+            stroke-dasharray="173.4 115.6"
+            stroke-dashoffset="0"
+            transform="rotate(-90 60 60)"
+            style="transition: stroke-dasharray 1.5s ease"/>
+          <!-- Red segment: غير مسكن -->
+          <circle cx="60" cy="60" r="46" fill="none" 
+            stroke="#EF4444" stroke-width="18"
+            stroke-dasharray="115.6 173.4"
+            stroke-dashoffset="-173.4"
+            transform="rotate(-90 60 60)"
+            style="transition: stroke-dasharray 1.5s ease"/>
+          <text x="60" y="55" text-anchor="middle" fill="#F1F5F9" font-size="14" font-weight="700" font-family="IBM Plex Sans Arabic">87,676</text>
+          <text x="60" y="70" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="IBM Plex Sans Arabic">إجمالي</text>
+        </svg>
+
+        <div class="donut-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#10B981"></div>
+            <span>المسكن</span>
+            <span class="legend-val">53,493</span>
+            <span style="color:var(--text-muted);font-size:0.78rem">(61%)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#EF4444"></div>
+            <span>غير مسكن</span>
+            <span class="legend-val">34,183</span>
+            <span style="color:var(--text-muted);font-size:0.78rem">(39%)</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="section-title" style="font-size:0.9rem">
+          <span>🗺️</span> جاهزية السكن - غير منفذه
+        </div>
+        <div class="bar-chart" id="readinessChart"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    تقرير <span>شركة اكرام الضيف</span> · إثبات الخدمة وعقود الخدمة · تم إنشاؤه بشكل تفاعلي
+  </div>
+
+</div>
+
+<script>
+const data = [
+  { center: 100, received: 43,   notReceived: 1,  unpaidMin: 11, noContract: 0,  closedTickets: 5,   accommodations: 11, forms: 286 },
+  { center: 101, received: 1474, notReceived: 0,  unpaidMin: 2,  noContract: 38, closedTickets: 80,  accommodations: 5,  forms: 122 },
+  { center: 102, received: 4404, notReceived: 0,  unpaidMin: 2,  noContract: 37, closedTickets: 238, accommodations: 1,  forms: 108 },
+  { center: 104, received: 412,  notReceived: 0,  unpaidMin: 2,  noContract: 37, closedTickets: 180, accommodations: 3,  forms: 57  },
+  { center: 106, received: 1254, notReceived: 2,  unpaidMin: 1,  noContract: 37, closedTickets: 147, accommodations: 2,  forms: 31  },
+  { center: 109, received: 1617, notReceived: 2,  unpaidMin: 8,  noContract: 47, closedTickets: 25,  accommodations: 18, forms: 79  },
+  { center: 112, received: 945,  notReceived: 40, unpaidMin: 4,  noContract: 40, closedTickets: 18,  accommodations: 2,  forms: 48  },
+  { center: 114, received: 0,    notReceived: 0,  unpaidMin: 1,  noContract: 49, closedTickets: 0,   accommodations: 2,  forms: 26  },
+  { center: 119, received: 0,    notReceived: 0,  unpaidMin: 21, noContract: 44, closedTickets: 1,   accommodations: 33, forms: 57  },
+  { center: 121, received: 2571, notReceived: 0,  unpaidMin: 6,  noContract: 45, closedTickets: 5,   accommodations: 5,  forms: 47  },
+  { center: 122, received: 2323, notReceived: 143,unpaidMin: 6,  noContract: 44, closedTickets: 6,   accommodations: 8,  forms: 41  },
+  { center: 123, received: 1116, notReceived: 1,  unpaidMin: 7,  noContract: 44, closedTickets: 3,   accommodations: 5,  forms: 59  },
+  { center: 151, received: 1,    notReceived: 0,  unpaidMin: 1,  noContract: 0,  closedTickets: 104, accommodations: 9,  forms: 4   },
+  { center: 160, received: 1764, notReceived: 0,  unpaidMin: 13, noContract: 0,  closedTickets: 28,  accommodations: 23, forms: 113 },
+  { center: 161, received: 967,  notReceived: 0,  unpaidMin: 4,  noContract: 0,  closedTickets: 14,  accommodations: 32, forms: 196 },
+  { center: 162, received: 769,  notReceived: 0,  unpaidMin: 6,  noContract: 0,  closedTickets: 6,   accommodations: 25, forms: 71  },
+  { center: 163, received: 59,   notReceived: 0,  unpaidMin: 6,  noContract: 0,  closedTickets: 1,   accommodations: 27, forms: 77  },
+];
+
+// Readiness data from Excel
+const readinessData = [
+  { name: '102 - مصر قرعة', val: 1 },
+  { name: '109 - موريتانيا', val: 18 },
+  { name: '110 - تونس', val: 1 },
+  { name: '125 - إرتريا', val: 19 },
+];
+
+let sortCol = -1;
+let sortDir = 1;
+let currentData = [...data];
+
+function numCell(val) {
+  if (val === 0) return `<td><span class="num-cell num-zero">—</span></td>`;
+  const cls = val > 500 ? 'num-high' : 'num-low';
+  return `<td><span class="num-cell ${cls}">${val.toLocaleString('ar-SA')}</span></td>`;
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById('tableBody');
+  const noRes = document.getElementById('noResults');
+  
+  if (rows.length === 0) {
+    tbody.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  let html = '';
+  rows.forEach((row, i) => {
+    const alertClass = row.notReceived > 50 ? 'badge-red' : row.notReceived > 0 ? 'badge-yellow' : 'badge-green';
+    const alertText = row.notReceived > 50 ? '⚠ عالي' : row.notReceived > 0 ? '• متوسط' : '✓ جيد';
+
+    html += `<tr>
+      <td><span class="center-id">${row.center}</span></td>
+      ${numCell(row.received)}
+      <td><span class="badge-cell ${alertClass}">${row.notReceived === 0 ? '✓ 0' : row.notReceived} ${row.notReceived > 0 ? alertText : ''}</span></td>
+      ${numCell(row.unpaidMin)}
+      <td><span class="num-cell ${row.noContract > 40 ? 'num-high' : 'num-low'}">${row.noContract.toLocaleString('ar-SA')}</span></td>
+      ${numCell(row.closedTickets)}
+      ${numCell(row.accommodations)}
+      ${numCell(row.forms)}
+    </tr>`;
+  });
+
+  // Total row
+  const tot = {
+    received: rows.reduce((s,r)=>s+r.received,0),
+    notReceived: rows.reduce((s,r)=>s+r.notReceived,0),
+    unpaidMin: rows.reduce((s,r)=>s+r.unpaidMin,0),
+    noContract: rows.reduce((s,r)=>s+r.noContract,0),
+    closedTickets: rows.reduce((s,r)=>s+r.closedTickets,0),
+    accommodations: rows.reduce((s,r)=>s+r.accommodations,0),
+    forms: rows.reduce((s,r)=>s+r.forms,0),
+  };
+  html += `<tr class="total-row">
+    <td>الإجمالي</td>
+    <td>${tot.received.toLocaleString('ar-SA')}</td>
+    <td>${tot.notReceived.toLocaleString('ar-SA')}</td>
+    <td>${tot.unpaidMin.toLocaleString('ar-SA')}</td>
+    <td>${tot.noContract.toLocaleString('ar-SA')}</td>
+    <td>${tot.closedTickets.toLocaleString('ar-SA')}</td>
+    <td>${tot.accommodations.toLocaleString('ar-SA')}</td>
+    <td>${tot.forms.toLocaleString('ar-SA')}</td>
+  </tr>`;
+
+  tbody.innerHTML = html;
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) {
+    currentData = [...data];
+  } else {
+    currentData = data.filter(r => r.center.toString().includes(q));
+  }
+  renderTable(currentData);
+}
+
+function sortByCol(col) {
+  const headers = document.querySelectorAll('thead th');
+  headers.forEach(h => h.classList.remove('sorted'));
+  headers[col].classList.add('sorted');
+
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+
+  const keys = ['center','received','notReceived','unpaidMin','noContract','closedTickets','accommodations','forms'];
+  currentData.sort((a, b) => {
+    const av = a[keys[col]], bv = b[keys[col]];
+    return (av - bv) * sortDir;
+  });
+  const ind = headers[col].querySelector('.sort-indicator');
+  if (ind) ind.textContent = sortDir === 1 ? '↑' : '↓';
+  renderTable(currentData);
+}
+
+function sortTable(col, btn) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  sortByCol(col);
+}
+
+// Bar Chart: top centers by received
+function buildBarChart() {
+  const sorted = [...data].sort((a,b) => b.received - a.received).slice(0, 8);
+  const max = sorted[0].received;
+  const colors = ['bar-gold','bar-blue','bar-green','bar-purple','bar-orange','bar-red','bar-gold','bar-blue'];
+  const el = document.getElementById('barChart');
+  el.innerHTML = sorted.map((r, i) => `
+    <div class="bar-row">
+      <div class="bar-label">مركز ${r.center}</div>
+      <div class="bar-track">
+        <div class="bar-fill ${colors[i]}" style="width: ${Math.max(8,(r.received/max*100))}%">${r.received.toLocaleString('ar-SA')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Readiness chart
+function buildReadinessChart() {
+  const max = Math.max(...readinessData.map(r=>r.val));
+  const colors = ['bar-red','bar-red','bar-red','bar-red'];
+  const el = document.getElementById('readinessChart');
+  el.innerHTML = readinessData.map((r,i) => `
+    <div class="bar-row">
+      <div class="bar-label" style="min-width:110px;font-size:0.73rem">${r.name}</div>
+      <div class="bar-track">
+        <div class="bar-fill ${colors[i]}" style="width: ${Math.max(15,(r.val/max*100))}%">${r.val}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Init
+renderTable(data);
+buildBarChart();
+buildReadinessChart();
+</script>
+</body>
+</html>
