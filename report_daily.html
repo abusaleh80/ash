@@ -8,17 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #C9A227; --gold-light: #E8C547; --gold-dim: #8B6E1A;
-    --emerald: #1A6B45; --emerald-light: #22C55E; --emerald-dim: #0D3D27;
-    --dark: #0A0F0D; --dark-2: #111714; --dark-3: #1A2020; --dark-4: #222B28; --dark-5: #2C3733;
-    --text-primary: #F0EDE4; --text-secondary: #B8B09A; --text-muted: #6B7068;
-    --ruby: #C0392B; --sapphire: #2980B9; --amber: #E67E22; --purple: #8E44AD; --teal: #16A085;
-    --border: rgba(201,162,39,0.2); --card-bg: rgba(26,32,32,0.8); --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --gold: #B8891A; --gold-light: #A0720F; --gold-dim: #8B6E1A;
+    --emerald: #166534; --emerald-light: #16A34A; --emerald-dim: #14532D;
+    --dark: #F4F6F8; --dark-2: #E8ECF0; --dark-3: #DDE3EA; --dark-4: #CDD5DF; --dark-5: #B8C4D0;
+    --text-primary: #1A2332; --text-secondary: #3D4F63; --text-muted: #6B7C93;
+    --ruby: #C0392B; --sapphire: #1D6FA4; --amber: #C07000; --purple: #7B2D8B; --teal: #0D7A6B;
+    --border: rgba(160,114,15,0.2); --card-bg: rgba(255,255,255,0.92); --shadow: 0 4px 20px rgba(0,0,0,0.08);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Cairo','Tajawal',sans-serif; background:var(--dark); color:var(--text-primary); min-height:100vh; overflow-x:hidden; }
-  body::before { content:''; position:fixed; inset:0; background-image: radial-gradient(ellipse 80% 50% at 20% 10%,rgba(26,107,69,0.08) 0%,transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%,rgba(201,162,39,0.06) 0%,transparent 50%); pointer-events:none; z-index:0; }
-  .header { position:relative; padding:20px 40px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(10,15,13,0.98) 0%,transparent 100%); z-index:10; display:flex; align-items:center; justify-content:space-between; }
+  body { font-family:'Cairo','Tajawal',sans-serif; background:#EEF1F5; color:var(--text-primary); min-height:100vh; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image: radial-gradient(ellipse 80% 50% at 20% 10%,rgba(22,163,74,0.06) 0%,transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%,rgba(184,137,26,0.05) 0%,transparent 50%); pointer-events:none; z-index:0; }
+  .header { position:relative; padding:20px 40px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(255,255,255,0.98) 0%,rgba(255,255,255,0.92) 100%); z-index:10; display:flex; align-items:center; justify-content:space-between; box-shadow:0 1px 12px rgba(0,0,0,0.07); }
   .header-brand { display:flex; align-items:center; gap:16px; }
   .logo-img { width:52px; height:52px; object-fit:contain; }
   .header-title h1 { font-size:20px; font-weight:900; color:var(--gold-light); }
@@ -29,7 +29,7 @@
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
 
   /* SECTION TABS */
-  .top-tabs { display:flex; gap:2px; padding:10px 40px; border-bottom:1px solid var(--border); background:rgba(10,15,13,0.7); position:sticky; top:0; z-index:9; backdrop-filter:blur(10px); overflow-x:auto; }
+  .top-tabs { display:flex; gap:2px; padding:10px 40px; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.9); position:sticky; top:0; z-index:9; backdrop-filter:blur(10px); overflow-x:auto; box-shadow:0 1px 8px rgba(0,0,0,0.06); }
   .top-tab { padding:8px 18px; border-radius:8px; border:1px solid transparent; background:transparent; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
   .top-tab:hover { background:rgba(201,162,39,0.08); color:var(--text-secondary); }
   .top-tab.active { background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(26,107,69,0.15)); color:var(--gold-light); border-color:rgba(201,162,39,0.4); }
@@ -37,27 +37,27 @@
   /* SUB TABS for ikram/rihlat */
   .sub-tabs { display:flex; gap:6px; margin-bottom:20px; }
   .sub-tab { padding:6px 16px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .sub-tab.active { background:rgba(201,162,39,0.15); color:var(--gold-light); border-color:rgba(201,162,39,0.4); }
+  .sub-tab.active { background:rgba(184,137,26,0.12); color:var(--gold); border-color:rgba(160,114,15,0.3); }
 
   .main { padding:28px 40px; position:relative; z-index:1; }
   .tab-panel { display:none; } .tab-panel.active { display:block; }
   .sub-panel { display:none; } .sub-panel.active { display:block; }
 
   .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:22px; }
-  .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:18px 16px; position:relative; overflow:hidden; transition:transform 0.2s; backdrop-filter:blur(8px); }
-  .stat-card:hover { transform:translateY(-2px); }
+  .stat-card { background:#FFFFFF; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:18px 16px; position:relative; overflow:hidden; transition:transform 0.2s; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+  .stat-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
   .stat-card::before { content:''; position:absolute; top:0; right:0; width:70px; height:70px; border-radius:0 12px 0 70px; opacity:0.08; }
   .stat-card.gold::before{background:var(--gold)} .stat-card.emerald::before{background:var(--emerald-light)} .stat-card.ruby::before{background:var(--ruby)} .stat-card.sapphire::before{background:var(--sapphire)} .stat-card.amber::before{background:var(--amber)} .stat-card.purple::before{background:var(--purple)} .stat-card.teal::before{background:var(--teal)}
   .stat-icon { font-size:24px; margin-bottom:8px; display:block; }
   .stat-label { font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase; margin-bottom:4px; }
   .stat-value { font-size:28px; font-weight:900; line-height:1; margin-bottom:3px; }
-  .stat-card.gold .stat-value{color:var(--gold-light)} .stat-card.emerald .stat-value{color:var(--emerald-light)} .stat-card.ruby .stat-value{color:#E74C3C} .stat-card.sapphire .stat-value{color:#3498DB} .stat-card.amber .stat-value{color:#F39C12} .stat-card.purple .stat-value{color:#9B59B6} .stat-card.teal .stat-value{color:#1ABC9C}
+  .stat-card.gold .stat-value{color:var(--gold-light)} .stat-card.emerald .stat-value{color:var(--emerald-light)} .stat-card.ruby .stat-value{color:#C0392B} .stat-card.sapphire .stat-value{color:#1D6FA4} .stat-card.amber .stat-value{color:#C07000} .stat-card.purple .stat-value{color:#7B2D8B} .stat-card.teal .stat-value{color:#0D7A6B}
   .stat-sub { font-size:11px; color:var(--text-muted); }
 
   .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
   .charts-grid.triple { grid-template-columns:2fr 1fr; }
   .charts-grid.full-w { grid-template-columns:1fr; }
-  .chart-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; backdrop-filter:blur(8px); }
+  .chart-card { background:#FFFFFF; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:20px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
   .chart-card.full { grid-column:1/-1; }
   .chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
   .chart-title { font-size:13px; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:7px; }
@@ -67,29 +67,29 @@
   .section-title { font-size:16px; font-weight:900; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
   .section-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
 
-  .table-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; overflow:hidden; backdrop-filter:blur(8px); margin-bottom:20px; }
-  .table-header-row { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .table-card { background:#FFFFFF; border:1px solid rgba(0,0,0,0.08); border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.06); margin-bottom:20px; }
+  .table-header-row { padding:14px 20px; border-bottom:1px solid var(--border); background:#F8FAFC; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   .table-controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-  .search-input { padding:6px 12px; border-radius:7px; border:1px solid var(--border); background:var(--dark-4); color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; width:180px; }
+  .search-input { padding:6px 12px; border-radius:7px; border:1px solid var(--border); background:#F8FAFC; color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; width:180px; }
   .search-input:focus { border-color:var(--gold); }
   .search-input::placeholder { color:var(--text-muted); }
-  .filter-select { padding:6px 10px; border-radius:7px; border:1px solid var(--border); background:var(--dark-4); color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; cursor:pointer; }
+  .filter-select { padding:6px 10px; border-radius:7px; border:1px solid var(--border); background:#F8FAFC; color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; cursor:pointer; }
   .export-btn { padding:6px 14px; border-radius:7px; border:1px solid rgba(201,162,39,0.4); background:rgba(201,162,39,0.1); color:var(--gold-light); font-family:'Cairo',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; }
   .export-btn:hover { background:rgba(201,162,39,0.2); }
   .table-overflow { overflow-x:auto; }
   table { width:100%; border-collapse:collapse; font-size:12px; }
-  thead tr { background:var(--dark-4); }
+  thead tr { background:#F1F5F9; }
   th { padding:10px 14px; text-align:right; font-weight:700; color:var(--gold); font-size:11px; border-bottom:1px solid var(--border); cursor:pointer; white-space:nowrap; }
   th:hover { color:var(--gold-light); }
-  td { padding:9px 14px; border-bottom:1px solid rgba(201,162,39,0.06); color:var(--text-secondary); }
+  td { padding:9px 14px; border-bottom:1px solid rgba(0,0,0,0.06); color:var(--text-secondary); }
   tr:last-child td { border-bottom:none; }
-  tr:hover td { background:rgba(201,162,39,0.03); color:var(--text-primary); }
+  tr:hover td { background:rgba(184,137,26,0.04); color:var(--text-primary); }
   .badge { display:inline-flex; align-items:center; padding:2px 9px; border-radius:20px; font-size:10px; font-weight:700; }
   .badge-green{background:rgba(34,197,94,0.15);color:#4ADE80;border:1px solid rgba(34,197,94,0.25)} .badge-gold{background:rgba(201,162,39,0.15);color:var(--gold-light);border:1px solid rgba(201,162,39,0.25)} .badge-red{background:rgba(231,76,60,0.15);color:#FC8181;border:1px solid rgba(231,76,60,0.25)} .badge-blue{background:rgba(52,152,219,0.15);color:#63B3ED;border:1px solid rgba(52,152,219,0.25)} .badge-gray{background:rgba(107,112,104,0.2);color:var(--text-muted);border:1px solid rgba(107,112,104,0.3)}
-  .progress-bar { height:5px; border-radius:3px; background:var(--dark-5); overflow:hidden; width:80px; display:inline-block; vertical-align:middle; }
+  .progress-bar { height:5px; border-radius:3px; background:#CBD5E1; overflow:hidden; width:80px; display:inline-block; vertical-align:middle; }
   .progress-fill { height:100%; border-radius:3px; }
   .nat-dot { width:7px; height:7px; border-radius:50%; display:inline-block; margin-left:5px; }
-  .overview-hero { background:linear-gradient(135deg,rgba(201,162,39,0.08),rgba(26,107,69,0.08)); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .overview-hero { background:linear-gradient(135deg,rgba(184,137,26,0.07),rgba(22,163,74,0.07)); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
   .hero-text h2 { font-size:24px; font-weight:900; background:linear-gradient(135deg,var(--gold-light),var(--emerald-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
   .hero-text p { font-size:12px; color:var(--text-muted); }
   .hero-divider { width:1px; height:50px; background:var(--border); }
@@ -97,13 +97,13 @@
   .hero-metric-value { font-size:26px; font-weight:900; color:var(--gold-light); display:block; }
   .hero-metric-label { font-size:10px; color:var(--text-muted); margin-top:3px; }
   .alert-banner { border-radius:10px; padding:12px 16px; margin-bottom:16px; display:flex; align-items:center; gap:10px; font-size:12px; }
-  .alert-red { background:linear-gradient(135deg,rgba(192,57,43,0.12),rgba(231,76,60,0.06)); border:1px solid rgba(192,57,43,0.3); color:#FC8181; }
-  .alert-blue { background:rgba(52,152,219,0.1); border:1px solid rgba(52,152,219,0.2); color:#63B3ED; }
+  .alert-red { background:rgba(254,226,226,0.8); border:1px solid rgba(220,38,38,0.25); color:#C0392B; }
+  .alert-blue { background:rgba(219,234,254,0.8); border:1px solid rgba(37,99,235,0.25); color:#1D6FA4; }
   .pagination { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-top:1px solid var(--border); font-size:11px; color:var(--text-muted); }
   .page-btns { display:flex; gap:4px; }
   .page-btn { width:28px; height:28px; border-radius:5px; border:1px solid var(--border); background:transparent; color:var(--text-secondary); font-family:'Cairo',sans-serif; cursor:pointer; font-size:11px; transition:all 0.2s; }
-  .page-btn.active,.page-btn:hover { background:rgba(201,162,39,0.15); border-color:rgba(201,162,39,0.4); color:var(--gold-light); }
-  ::-webkit-scrollbar{width:5px;height:5px} ::-webkit-scrollbar-track{background:var(--dark-2)} ::-webkit-scrollbar-thumb{background:var(--dark-5);border-radius:3px} ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
+  .page-btn.active,.page-btn:hover { background:rgba(184,137,26,0.12); border-color:rgba(160,114,15,0.4); color:var(--gold); }
+  ::-webkit-scrollbar{width:5px;height:5px} ::-webkit-scrollbar-track{background:#E8ECF0} ::-webkit-scrollbar-thumb{background:#B8C4D0;border-radius:3px} ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
   @media(max-width:768px){.header{padding:14px 16px}.top-tabs{padding:8px 12px}.main{padding:16px}.charts-grid{grid-template-columns:1fr}.charts-grid.triple{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.overview-hero{flex-direction:column}}
 </style>
 </head>
@@ -397,15 +397,15 @@ const NAT_COLORS = {
   'قرغيزستان':'#673AB7','تشاد':'#795548','موريتانيا':'#8E44AD'
 };
 
-Chart.defaults.color='#B8B09A';
+Chart.defaults.color='#4A5568';
 Chart.defaults.font.family="'Cairo','Tajawal',sans-serif";
 
 function cOpts(extra={}){
   return {responsive:true,maintainAspectRatio:true,animation:{duration:700,easing:'easeInOutQuart'},
-    plugins:{legend:{labels:{color:'#B8B09A',font:{family:'Cairo'}}},
-    tooltip:{backgroundColor:'#1A2020',borderColor:'rgba(201,162,39,0.3)',borderWidth:1,titleColor:'#E8C547',bodyColor:'#B8B09A',padding:10}},
-    scales:{x:{ticks:{color:'#6B7068'},grid:{color:'rgba(201,162,39,0.06)'},...(extra.x||{})},
-            y:{ticks:{color:'#6B7068'},grid:{color:'rgba(201,162,39,0.06)'},...(extra.y||{})}},
+    plugins:{legend:{labels:{color:'#3D4F63',font:{family:'Cairo'}}},
+    tooltip:{backgroundColor:'#FFFFFF',borderColor:'rgba(201,162,39,0.3)',borderWidth:1,titleColor:'#A0720F',bodyColor:'#4A5568',padding:10}},
+    scales:{x:{ticks:{color:'#6B7C93'},grid:{color:'rgba(0,0,0,0.06)'},...(extra.x||{})},
+            y:{ticks:{color:'#6B7C93'},grid:{color:'rgba(0,0,0,0.06)'},...(extra.y||{})}},
     ...extra};
 }
 
@@ -601,49 +601,49 @@ function initCharts(){
   const ikramByNat = {};
   D.inc_ikram.forEach(d=>{if(!ikramByNat[d.nat]) ikramByNat[d.nat]=0; ikramByNat[d.nat]+=d.total;});
   const ikramNats = Object.entries(ikramByNat).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a);
-  new Chart(document.getElementById('overviewIkramNat'),{type:'bar',data:{labels:ikramNats.map(([k])=>k),datasets:[{label:'وقوعات إكرام',data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('overviewIkramNat'),{type:'bar',data:{labels:ikramNats.map(([k])=>k),datasets:[{label:'وقوعات إكرام',data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
 
   const rihlatByNat = {};
   D.inc_rihlat.forEach(d=>{if(!rihlatByNat[d.nat]) rihlatByNat[d.nat]=0; rihlatByNat[d.nat]+=d.total;});
   const rihlatNats = Object.entries(rihlatByNat).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a);
-  new Chart(document.getElementById('overviewRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات رحلات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('overviewRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات رحلات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63',maxRotation:30}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
 
-  new Chart(document.getElementById('overviewContracts'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'نسبة الإنجاز %',data:D.contracts.map(c=>+(c.rate*100).toFixed(1)),backgroundColor:D.contracts.map(c=>c.rate>0.15?'#22C55EBB':c.rate>0?'#C9A227BB':'#E74C3CBB'),borderColor:D.contracts.map(c=>c.rate>0.15?'#22C55E':c.rate>0?'#C9A227':'#E74C3C'),borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{max:25,ticks:{callback:v=>v+'%',color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.x}%`}}}}});
+  new Chart(document.getElementById('overviewContracts'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'نسبة الإنجاز %',data:D.contracts.map(c=>+(c.rate*100).toFixed(1)),backgroundColor:D.contracts.map(c=>c.rate>0.15?'#22C55EBB':c.rate>0?'#C9A227BB':'#E74C3CBB'),borderColor:D.contracts.map(c=>c.rate>0.15?'#22C55E':c.rate>0?'#C9A227':'#E74C3C'),borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{max:25,ticks:{callback:v=>v+'%',color:'#6B7068'}},y:{ticks:{color:'#3D4F63'}}}}),plugins:{legend:{display:false},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.x}%`}}}}});
 
-  new Chart(document.getElementById('overviewContractsBar'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'المطلوب',data:D.contracts.map(c=>c.req),backgroundColor:'#C9A22755',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'المنجز',data:D.contracts.map(c=>c.done),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{callback:v=>(v/1000).toFixed(0)+'k',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('overviewContractsBar'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'المطلوب',data:D.contracts.map(c=>c.req),backgroundColor:'#C9A22755',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'المنجز',data:D.contracts.map(c=>c.done),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{callback:v=>(v/1000).toFixed(0)+'k',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:cOpts().plugins.tooltip}}});
 
   // Incidents charts
   const iAmb=D.inc_ikram.reduce((s,d)=>s+d.ambulance,0),iAdm=D.inc_ikram.reduce((s,d)=>s+d.admitted,0),iDth=D.inc_ikram.reduce((s,d)=>s+d.death,0),iLst=D.inc_ikram.reduce((s,d)=>s+d.lost,0);
-  new Chart(document.getElementById('incIkramTypes'),{type:'doughnut',data:{labels:[`إسعاف (${iAmb})`,`تنويم (${iAdm})`,`وفاة (${iDth})`,`تائه (${iLst})`],datasets:[{data:[iAmb,iAdm,iDth,iLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('incIkramNat'),{type:'pie',data:{labels:ikramNats.map(([k])=>k),datasets:[{data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incIkramTypes'),{type:'doughnut',data:{labels:[`إسعاف (${iAmb})`,`تنويم (${iAdm})`,`وفاة (${iDth})`,`تائه (${iLst})`],datasets:[{data:[iAmb,iAdm,iDth,iLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#3D4F63',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incIkramNat'),{type:'pie',data:{labels:ikramNats.map(([k])=>k),datasets:[{data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#3D4F63',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
 
   const rAmb=D.inc_rihlat.reduce((s,d)=>s+d.ambulance,0),rAdm=D.inc_rihlat.reduce((s,d)=>s+d.admitted,0),rDth=D.inc_rihlat.reduce((s,d)=>s+d.death,0),rLst=D.inc_rihlat.reduce((s,d)=>s+d.lost,0);
-  new Chart(document.getElementById('incRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('incRihlatTypes'),{type:'doughnut',data:{labels:[`إسعاف (${rAmb})`,`تنويم (${rAdm})`,`وفاة (${rDth})`,`تائه (${rLst})`],datasets:[{data:[rAmb,rAdm,rDth,rLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63',maxRotation:30}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incRihlatTypes'),{type:'doughnut',data:{labels:[`إسعاف (${rAmb})`,`تنويم (${rAdm})`,`وفاة (${rDth})`,`تائه (${rLst})`],datasets:[{data:[rAmb,rAdm,rDth,rLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#3D4F63',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
 
   // Centers charts
   const topCen = D.centers_ikram.filter(c=>typeof c.id==='string'&&!c.id.includes('ضيافة')).sort((a,b)=>b.forms-a.forms).slice(0,12);
-  new Chart(document.getElementById('cenIkramCap'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'السقف',data:topCen.map(c=>c.cap),backgroundColor:'#C9A22733',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'الاستمارات',data:topCen.map(c=>c.forms),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('cenIkramAct'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'محاضر',data:topCen.map(c=>c.reports),backgroundColor:'#9B59B6BB',borderColor:'#9B59B6',borderWidth:2,borderRadius:5},{label:'عقود',data:topCen.map(c=>c.contracts),backgroundColor:'#1ABC9CBB',borderColor:'#1ABC9C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenIkramCap'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'السقف',data:topCen.map(c=>c.cap),backgroundColor:'#C9A22733',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'الاستمارات',data:topCen.map(c=>c.forms),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenIkramAct'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'محاضر',data:topCen.map(c=>c.reports),backgroundColor:'#9B59B6BB',borderColor:'#9B59B6',borderWidth:2,borderRadius:5},{label:'عقود',data:topCen.map(c=>c.contracts),backgroundColor:'#1ABC9CBB',borderColor:'#1ABC9C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:cOpts().plugins.tooltip}}});
 
   const rihlat12 = D.centers_rihlat.slice(0,12);
-  new Chart(document.getElementById('cenRihlatForms'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'الاستمارات',data:rihlat12.map(c=>c.forms),backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:6},{label:'العقود',data:rihlat12.map(c=>c.contracts),backgroundColor:'#FF980099',borderColor:'#FF9800',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('cenRihlatCap'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'السقف',data:rihlat12.map(c=>c.cap),backgroundColor:'#673AB7BB',borderColor:'#673AB7',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenRihlatForms'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'الاستمارات',data:rihlat12.map(c=>c.forms),backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:6},{label:'العقود',data:rihlat12.map(c=>c.contracts),backgroundColor:'#FF980099',borderColor:'#FF9800',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63',maxRotation:30}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenRihlatCap'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'السقف',data:rihlat12.map(c=>c.cap),backgroundColor:'#673AB7BB',borderColor:'#673AB7',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63',maxRotation:30}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
 
   // Contracts charts
-  new Chart(document.getElementById('conProgress'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'مكتملة',data:D.contracts.map(c=>c.complete),backgroundColor:'#22C55EBB',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'ناقصة',data:D.contracts.map(c=>c.incomplete),backgroundColor:'#E74C3CBB',borderColor:'#E74C3C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('conShare'),{type:'pie',data:{labels:D.contracts.map(c=>c.nat),datasets:[{data:D.contracts.map(c=>c.req),backgroundColor:D.contracts.map(c=>(NAT_COLORS[c.nat]||'#78909C')+'BB'),borderColor:D.contracts.map(c=>NAT_COLORS[c.nat]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.toLocaleString('ar-SA')}`}}}}});
-  new Chart(document.getElementById('conMashaar'),{type:'bar',data:{labels:['منى','عرفة','مزدلفة'],datasets:[{label:'مصر',data:[0.12946,0.17568,0],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.09685,0.17155,0],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.21077,0.18658,0],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{max:0.25,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
-  new Chart(document.getElementById('conService'),{type:'bar',data:{labels:['الخدمات الأمنية','تجهيزات مخيم','الضيافة والتغذية','النظافة','لوازم النوم'],datasets:[{label:'مصر',data:[0.433,0.653,0.037,0.329,0.606],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.097,0.318,0,0.045,0.724],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.251,0.289,0.187,0.2,0.254],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:20}},y:{max:1,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
+  new Chart(document.getElementById('conProgress'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'مكتملة',data:D.contracts.map(c=>c.complete),backgroundColor:'#22C55EBB',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'ناقصة',data:D.contracts.map(c=>c.incomplete),backgroundColor:'#E74C3CBB',borderColor:'#E74C3C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('conShare'),{type:'pie',data:{labels:D.contracts.map(c=>c.nat),datasets:[{data:D.contracts.map(c=>c.req),backgroundColor:D.contracts.map(c=>(NAT_COLORS[c.nat]||'#78909C')+'BB'),borderColor:D.contracts.map(c=>NAT_COLORS[c.nat]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#3D4F63'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.toLocaleString('ar-SA')}`}}}}});
+  new Chart(document.getElementById('conMashaar'),{type:'bar',data:{labels:['منى','عرفة','مزدلفة'],datasets:[{label:'مصر',data:[0.12946,0.17568,0],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.09685,0.17155,0],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.21077,0.18658,0],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{max:0.25,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
+  new Chart(document.getElementById('conService'),{type:'bar',data:{labels:['الخدمات الأمنية','تجهيزات مخيم','الضيافة والتغذية','النظافة','لوازم النوم'],datasets:[{label:'مصر',data:[0.433,0.653,0.037,0.329,0.606],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.097,0.318,0,0.045,0.724],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.251,0.289,0.187,0.2,0.254],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63',maxRotation:20}},y:{max:1,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#3D4F63'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
 
   // Admin charts
   const admT=D.admin_ikram.tickets.slice(0,8);
-  new Chart(document.getElementById('admIkramTickets'),{type:'bar',data:{labels:admT.map(t=>t.dept.length>12?t.dept.slice(0,12)+'...':t.dept),datasets:[{label:'التذاكر',data:admT.map(t=>t.count),backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('admIkramForms'),{type:'bar',data:{labels:D.admin_ikram.forms.map(f=>f.dept.length>12?f.dept.slice(0,12)+'...':f.dept),datasets:[{label:'الاستمارات',data:D.admin_ikram.forms.map(f=>f.count),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('admIkramReports'),{type:'doughnut',data:{labels:D.admin_ikram.reports.map(r=>r.dept),datasets:[{data:D.admin_ikram.reports.map(r=>r.count),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),cutout:'50%',plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:10}}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admIkramTickets'),{type:'bar',data:{labels:admT.map(t=>t.dept.length>12?t.dept.slice(0,12)+'...':t.dept),datasets:[{label:'التذاكر',data:admT.map(t=>t.count),backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7C93'}},y:{ticks:{color:'#3D4F63'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admIkramForms'),{type:'bar',data:{labels:D.admin_ikram.forms.map(f=>f.dept.length>12?f.dept.slice(0,12)+'...':f.dept),datasets:[{label:'الاستمارات',data:D.admin_ikram.forms.map(f=>f.count),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7C93'}},y:{ticks:{color:'#3D4F63'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admIkramReports'),{type:'doughnut',data:{labels:D.admin_ikram.reports.map(r=>r.dept),datasets:[{data:D.admin_ikram.reports.map(r=>r.count),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),cutout:'50%',plugins:{legend:{position:'right',labels:{color:'#3D4F63',font:{size:10}}},tooltip:cOpts().plugins.tooltip}}});
 
-  new Chart(document.getElementById('admRihlatForms'),{type:'bar',data:{labels:['إدارة الإسكان'],datasets:[{label:'الاستمارات',data:[1588],backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:10}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
-  new Chart(document.getElementById('admRihlatDepts'),{type:'pie',data:{labels:D.admin_rihlat.depts.map(d=>d.dept),datasets:[{data:D.admin_rihlat.depts.map(d=>1),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:10}}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${D.admin_rihlat.depts[ctx.dataIndex].dept}`}}}}});
+  new Chart(document.getElementById('admRihlatForms'),{type:'bar',data:{labels:['إدارة الإسكان'],datasets:[{label:'الاستمارات',data:[1588],backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:10}]},options:{...cOpts({scales:{x:{ticks:{color:'#3D4F63'}},y:{ticks:{color:'#6B7C93'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admRihlatDepts'),{type:'pie',data:{labels:D.admin_rihlat.depts.map(d=>d.dept),datasets:[{data:D.admin_rihlat.depts.map(d=>1),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#3D4F63',font:{size:10}}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${D.admin_rihlat.depts[ctx.dataIndex].dept}`}}}}});
 }
 
 // ===== TABLES =====
