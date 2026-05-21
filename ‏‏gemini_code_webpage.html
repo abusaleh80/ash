@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วแสÞัํั วแํๆใํ แฺใแํวส วแอฬ</title>
+    <title>ุงูุชูุฑูุฑ ุงูููู…ู ูุนู…ููุงุช ุงูุญุฌ</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,18 +19,18 @@
     <header class="bg-white shadow-md border-b border-gray-100 sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <img src="แÞุษ_ิวิษ_2026-04-19_201030-removebg-preview.png" alt="Logo" class="w-12 h-12 object-contain error-fallback" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2922/2922510.png'">
+                <img src="ููุทุฉ_ุดุงุดุฉ_2026-04-19_201030-removebg-preview.png" alt="Logo" class="w-12 h-12 object-contain error-fallback" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2922/2922510.png'">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 tracking-wide">วแสÞัํั วแํๆใํ แฺใแํวส วแอฬ</h1>
-                    <p class="text-xs text-gray-500 mt-0.5">แๆอษ สอ฿ใ สÝวฺแํษ ะ฿ํษ แแรฯวม ๆวแฺใแํวส วแใํฯวไํษ แฺวใ 1447ๅÜ</p>
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-wide">ุงูุชูุฑูุฑ ุงูููู…ู ูุนู…ููุงุช ุงูุญุฌ</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">ููุญุฉ ุชุญูู… ุชูุงุนููุฉ ุฐููุฉ ููุฃุฏุงุก ูุงูุนู…ููุงุช ุงูู…ูุฏุงููุฉ ูุนุงู… 1447ูู€</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
                 <button onclick="window.print()" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 cursor-pointer shadow-xs">
-                    <i class="fa-solid fa-file-pdf text-red-500"></i> สีฯํั สÞัํั PDF
+                    <i class="fa-solid fa-file-pdf text-red-500"></i> ุชุตุฏูุฑ ุชูุฑูุฑ PDF
                 </button>
-                <button onclick="showToast('สใ สอฯํห วแศํวไวส ศไฬวอ!')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 cursor-pointer shadow-md shadow-teal-600/20">
-                    <i class="fa-solid fa-arrows-rotate animate-spin-hover"></i> สอฯํห Ýๆัํ
+                <button onclick="showToast('ุชู… ุชุญุฏูุซ ุงูุจูุงูุงุช ุจูุฌุงุญ!')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 cursor-pointer shadow-md shadow-teal-600/20">
+                    <i class="fa-solid fa-arrows-rotate animate-spin-hover"></i> ุชุญุฏูุซ ููุฑู
                 </button>
             </div>
         </div>
@@ -40,13 +40,13 @@
         
         <div class="bg-white p-2 rounded-2xl shadow-xs border border-gray-200/80 flex flex-wrap gap-2 max-w-3xl mx-auto w-full justify-center">
             <button onclick="switchMainTab('ekram')" id="main-tab-ekram" class="tab-btn active flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-base transition-all duration-200 cursor-pointer flex-1 justify-center">
-                <i class="fa-solid fa-hand-holding-heart text-lg"></i> Þุวฺ ล฿ัวใ
+                <i class="fa-solid fa-hand-holding-heart text-lg"></i> ูุทุงุน ุฅูุฑุงู…
             </button>
             <button onclick="switchMainTab('rehlat')" id="main-tab-rehlat" class="tab-btn flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-base transition-all duration-200 cursor-pointer flex-1 justify-center text-gray-600 hover:bg-gray-50">
-                <i class="fa-solid fa-route text-lg"></i> Þุวฺ ัอแวส ๆใไวÝฺ
+                <i class="fa-solid fa-route text-lg"></i> ูุทุงุน ุฑุญูุงุช ูู…ูุงูุน
             </button>
             <button onclick="switchMainTab('kpi')" id="main-tab-kpi" class="tab-btn flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-base transition-all duration-200 cursor-pointer flex-1 justify-center text-gray-600 hover:bg-gray-50">
-                <i class="fa-solid fa-chart-line text-lg"></i> ใฤิั รฯวม ใัว฿า วแฮฯใษ
+                <i class="fa-solid fa-chart-line text-lg"></i> ู…ุคุดุฑ ุฃุฏุงุก ู…ุฑุงูุฒ ุงูุฎุฏู…ุฉ
             </button>
         </div>
 
@@ -54,28 +54,28 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">ลฬใวแํ วแสะว฿ั วแใÛแÞษ</p>
+                        <p class="text-sm font-medium text-gray-500">ุฅุฌู…ุงูู ุงูุชุฐุงูุฑ ุงูู…ุบููุฉ</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">2,689</h3>
                     </div>
                     <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600 text-xl"><i class="fa-solid fa-ticket"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">วแวำสใวัวส วแใไฬาษ</p>
+                        <p class="text-sm font-medium text-gray-500">ุงูุงุณุชู…ุงุฑุงุช ุงูู…ูุฌุฒุฉ</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">2,322</h3>
                     </div>
                     <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-xl"><i class="fa-solid fa-file-invoice"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">ลฬใวแํ วแใอวึั วแใํฯวไํษ</p>
+                        <p class="text-sm font-medium text-gray-500">ุฅุฌู…ุงูู ุงูู…ุญุงุถุฑ ุงูู…ูุฏุงููุฉ</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">197</h3>
                     </div>
                     <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 text-xl"><i class="fa-solid fa-gavel"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">อวแวส วแวำสฬวศษ วแลำฺวÝํษ</p>
+                        <p class="text-sm font-medium text-gray-500">ุญุงูุงุช ุงูุงุณุชุฌุงุจุฉ ุงูุฅุณุนุงููุฉ</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">342</h3>
                     </div>
                     <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 text-xl"><i class="fa-solid fa-truck-medical"></i></div>
@@ -84,13 +84,13 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
-                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-teal-600"></i> สๆาํฺ วแวำสใวัวส ฺแ์ ลฯวัวส ล฿ัวใ</h3>
+                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-teal-600"></i> ุชูุฒูุน ุงูุงุณุชู…ุงุฑุงุช ุนูู ุฅุฏุงุฑุงุช ุฅูุฑุงู…</h3>
                     <div class="h-64 flex items-center justify-center">
                         <canvas id="chartEkramForms"></canvas>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
-                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-bar text-teal-600"></i> รฺแ์ วแศแวÛวส ๆวแสะว฿ั อำศ วแลฯวัษ</h3>
+                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-bar text-teal-600"></i> ุฃุนูู ุงูุจูุงุบุงุช ูุงูุชุฐุงูุฑ ุญุณุจ ุงูุฅุฏุงุฑุฉ</h3>
                     <div class="h-64 flex items-center justify-center">
                         <canvas id="chartEkramTickets"></canvas>
                     </div>
@@ -100,27 +100,27 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
                 <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h3 class="font-bold text-gray-900 text-base">ศํวไวส ใัว฿า วแฮฯใษ วแใํฯวไํษ (Þุวฺ ล฿ัวใ)</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">สÝวีํแ วแำÞÝ วแใสวอ ๆวแใอวึั ๆวแฺÞๆฯ วแใศัใษ แ฿แ ใั฿า</p>
+                        <h3 class="font-bold text-gray-900 text-base">ุจูุงูุงุช ู…ุฑุงูุฒ ุงูุฎุฏู…ุฉ ุงูู…ูุฏุงููุฉ (ูุทุงุน ุฅูุฑุงู…)</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">ุชูุงุตูู ุงูุณูู ุงูู…ุชุงุญ ูุงูู…ุญุงุถุฑ ูุงูุนููุฏ ุงูู…ุจุฑู…ุฉ ููู ู…ุฑูุฒ</p>
                     </div>
-                    <input type="text" id="searchEkram" oninput="filterTable('tableEkram', this.value)" placeholder="ศอห ำัํฺ ศัÞใ วแใั฿า..." class="bg-white border border-gray-300 text-sm rounded-xl px-4 py-2 w-full sm:w-64 focus:outline-hidden focus:border-teal-500 focus:ring-1 focus:ring-teal-500">
+                    <input type="text" id="searchEkram" oninput="filterTable('tableEkram', this.value)" placeholder="ุจุญุซ ุณุฑูุน ุจุฑูู… ุงูู…ุฑูุฒ..." class="bg-white border border-gray-300 text-sm rounded-xl px-4 py-2 w-full sm:w-64 focus:outline-hidden focus:border-teal-500 focus:ring-1 focus:ring-teal-500">
                 </div>
                 <div class="overflow-x-auto">
                     <table id="tableEkram" class="w-full text-right border-collapse">
                         <thead>
                             <tr class="bg-slate-100 text-gray-700 text-xs font-bold uppercase border-b border-gray-200">
-                                <th class="p-4">ัÞใ วแใั฿า</th>
-                                <th class="p-4">ำÞÝ วแใั฿า (วแอฬวฬ)</th>
-                                <th class="p-4">ฺฯฯ วแใอวึั</th>
-                                <th class="p-4">ฺฯฯ วแฺÞๆฯ</th>
-                                <th class="p-4">วแสะว฿ั วแใÛแÞษ</th>
-                                <th class="p-4">ฺฯฯ วแลำ฿วไวส</th>
-                                <th class="p-4">ฺฯฯ วแวำสใวัวส</th>
+                                <th class="p-4">ุฑูู… ุงูู…ุฑูุฒ</th>
+                                <th class="p-4">ุณูู ุงูู…ุฑูุฒ (ุงูุญุฌุงุฌ)</th>
+                                <th class="p-4">ุนุฏุฏ ุงูู…ุญุงุถุฑ</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุนููุฏ</th>
+                                <th class="p-4">ุงูุชุฐุงูุฑ ุงูู…ุบููุฉ</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุฅุณูุงูุงุช</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุงุณุชู…ุงุฑุงุช</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm divide-y divide-gray-100 text-gray-600">
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">100 (ใีั ำํวอษ)</td>
+                                <td class="p-4 font-bold text-gray-900">100 (ู…ุตุฑ ุณูุงุญุฉ)</td>
                                 <td class="p-4">981</td>
                                 <td class="p-4"><span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">11</span></td>
                                 <td class="p-4">21</td>
@@ -129,7 +129,7 @@
                                 <td class="p-4 font-semibold text-teal-600">286</td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">101 (ใีั Þัฺษ)</td>
+                                <td class="p-4 font-bold text-gray-900">101 (ู…ุตุฑ ูุฑุนุฉ)</td>
                                 <td class="p-4">2,341</td>
                                 <td class="p-4"><span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">2</span></td>
                                 <td class="p-4">8</td>
@@ -138,7 +138,7 @@
                                 <td class="p-4 font-semibold text-teal-600">127</td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">102 (ใีั Þัฺษ)</td>
+                                <td class="p-4 font-bold text-gray-900">102 (ู…ุตุฑ ูุฑุนุฉ)</td>
                                 <td class="p-4">4,414</td>
                                 <td class="p-4"><span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">2</span></td>
                                 <td class="p-4">1</td>
@@ -147,7 +147,7 @@
                                 <td class="p-4 font-semibold text-teal-600">109</td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">103 (ใีั Þัฺษ)</td>
+                                <td class="p-4 font-bold text-gray-900">103 (ู…ุตุฑ ูุฑุนุฉ)</td>
                                 <td class="p-4">2,963</td>
                                 <td class="p-4"><span class="text-gray-400">-</span></td>
                                 <td class="p-4">0</td>
@@ -156,7 +156,7 @@
                                 <td class="p-4 font-semibold text-teal-600">87</td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">105 (ใีั Þัฺษ)</td>
+                                <td class="p-4 font-bold text-gray-900">105 (ู…ุตุฑ ูุฑุนุฉ)</td>
                                 <td class="p-4">2,971</td>
                                 <td class="p-4"><span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">16</span></td>
                                 <td class="p-4">3</td>
@@ -174,28 +174,28 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">วำสใวัวส ลำ฿วไ ัอแวส</p>
+                        <p class="text-sm font-medium text-gray-500">ุงุณุชู…ุงุฑุงุช ุฅุณูุงู ุฑุญูุงุช</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">1,588</h3>
                     </div>
                     <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-xl"><i class="fa-solid fa-hotel"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">อฬวฬ Ýแำุํไ วแใหศสํไ</p>
+                        <p class="text-sm font-medium text-gray-500">ุญุฌุงุฌ ููุณุทูู ุงูู…ุซุจุชูู</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">5,277</h3>
                     </div>
                     <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 text-xl"><i class="fa-solid fa-passport"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">อฬวฬ สิวฯ ๆวแใÛัศ</p>
+                        <p class="text-sm font-medium text-gray-500">ุญุฌุงุฌ ุชุดุงุฏ ูุงูู…ุบุฑุจ</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">6,463</h3>
                     </div>
                     <div class="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center text-sky-600 text-xl"><i class="fa-solid fa-users"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-xs flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-500">ลฬใวแํ ๆÞๆฺวส วแÞุวฺ</p>
+                        <p class="text-sm font-medium text-gray-500">ุฅุฌู…ุงูู ูููุนุงุช ุงููุทุงุน</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1">110</h3>
                     </div>
                     <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -204,13 +204,13 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
-                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-line text-indigo-600"></i> ใÞวัไษ ฬวๅาํษ วแำ฿ไ ๆวแวำสใวัวส</h3>
+                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-line text-indigo-600"></i> ู…ูุงุฑูุฉ ุฌุงูุฒูุฉ ุงูุณูู ูุงูุงุณุชู…ุงุฑุงุช</h3>
                     <div class="h-64 flex items-center justify-center">
                         <canvas id="chartRehlatProgress"></canvas>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
-                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-square-poll-horizontal text-indigo-600"></i> วแสๆาํฺ วแไำศํ แแๆÞๆฺวส วแใํฯวไํษ</h3>
+                    <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-square-poll-horizontal text-indigo-600"></i> ุงูุชูุฒูุน ุงููุณุจู ูููููุนุงุช ุงูู…ูุฏุงููุฉ</h3>
                     <div class="h-64 flex items-center justify-center">
                         <canvas id="chartRehlatIncidents"></canvas>
                     </div>
@@ -220,26 +220,26 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
                 <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h3 class="font-bold text-gray-900 text-base">ใัว฿า วแฮฯใษ วแใํฯวไํษ (Þุวฺ ัอแวส ๆใไวÝฺ)</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">ใสวศฺษ ฯÞํÞษ แฺÞๆฯ วแลำ฿วไ ๆวแวำสใวัวส วแใํฯวไํษ วแใฺสใฯษ</p>
+                        <h3 class="font-bold text-gray-900 text-base">ู…ุฑุงูุฒ ุงูุฎุฏู…ุฉ ุงูู…ูุฏุงููุฉ (ูุทุงุน ุฑุญูุงุช ูู…ูุงูุน)</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">ู…ุชุงุจุนุฉ ุฏูููุฉ ูุนููุฏ ุงูุฅุณูุงู ูุงูุงุณุชู…ุงุฑุงุช ุงูู…ูุฏุงููุฉ ุงูู…ุนุชู…ุฏุฉ</p>
                     </div>
-                    <input type="text" id="searchRehlat" oninput="filterTable('tableRehlat', this.value)" placeholder="ศอห ำัํฺ ศัÞใ วแใั฿า..." class="bg-white border border-gray-300 text-sm rounded-xl px-4 py-2 w-full sm:w-64 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    <input type="text" id="searchRehlat" oninput="filterTable('tableRehlat', this.value)" placeholder="ุจุญุซ ุณุฑูุน ุจุฑูู… ุงูู…ุฑูุฒ..." class="bg-white border border-gray-300 text-sm rounded-xl px-4 py-2 w-full sm:w-64 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                 </div>
                 <div class="overflow-x-auto">
                     <table id="tableRehlat" class="w-full text-right border-collapse">
                         <thead>
                             <tr class="bg-slate-100 text-gray-700 text-xs font-bold uppercase border-b border-gray-200">
-                                <th class="p-4">ัÞใ วแใั฿า</th>
-                                <th class="p-4">ำÞÝ วแใั฿า</th>
-                                <th class="p-4">ฺฯฯ วแฺÞๆฯ วแใศัใษ</th>
-                                <th class="p-4">ฺฯฯ วแลำ฿วไวส วแใฺสใฯษ</th>
-                                <th class="p-4">ฺฯฯ วแลำสใวัวส วแใไฬาษ</th>
-                                <th class="p-4">ไำศษ วแฬวๅาํษ ศวแำ฿ไ</th>
+                                <th class="p-4">ุฑูู… ุงูู…ุฑูุฒ</th>
+                                <th class="p-4">ุณูู ุงูู…ุฑูุฒ</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุนููุฏ ุงูู…ุจุฑู…ุฉ</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุฅุณูุงูุงุช ุงูู…ุนุชู…ุฏุฉ</th>
+                                <th class="p-4">ุนุฏุฏ ุงูุฅุณุชู…ุงุฑุงุช ุงูู…ูุฌุฒุฉ</th>
+                                <th class="p-4">ูุณุจุฉ ุงูุฌุงูุฒูุฉ ุจุงูุณูู</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm divide-y divide-gray-100 text-gray-600">
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">201 (Ýแำุํไ)</td>
+                                <td class="p-4 font-bold text-gray-900">201 (ููุณุทูู)</td>
                                 <td class="p-4">3,496</td>
                                 <td class="p-4">5</td>
                                 <td class="p-4">4</td>
@@ -247,7 +247,7 @@
                                 <td class="p-4"><span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded text-xs">100%</span></td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">202 (Ýแำุํไ)</td>
+                                <td class="p-4 font-bold text-gray-900">202 (ููุณุทูู)</td>
                                 <td class="p-4">3,170</td>
                                 <td class="p-4">3</td>
                                 <td class="p-4">3</td>
@@ -255,7 +255,7 @@
                                 <td class="p-4"><span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded text-xs">100%</span></td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">203 (วแใÛัศ)</td>
+                                <td class="p-4 font-bold text-gray-900">203 (ุงูู…ุบุฑุจ)</td>
                                 <td class="p-4">3,266</td>
                                 <td class="p-4 font-semibold text-gray-900">206</td>
                                 <td class="p-4">25</td>
@@ -263,7 +263,7 @@
                                 <td class="p-4"><span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded text-xs">100%</span></td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">204 (วแใÛัศ)</td>
+                                <td class="p-4 font-bold text-gray-900">204 (ุงูู…ุบุฑุจ)</td>
                                 <td class="p-4">292</td>
                                 <td class="p-4">61</td>
                                 <td class="p-4">4</td>
@@ -271,7 +271,7 @@
                                 <td class="p-4"><span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded text-xs">100%</span></td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
-                                <td class="p-4 font-bold text-gray-900">206 (ÞัÛําำสวไ)</td>
+                                <td class="p-4 font-bold text-gray-900">206 (ูุฑุบูุฒุณุชุงู)</td>
                                 <td class="p-4">3,506</td>
                                 <td class="p-4">16</td>
                                 <td class="p-4">12</td>
@@ -288,36 +288,36 @@
             
             <div class="flex justify-center gap-2 border-b border-gray-200 pb-3">
                 <button onclick="switchSubKpi('kpi-ekram')" id="sub-btn-kpi-ekram" class="sub-tab active px-4 py-1.5 rounded-lg text-sm font-bold transition-all cursor-pointer">
-                    ใฤิัวส ล฿ัวใ
+                    ู…ุคุดุฑุงุช ุฅูุฑุงู…
                 </button>
                 <button onclick="switchSubKpi('kpi-rehlat')" id="sub-btn-kpi-rehlat" class="sub-tab px-4 py-1.5 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100 transition-all cursor-pointer">
-                    ใฤิัวส ัอแวส ๆใไวÝฺ
+                    ู…ุคุดุฑุงุช ุฑุญูุงุช ูู…ูุงูุน
                 </button>
             </div>
 
             <div id="sub-section-kpi-ekram" class="sub-kpi-content space-y-6">
                 <div class="bg-amber-50 border-r-4 border-amber-500 p-4 rounded-xl text-amber-900 text-sm flex items-center gap-3">
                     <i class="fa-solid fa-circle-info text-lg"></i>
-                    <span>สๆึอ วแฬฯวๆแ วแสวแํษ วแสÞํํใ วแไๅวฦํ วแใๆาๆไ แใัว฿า วแฮฯใษ วแใํฯวไํษ ศไวม๐ ฺแ์ รัศฺษ ใฺวํํั ัฦํำํษ.</span>
+                    <span>ุชูุถุญ ุงูุฌุฏุงูู ุงูุชุงููุฉ ุงูุชูููู… ุงูููุงุฆู ุงูู…ูุฒูู ูู…ุฑุงูุฒ ุงูุฎุฏู…ุฉ ุงูู…ูุฏุงููุฉ ุจูุงุกู ุนูู ุฃุฑุจุนุฉ ู…ุนุงููุฑ ุฑุฆูุณูุฉ.</span>
                 </div>
                 
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
-                    <div class="p-4 bg-gray-50/50 font-bold text-gray-900 text-sm border-b border-gray-100">ไูัษ ฺวใษ ฺแ์ ไำศ วแลไฬวา วแไๅวฦํษ - ล฿ัวใ</div>
+                    <div class="p-4 bg-gray-50/50 font-bold text-gray-900 text-sm border-b border-gray-100">ูุธุฑุฉ ุนุงู…ุฉ ุนูู ูุณุจ ุงูุฅูุฌุงุฒ ุงูููุงุฆูุฉ - ุฅูุฑุงู…</div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right border-collapse text-sm">
                             <thead>
                                 <tr class="bg-slate-50 text-gray-700 font-semibold border-b border-gray-200">
-                                    <th class="p-4">วแใั฿า</th>
-                                    <th class="p-4">ฬวๅาํษ วแำ฿ไ</th>
-                                    <th class="p-4">สำ฿ํไ วแอฬวฬ</th>
-                                    <th class="p-4">สำแํใ ศุวÞวส ไำ฿</th>
-                                    <th class="p-4">สร฿ํฯ วำสแวใ วแฮฯใวส</th>
-                                    <th class="p-4 text-teal-600">วแไำศษ วแไๅวฦํษ วแใๆาๆไษ</th>
+                                    <th class="p-4">ุงูู…ุฑูุฒ</th>
+                                    <th class="p-4">ุฌุงูุฒูุฉ ุงูุณูู</th>
+                                    <th class="p-4">ุชุณููู ุงูุญุฌุงุฌ</th>
+                                    <th class="p-4">ุชุณููู… ุจุทุงูุงุช ูุณู</th>
+                                    <th class="p-4">ุชุฃููุฏ ุงุณุชูุงู… ุงูุฎุฏู…ุงุช</th>
+                                    <th class="p-4 text-teal-600">ุงููุณุจุฉ ุงูููุงุฆูุฉ ุงูู…ูุฒููุฉ</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-gray-600">
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">100 - ใีั ำํวอษ</td>
+                                    <td class="p-4 font-bold text-gray-900">100 - ู…ุตุฑ ุณูุงุญุฉ</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4">94.83%</td>
@@ -325,7 +325,7 @@
                                     <td class="p-4 font-bold text-teal-600 bg-teal-50/30">73.71%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">101 - ใีั Þัฺษ</td>
+                                    <td class="p-4 font-bold text-gray-900">101 - ู…ุตุฑ ูุฑุนุฉ</td>
                                     <td class="p-4">19.66%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
@@ -333,7 +333,7 @@
                                     <td class="p-4 font-bold text-teal-600 bg-teal-50/30">54.92%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">106 - ใีั Þัฺษ</td>
+                                    <td class="p-4 font-bold text-gray-900">106 - ู…ุตุฑ ูุฑุนุฉ</td>
                                     <td class="p-4">39.50%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4 text-emerald-600 font-medium">99.95%</td>
@@ -341,7 +341,7 @@
                                     <td class="p-4 font-bold text-teal-600 bg-teal-50/30">59.86%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">112 - สๆไำ</td>
+                                    <td class="p-4 font-bold text-gray-900">112 - ุชููุณ</td>
                                     <td class="p-4">17.28%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4 text-emerald-600 font-medium">99.76%</td>
@@ -356,22 +356,22 @@
 
             <div id="sub-section-kpi-rehlat" class="sub-kpi-content space-y-6 hidden">
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
-                    <div class="p-4 bg-gray-50/50 font-bold text-gray-900 text-sm border-b border-gray-100">ไูัษ ฺวใษ ฺแ์ ไำศ วแลไฬวา วแไๅวฦํษ - ัอแวส ๆใไวÝฺ</div>
+                    <div class="p-4 bg-gray-50/50 font-bold text-gray-900 text-sm border-b border-gray-100">ูุธุฑุฉ ุนุงู…ุฉ ุนูู ูุณุจ ุงูุฅูุฌุงุฒ ุงูููุงุฆูุฉ - ุฑุญูุงุช ูู…ูุงูุน</div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right border-collapse text-sm">
                             <thead>
                                 <tr class="bg-slate-50 text-gray-700 font-semibold border-b border-gray-200">
-                                    <th class="p-4">วแใั฿า</th>
-                                    <th class="p-4">ฬวๅาํษ วแำ฿ไ</th>
-                                    <th class="p-4">สำ฿ํไ วแอฬวฬ</th>
-                                    <th class="p-4">สำแํใ ศุวÞวส ไำ฿</th>
-                                    <th class="p-4">สร฿ํฯ วำสแวใ วแศไๆฯ</th>
-                                    <th class="p-4 text-indigo-600">วแไำศษ วแไๅวฦํษ วแใๆาๆไษ</th>
+                                    <th class="p-4">ุงูู…ุฑูุฒ</th>
+                                    <th class="p-4">ุฌุงูุฒูุฉ ุงูุณูู</th>
+                                    <th class="p-4">ุชุณููู ุงูุญุฌุงุฌ</th>
+                                    <th class="p-4">ุชุณููู… ุจุทุงูุงุช ูุณู</th>
+                                    <th class="p-4">ุชุฃููุฏ ุงุณุชูุงู… ุงูุจููุฏ</th>
+                                    <th class="p-4 text-indigo-600">ุงููุณุจุฉ ุงูููุงุฆูุฉ ุงูู…ูุฒููุฉ</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-gray-600">
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">201 - Ýแำุํไ</td>
+                                    <td class="p-4 font-bold text-gray-900">201 - ููุณุทูู</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4">0.07%</td>
@@ -379,7 +379,7 @@
                                     <td class="p-4 font-bold text-indigo-600 bg-indigo-50/30">25.02%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">210 - สิวฯ</td>
+                                    <td class="p-4 font-bold text-gray-900">210 - ุชุดุงุฏ</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4">36.56%</td>
@@ -387,7 +387,7 @@
                                     <td class="p-4 font-bold text-indigo-600 bg-indigo-50/30">34.14%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">223 - ศว฿ำสวไ</td>
+                                    <td class="p-4 font-bold text-gray-900">223 - ุจุงูุณุชุงู</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
@@ -395,7 +395,7 @@
                                     <td class="p-4 font-bold text-indigo-600 bg-indigo-50/30">50.00%</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-4 font-bold text-gray-900">225 - ศว฿ำสวไ</td>
+                                    <td class="p-4 font-bold text-gray-900">225 - ุจุงูุณุชุงู</td>
                                     <td class="p-4 text-emerald-600 font-medium">100%</td>
                                     <td class="p-4 text-gray-400">0%</td>
                                     <td class="p-4">53.94%</td>
@@ -413,12 +413,12 @@
 
     <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none flex items-center gap-3 text-sm z-50">
         <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toast-msg">สใ วแลฬัวม ศไฬวอ</span>
+        <span id="toast-msg">ุชู… ุงูุฅุฌุฑุงุก ุจูุฌุงุญ</span>
     </div>
 
     <footer class="bg-white border-t border-gray-200 mt-12 py-4">
         <div class="container mx-auto px-6 text-center text-xs text-gray-400">
-            วแไูวใ ใฯฺๆใ ศยแํวส วแสอฯํห วแÝๆัํ ๆอใวํษ วแศํวไวส วแใฯใฬษ ใอแํว๐ ฉ 2026 วแสÞัํั วแฺใแํวสํ วแใๆอฯ.
+            ุงููุธุงู… ู…ุฏุนูู… ุจุขููุงุช ุงูุชุญุฏูุซ ุงูููุฑู ูุญู…ุงูุฉ ุงูุจูุงูุงุช ุงูู…ุฏู…ุฌุฉ ู…ุญููุงู ยฉ 2026 ุงูุชูุฑูุฑ ุงูุนู…ููุงุชู ุงูู…ูุญุฏ.
         </div>
     </footer>
 
@@ -441,7 +441,7 @@
                 document.getElementById('section-kpi').classList.remove('hidden');
                 document.getElementById('main-tab-kpi').classList.add('active');
             }
-            showToast("สใ วแวไสÞวแ ลแ์ ฺแวใษ วแสศๆํศ วแใอฯฯษ");
+            showToast("ุชู… ุงูุงูุชูุงู ุฅูู ุนูุงู…ุฉ ุงูุชุจููุจ ุงูู…ุญุฏุฏุฉ");
         }
 
         function switchSubKpi(subId) {
@@ -496,7 +496,7 @@
             new Chart(ctxEkramForms, {
                 type: 'doughnut',
                 data: {
-                    labels: ['ไำ฿ ๆวใสหวแ', 'ลฯวัษ วแลำ฿วไ', 'วแลไิวมวส ๆวแสฬๅําวส', 'วแสÝๆํฬ ๆวแำแวใษ', 'ลฯวัวส รฮั์'],
+                    labels: ['ูุณู ูุงู…ุชุซุงู', 'ุฅุฏุงุฑุฉ ุงูุฅุณูุงู', 'ุงูุฅูุดุงุกุงุช ูุงูุชุฌููุฒุงุช', 'ุงูุชูููุฌ ูุงูุณูุงู…ุฉ', 'ุฅุฏุงุฑุงุช ุฃุฎุฑู'],
                     datasets: [{
                         data: [866, 377, 654, 214, 211],
                         backgroundColor: ['#0d9488', '#3b82f6', '#f59e0b', '#ef4444', '#64748b'],
@@ -515,9 +515,9 @@
             new Chart(ctxEkramTickets, {
                 type: 'bar',
                 data: {
-                    labels: ['ฺแวÞวส วแฺใแวม CRM', 'วแสฮุํุ ๆวแสุๆั', 'ใั฿า ศุวÞวส ไำ฿', 'วแฺไวํษ ศวแใำสÝํฯํไ', 'วแศแวÛวส ๆวแิ฿วๆ์'],
+                    labels: ['ุนูุงูุงุช ุงูุนู…ูุงุก CRM', 'ุงูุชุฎุทูุท ูุงูุชุทูุฑ', 'ู…ุฑูุฒ ุจุทุงูุงุช ูุณู', 'ุงูุนูุงูุฉ ุจุงูู…ุณุชููุฏูู', 'ุงูุจูุงุบุงุช ูุงูุดูุงูู'],
                     datasets: [{
-                        label: 'ฺฯฯ วแสะว฿ั วแใÛแÞษ',
+                        label: 'ุนุฏุฏ ุงูุชุฐุงูุฑ ุงูู…ุบููุฉ',
                         data: [2139, 217, 139, 82, 47],
                         backgroundColor: '#0d9488',
                         borderRadius: 6
@@ -537,17 +537,17 @@
             new Chart(ctxRehlatProgress, {
                 type: 'bar',
                 data: {
-                    labels: ['ใั฿า 201', 'ใั฿า 202', 'ใั฿า 203', 'ใั฿า 204', 'ใั฿า 206'],
+                    labels: ['ู…ุฑูุฒ 201', 'ู…ุฑูุฒ 202', 'ู…ุฑูุฒ 203', 'ู…ุฑูุฒ 204', 'ู…ุฑูุฒ 206'],
                     datasets: [
                         {
-                            label: 'ฺฯฯ วแวำสใวัวส วแใํฯวไํษ',
+                            label: 'ุนุฏุฏ ุงูุงุณุชู…ุงุฑุงุช ุงูู…ูุฏุงููุฉ',
                             data: [44, 26, 174, 39, 141],
                             backgroundColor: '#4f46e5',
                             borderRadius: 6,
                             order: 2
                         },
                         {
-                            label: 'ไำศษ วแฬวๅาํษ ศวแำ฿ไ %',
+                            label: 'ูุณุจุฉ ุงูุฌุงูุฒูุฉ ุจุงูุณูู %',
                             data: [100, 100, 100, 100, 100],
                             type: 'line',
                             borderColor: '#10b981',
@@ -569,7 +569,7 @@
             new Chart(ctxRehlatIncidents, {
                 type: 'polarArea',
                 data: {
-                    labels: ['อวแวส ลำฺวÝ', 'วแสไๆํใ ศวแใำสิÝํวส', 'อวแวส ใๆÞๆÝษ', 'ใÝÞๆฯํไ ๆสวฦๅํไ'],
+                    labels: ['ุญุงูุงุช ุฅุณุนุงู', 'ุงูุชูููู… ุจุงูู…ุณุชุดููุงุช', 'ุญุงูุงุช ู…ููููุฉ', 'ู…ูููุฏูู ูุชุงุฆููู'],
                     datasets: [{
                         data: [48, 8, 4, 4],
                         backgroundColor: ['rgba(239, 68, 68, 0.75)', 'rgba(245, 158, 11, 0.75)', 'rgba(99, 102, 241, 0.75)', 'rgba(14, 165, 233, 0.75)']
