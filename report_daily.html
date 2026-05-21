@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التقرير اليومي لعمليات الحج</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A227; --gold-light: #E8C547; --gold-dim: #8B6E1A;
+    --emerald: #1A6B45; --emerald-light: #22C55E; --emerald-dim: #0D3D27;
+    --dark: #0A0F0D; --dark-2: #111714; --dark-3: #1A2020; --dark-4: #222B28; --dark-5: #2C3733;
+    --text-primary: #F0EDE4; --text-secondary: #B8B09A; --text-muted: #6B7068;
+    --ruby: #C0392B; --sapphire: #2980B9; --amber: #E67E22; --purple: #8E44AD; --teal: #16A085;
+    --border: rgba(201,162,39,0.2); --card-bg: rgba(26,32,32,0.8); --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo','Tajawal',sans-serif; background:var(--dark); color:var(--text-primary); min-height:100vh; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image: radial-gradient(ellipse 80% 50% at 20% 10%,rgba(26,107,69,0.08) 0%,transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%,rgba(201,162,39,0.06) 0%,transparent 50%); pointer-events:none; z-index:0; }
+  .header { position:relative; padding:20px 40px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(10,15,13,0.98) 0%,transparent 100%); z-index:10; display:flex; align-items:center; justify-content:space-between; }
+  .header-brand { display:flex; align-items:center; gap:16px; }
+  .logo-img { width:52px; height:52px; object-fit:contain; }
+  .header-title h1 { font-size:20px; font-weight:900; color:var(--gold-light); }
+  .header-title p { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .header-meta { display:flex; align-items:center; gap:16px; }
+  .header-badge { display:flex; align-items:center; gap:8px; padding:7px 14px; border-radius:20px; background:rgba(201,162,39,0.1); border:1px solid var(--border); font-size:12px; color:var(--gold-light); }
+  .live-dot { width:7px; height:7px; border-radius:50%; background:var(--emerald-light); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  /* SECTION TABS */
+  .top-tabs { display:flex; gap:2px; padding:10px 40px; border-bottom:1px solid var(--border); background:rgba(10,15,13,0.7); position:sticky; top:0; z-index:9; backdrop-filter:blur(10px); overflow-x:auto; }
+  .top-tab { padding:8px 18px; border-radius:8px; border:1px solid transparent; background:transparent; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+  .top-tab:hover { background:rgba(201,162,39,0.08); color:var(--text-secondary); }
+  .top-tab.active { background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(26,107,69,0.15)); color:var(--gold-light); border-color:rgba(201,162,39,0.4); }
+
+  /* SUB TABS for ikram/rihlat */
+  .sub-tabs { display:flex; gap:6px; margin-bottom:20px; }
+  .sub-tab { padding:6px 16px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .sub-tab.active { background:rgba(201,162,39,0.15); color:var(--gold-light); border-color:rgba(201,162,39,0.4); }
+
+  .main { padding:28px 40px; position:relative; z-index:1; }
+  .tab-panel { display:none; } .tab-panel.active { display:block; }
+  .sub-panel { display:none; } .sub-panel.active { display:block; }
+
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:22px; }
+  .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:18px 16px; position:relative; overflow:hidden; transition:transform 0.2s; backdrop-filter:blur(8px); }
+  .stat-card:hover { transform:translateY(-2px); }
+  .stat-card::before { content:''; position:absolute; top:0; right:0; width:70px; height:70px; border-radius:0 12px 0 70px; opacity:0.08; }
+  .stat-card.gold::before{background:var(--gold)} .stat-card.emerald::before{background:var(--emerald-light)} .stat-card.ruby::before{background:var(--ruby)} .stat-card.sapphire::before{background:var(--sapphire)} .stat-card.amber::before{background:var(--amber)} .stat-card.purple::before{background:var(--purple)} .stat-card.teal::before{background:var(--teal)}
+  .stat-icon { font-size:24px; margin-bottom:8px; display:block; }
+  .stat-label { font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase; margin-bottom:4px; }
+  .stat-value { font-size:28px; font-weight:900; line-height:1; margin-bottom:3px; }
+  .stat-card.gold .stat-value{color:var(--gold-light)} .stat-card.emerald .stat-value{color:var(--emerald-light)} .stat-card.ruby .stat-value{color:#E74C3C} .stat-card.sapphire .stat-value{color:#3498DB} .stat-card.amber .stat-value{color:#F39C12} .stat-card.purple .stat-value{color:#9B59B6} .stat-card.teal .stat-value{color:#1ABC9C}
+  .stat-sub { font-size:11px; color:var(--text-muted); }
+
+  .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
+  .charts-grid.triple { grid-template-columns:2fr 1fr; }
+  .charts-grid.full-w { grid-template-columns:1fr; }
+  .chart-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; backdrop-filter:blur(8px); }
+  .chart-card.full { grid-column:1/-1; }
+  .chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .chart-title { font-size:13px; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:7px; }
+  .chart-title::before { content:''; width:3px; height:16px; border-radius:2px; background:linear-gradient(180deg,var(--gold),var(--emerald-light)); }
+  canvas { max-height:260px; }
+
+  .section-title { font-size:16px; font-weight:900; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+  .section-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
+
+  .table-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; overflow:hidden; backdrop-filter:blur(8px); margin-bottom:20px; }
+  .table-header-row { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .table-controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .search-input { padding:6px 12px; border-radius:7px; border:1px solid var(--border); background:var(--dark-4); color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; width:180px; }
+  .search-input:focus { border-color:var(--gold); }
+  .search-input::placeholder { color:var(--text-muted); }
+  .filter-select { padding:6px 10px; border-radius:7px; border:1px solid var(--border); background:var(--dark-4); color:var(--text-primary); font-family:'Cairo',sans-serif; font-size:12px; outline:none; cursor:pointer; }
+  .export-btn { padding:6px 14px; border-radius:7px; border:1px solid rgba(201,162,39,0.4); background:rgba(201,162,39,0.1); color:var(--gold-light); font-family:'Cairo',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .export-btn:hover { background:rgba(201,162,39,0.2); }
+  .table-overflow { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  thead tr { background:var(--dark-4); }
+  th { padding:10px 14px; text-align:right; font-weight:700; color:var(--gold); font-size:11px; border-bottom:1px solid var(--border); cursor:pointer; white-space:nowrap; }
+  th:hover { color:var(--gold-light); }
+  td { padding:9px 14px; border-bottom:1px solid rgba(201,162,39,0.06); color:var(--text-secondary); }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(201,162,39,0.03); color:var(--text-primary); }
+  .badge { display:inline-flex; align-items:center; padding:2px 9px; border-radius:20px; font-size:10px; font-weight:700; }
+  .badge-green{background:rgba(34,197,94,0.15);color:#4ADE80;border:1px solid rgba(34,197,94,0.25)} .badge-gold{background:rgba(201,162,39,0.15);color:var(--gold-light);border:1px solid rgba(201,162,39,0.25)} .badge-red{background:rgba(231,76,60,0.15);color:#FC8181;border:1px solid rgba(231,76,60,0.25)} .badge-blue{background:rgba(52,152,219,0.15);color:#63B3ED;border:1px solid rgba(52,152,219,0.25)} .badge-gray{background:rgba(107,112,104,0.2);color:var(--text-muted);border:1px solid rgba(107,112,104,0.3)}
+  .progress-bar { height:5px; border-radius:3px; background:var(--dark-5); overflow:hidden; width:80px; display:inline-block; vertical-align:middle; }
+  .progress-fill { height:100%; border-radius:3px; }
+  .nat-dot { width:7px; height:7px; border-radius:50%; display:inline-block; margin-left:5px; }
+  .overview-hero { background:linear-gradient(135deg,rgba(201,162,39,0.08),rgba(26,107,69,0.08)); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .hero-text h2 { font-size:24px; font-weight:900; background:linear-gradient(135deg,var(--gold-light),var(--emerald-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
+  .hero-text p { font-size:12px; color:var(--text-muted); }
+  .hero-divider { width:1px; height:50px; background:var(--border); }
+  .hero-metric { text-align:center; min-width:80px; }
+  .hero-metric-value { font-size:26px; font-weight:900; color:var(--gold-light); display:block; }
+  .hero-metric-label { font-size:10px; color:var(--text-muted); margin-top:3px; }
+  .alert-banner { border-radius:10px; padding:12px 16px; margin-bottom:16px; display:flex; align-items:center; gap:10px; font-size:12px; }
+  .alert-red { background:linear-gradient(135deg,rgba(192,57,43,0.12),rgba(231,76,60,0.06)); border:1px solid rgba(192,57,43,0.3); color:#FC8181; }
+  .alert-blue { background:rgba(52,152,219,0.1); border:1px solid rgba(52,152,219,0.2); color:#63B3ED; }
+  .pagination { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-top:1px solid var(--border); font-size:11px; color:var(--text-muted); }
+  .page-btns { display:flex; gap:4px; }
+  .page-btn { width:28px; height:28px; border-radius:5px; border:1px solid var(--border); background:transparent; color:var(--text-secondary); font-family:'Cairo',sans-serif; cursor:pointer; font-size:11px; transition:all 0.2s; }
+  .page-btn.active,.page-btn:hover { background:rgba(201,162,39,0.15); border-color:rgba(201,162,39,0.4); color:var(--gold-light); }
+  ::-webkit-scrollbar{width:5px;height:5px} ::-webkit-scrollbar-track{background:var(--dark-2)} ::-webkit-scrollbar-thumb{background:var(--dark-5);border-radius:3px} ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
+  @media(max-width:768px){.header{padding:14px 16px}.top-tabs{padding:8px 12px}.main{padding:16px}.charts-grid{grid-template-columns:1fr}.charts-grid.triple{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.overview-hero{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-brand">
+    <img src="data:image/png;base64,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" class="logo-img" alt="أشرقت">
+    <div class="header-title">
+      <h1>التقرير اليومي لعمليات الحج</h1>
+      <p>نظام متابعة العمليات والخدمات الميدانية — إكرام ضيوف الرحمن</p>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="header-badge"><div class="live-dot"></div> تحديث: 4 ذو الحجة 1447هـ</div>
+  </div>
+</header>
+
+<nav class="top-tabs" id="topTabs">
+  <button class="top-tab active" onclick="showTab('overview',this)">📊 نظرة عامة</button>
+  <button class="top-tab" onclick="showTab('incidents',this)">🚨 الوقوعات والحركة</button>
+  <button class="top-tab" onclick="showTab('centers',this)">🏕 المراكز</button>
+  <button class="top-tab" onclick="showTab('contracts',this)">📋 عقود الخدمة</button>
+  <button class="top-tab" onclick="showTab('admin',this)">🗂 الإدارات</button>
+</nav>
+
+<main class="main">
+
+<!-- ========== OVERVIEW ========== -->
+<div class="tab-panel active" id="tab-overview">
+  <div class="overview-hero">
+    <div class="hero-text">
+      <h2>التقرير اليومي — 4 ذو الحجة 1447هـ</h2>
+      <p>لوحة متابعة شاملة لجميع مؤشرات الأداء الميداني — إكرام ورحلات</p>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-metric"><span class="hero-metric-value">63</span><div class="hero-metric-label">مركز إكرام + رحلات</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-metric"><span class="hero-metric-value" style="color:#4ADE80">11%</span><div class="hero-metric-label">إنجاز العقود الكلي</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-metric"><span class="hero-metric-value" style="color:#FC8181">758</span><div class="hero-metric-label">إجمالي الوقوعات</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-metric"><span class="hero-metric-value">1.64M</span><div class="hero-metric-label">إجمالي بنود العقود</div></div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card gold"><span class="stat-icon">📋</span><div class="stat-label">تذاكر إكرام</div><div class="stat-value">2,689</div><div class="stat-sub">آخر تذكرة: 2316</div></div>
+    <div class="stat-card emerald"><span class="stat-icon">🚌</span><div class="stat-label">استمارات رحلات</div><div class="stat-value">1,588</div><div class="stat-sub">إدارة الإسكان</div></div>
+    <div class="stat-card sapphire"><span class="stat-icon">🏕</span><div class="stat-label">مراكز إكرام</div><div class="stat-value">42</div><div class="stat-sub">مركز نشط</div></div>
+    <div class="stat-card teal"><span class="stat-icon">🚐</span><div class="stat-label">مراكز رحلات</div><div class="stat-value">21</div><div class="stat-sub">مركز نشط</div></div>
+    <div class="stat-card ruby"><span class="stat-icon">🚑</span><div class="stat-label">إسعاف إكرام</div><div class="stat-value">394</div><div class="stat-sub">حالة طبية</div></div>
+    <div class="stat-card amber"><span class="stat-icon">🚑</span><div class="stat-label">إسعاف رحلات</div><div class="stat-value">207</div><div class="stat-sub">حالة طبية</div></div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header"><div class="chart-title">وقوعات إكرام حسب الجنسية</div></div>
+      <canvas id="overviewIkramNat"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header"><div class="chart-title">وقوعات رحلات حسب الجنسية</div></div>
+      <canvas id="overviewRihlatNat"></canvas>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header"><div class="chart-title">نسب إنجاز عقود الخدمة حسب الجنسية</div></div>
+      <canvas id="overviewContracts"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header"><div class="chart-title">مقارنة المطلوب والمنجز بالعقود</div></div>
+      <canvas id="overviewContractsBar"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ========== INCIDENTS ========== -->
+<div class="tab-panel" id="tab-incidents">
+  <div class="section-title">🚨 تقرير الوقوعات مع حركة الحجاج</div>
+
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="showSub('inc','ikram',this)">🕋 إكرام</button>
+    <button class="sub-tab" onclick="showSub('inc','rihlat',this)">🚌 رحلات</button>
+  </div>
+
+  <!-- IKRAM INCIDENTS -->
+  <div class="sub-panel active" id="inc-ikram">
+    <div class="alert-banner alert-red">
+      <span>⚠️</span>
+      إكرام — إجمالي: <strong style="margin:0 4px">460</strong> وقوعة | إسعاف: <strong style="margin:0 4px">394</strong> | تنويم: <strong style="margin:0 4px">18</strong> | وفاة: <strong style="margin:0 4px">3</strong> | تائه: <strong style="margin:0 4px">46</strong>
+    </div>
+    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="stat-card ruby"><span class="stat-icon">🚑</span><div class="stat-label">إسعاف</div><div class="stat-value">394</div></div>
+      <div class="stat-card sapphire"><span class="stat-icon">🏥</span><div class="stat-label">تنويم</div><div class="stat-value">18</div></div>
+      <div class="stat-card" style="border-color:rgba(107,112,104,0.3)"><span class="stat-icon">⚫</span><div class="stat-label">وفاة</div><div class="stat-value" style="color:var(--text-muted)">3</div></div>
+      <div class="stat-card amber"><span class="stat-icon">🔍</span><div class="stat-label">تائه</div><div class="stat-value">46</div></div>
+      <div class="stat-card gold"><span class="stat-icon">📊</span><div class="stat-label">الإجمالي</div><div class="stat-value">460</div></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">توزيع أنواع الوقوعات</div></div><canvas id="incIkramTypes"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">الوقوعات حسب الجنسية</div></div><canvas id="incIkramNat"></canvas></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header-row">
+        <div class="chart-title">تفاصيل وقوعات إكرام</div>
+        <div class="table-controls">
+          <input class="search-input" placeholder="🔍 مركز أو جنسية..." oninput="filterTableDirect('tblIncIkram',this.value)">
+          <select class="filter-select" onchange="filterByNatDirect('tblIncIkram',this.value,'nat')">
+            <option value="">كل الجنسيات</option>
+            <option>مصر</option><option>تونس</option><option>عمان</option><option>روسيا</option>
+            <option>موريتانيا</option><option>إرتريا</option><option>بنجلاديش</option><option>أخرى</option>
+          </select>
+          <button class="export-btn" onclick="exportCSV('tblIncIkram','وقوعات_إكرام')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="table-overflow"><table id="tblIncIkram"><thead><tr>
+        <th onclick="sortTbl('tblIncIkram',0)">المركز</th><th>الجنسية</th>
+        <th onclick="sortTbl('tblIncIkram',2)">السقف</th><th onclick="sortTbl('tblIncIkram',3)">المثبت</th>
+        <th onclick="sortTbl('tblIncIkram',4)">إسعاف</th><th onclick="sortTbl('tblIncIkram',5)">تنويم</th>
+        <th onclick="sortTbl('tblIncIkram',6)">وفاة</th><th onclick="sortTbl('tblIncIkram',7)">تائه</th>
+        <th onclick="sortTbl('tblIncIkram',8)">الإجمالي</th>
+      </tr></thead><tbody id="tblIncIkramBody"></tbody></table></div>
+      <div class="pagination"><span id="incIkramInfo"></span><div class="page-btns" id="incIkramPages"></div></div>
+    </div>
+  </div>
+
+  <!-- RIHLAT INCIDENTS -->
+  <div class="sub-panel" id="inc-rihlat">
+    <div class="alert-banner alert-blue">
+      <span>🚌</span>
+      رحلات — إجمالي: <strong style="margin:0 4px">298</strong> وقوعة | إسعاف: <strong style="margin:0 4px">207</strong> | تنويم: <strong style="margin:0 4px">29</strong> | وفاة: <strong style="margin:0 4px">3</strong>
+    </div>
+    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="stat-card ruby"><span class="stat-icon">🚑</span><div class="stat-label">إسعاف</div><div class="stat-value">207</div></div>
+      <div class="stat-card sapphire"><span class="stat-icon">🏥</span><div class="stat-label">تنويم</div><div class="stat-value">29</div></div>
+      <div class="stat-card" style="border-color:rgba(107,112,104,0.3)"><span class="stat-icon">⚫</span><div class="stat-label">وفاة</div><div class="stat-value" style="color:var(--text-muted)">3</div></div>
+      <div class="stat-card amber"><span class="stat-icon">🔍</span><div class="stat-label">تائه</div><div class="stat-value">12</div></div>
+      <div class="stat-card teal"><span class="stat-icon">📊</span><div class="stat-label">الإجمالي</div><div class="stat-value">298</div></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">وقوعات رحلات حسب الجنسية</div></div><canvas id="incRihlatNat"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">توزيع أنواع الوقوعات — رحلات</div></div><canvas id="incRihlatTypes"></canvas></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header-row">
+        <div class="chart-title">تفاصيل وقوعات رحلات</div>
+        <div class="table-controls">
+          <input class="search-input" placeholder="🔍 مركز أو جنسية..." oninput="filterTableDirect('tblIncRihlat',this.value)">
+          <button class="export-btn" onclick="exportCSV('tblIncRihlat','وقوعات_رحلات')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="table-overflow"><table id="tblIncRihlat"><thead><tr>
+        <th>المركز</th><th>الجنسية</th><th>السقف</th><th>المثبت</th>
+        <th>إسعاف</th><th>تنويم</th><th>وفاة</th><th>تائه</th><th>الإجمالي</th>
+      </tr></thead><tbody id="tblIncRihlatBody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CENTERS ========== -->
+<div class="tab-panel" id="tab-centers">
+  <div class="section-title">🏕 تقرير المراكز</div>
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="showSub('cen','ikram',this)">🕋 إكرام (42 مركز)</button>
+    <button class="sub-tab" onclick="showSub('cen','rihlat',this)">🚌 رحلات (21 مركز)</button>
+  </div>
+
+  <div class="sub-panel active" id="cen-ikram">
+    <div class="charts-grid triple">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">استمارات المراكز مقارنة بالسقف</div></div><canvas id="cenIkramCap"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">المحاضر والعقود</div></div><canvas id="cenIkramAct"></canvas></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header-row">
+        <div class="chart-title">بيانات مراكز إكرام التفصيلية</div>
+        <div class="table-controls">
+          <input class="search-input" placeholder="🔍 رقم المركز..." oninput="filterTableDirect('tblCenIkram',this.value)">
+          <button class="export-btn" onclick="exportCSV('tblCenIkram','مراكز_إكرام')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="table-overflow"><table id="tblCenIkram"><thead><tr>
+        <th onclick="sortTbl('tblCenIkram',0)">المركز</th><th onclick="sortTbl('tblCenIkram',1)">السقف</th>
+        <th onclick="sortTbl('tblCenIkram',2)">محاضر</th><th onclick="sortTbl('tblCenIkram',3)">عقود</th>
+        <th onclick="sortTbl('tblCenIkram',4)">تذاكر مغلقة</th><th onclick="sortTbl('tblCenIkram',5)">إسكانات</th>
+        <th onclick="sortTbl('tblCenIkram',6)">استمارات</th><th>90-100%</th><th>80-89%</th>
+      </tr></thead><tbody id="tblCenIkramBody"></tbody></table></div>
+      <div class="pagination"><span id="cenIkramInfo"></span><div class="page-btns" id="cenIkramPages"></div></div>
+    </div>
+  </div>
+
+  <div class="sub-panel" id="cen-rihlat">
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">استمارات مراكز الرحلات</div></div><canvas id="cenRihlatForms"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">سقف مراكز الرحلات</div></div><canvas id="cenRihlatCap"></canvas></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header-row">
+        <div class="chart-title">بيانات مراكز الرحلات</div>
+        <button class="export-btn" onclick="exportCSV('tblCenRihlat','مراكز_رحلات')">⬇ CSV</button>
+      </div>
+      <div class="table-overflow"><table id="tblCenRihlat"><thead><tr>
+        <th>المركز</th><th>السقف</th><th>محاضر</th><th>عقود</th><th>تذاكر مغلقة</th><th>إسكانات</th><th>استمارات</th>
+      </tr></thead><tbody id="tblCenRihlatBody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONTRACTS ========== -->
+<div class="tab-panel" id="tab-contracts">
+  <div class="section-title">📋 تحليل عقود الخدمة 1447هـ</div>
+  <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat-card gold"><span class="stat-icon">🌍</span><div class="stat-label">الجنسيات</div><div class="stat-value">6</div></div>
+    <div class="stat-card emerald"><span class="stat-icon">✅</span><div class="stat-label">بنود مكتملة</div><div class="stat-value">188</div></div>
+    <div class="stat-card ruby"><span class="stat-icon">⏳</span><div class="stat-label">بنود ناقصة</div><div class="stat-value">891</div></div>
+    <div class="stat-card amber"><span class="stat-icon">📈</span><div class="stat-label">نسبة الإنجاز</div><div class="stat-value">11%</div><div class="stat-sub">180,924 من 1,646,395</div></div>
+  </div>
+  <div class="charts-grid">
+    <div class="chart-card"><div class="chart-header"><div class="chart-title">نسبة الإنجاز حسب الجنسية</div></div><canvas id="conProgress"></canvas></div>
+    <div class="chart-card"><div class="chart-header"><div class="chart-title">توزيع المطلوب حسب الجنسية</div></div><canvas id="conShare"></canvas></div>
+  </div>
+  <div class="charts-grid">
+    <div class="chart-card"><div class="chart-header"><div class="chart-title">الإنجاز حسب المشعر</div></div><canvas id="conMashaar"></canvas></div>
+    <div class="chart-card"><div class="chart-header"><div class="chart-title">تفصيل نوع الخدمة</div></div><canvas id="conService"></canvas></div>
+  </div>
+  <div class="table-card">
+    <div class="table-header-row">
+      <div class="chart-title">ملخص العقود حسب الجنسية</div>
+      <button class="export-btn" onclick="exportCSV('tblContracts','العقود')">⬇ CSV</button>
+    </div>
+    <div class="table-overflow"><table id="tblContracts"><thead><tr>
+      <th>الجنسية</th><th>إجمالي المطلوب</th><th>المنجز</th><th>المتبقي</th>
+      <th>نسبة الإنجاز</th><th>مراكز</th><th>مكتملة</th><th>ناقصة</th><th>الحالة</th>
+    </tr></thead><tbody id="tblContractsBody"></tbody></table></div>
+  </div>
+  <div class="alert-banner alert-red" style="margin-top:10px">
+    <span>⚠️</span>
+    <strong>مراكز بلا عقود (19 مركز):</strong> 100 (مصر)، 150-152 (أخرى)، 160-164 (بنجلاديش)، 301-306 (هند/بنجلاديش)، مراكز الضيافة 1-3
+  </div>
+</div>
+
+<!-- ========== ADMIN ========== -->
+<div class="tab-panel" id="tab-admin">
+  <div class="section-title">🗂 تقرير الإدارات — 4 ذو الحجة 1447هـ</div>
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="showSub('adm','ikram',this)">🕋 إكرام</button>
+    <button class="sub-tab" onclick="showSub('adm','rihlat',this)">🚌 رحلات</button>
+  </div>
+
+  <div class="sub-panel active" id="adm-ikram">
+    <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card gold"><span class="stat-icon">🎫</span><div class="stat-label">إجمالي التذاكر</div><div class="stat-value">2,689</div><div class="stat-sub">آخر تذكرة: 2316</div></div>
+      <div class="stat-card emerald"><span class="stat-icon">📝</span><div class="stat-label">إجمالي الاستمارات</div><div class="stat-value">2,322</div></div>
+      <div class="stat-card sapphire"><span class="stat-icon">📜</span><div class="stat-label">إجمالي المحاضر</div><div class="stat-value">197</div></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">التذاكر حسب الإدارة — إكرام</div></div><canvas id="admIkramTickets"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">الاستمارات حسب الإدارة — إكرام</div></div><canvas id="admIkramForms"></canvas></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:20px"><div class="chart-header"><div class="chart-title">المحاضر حسب الإدارة — إكرام</div></div><canvas id="admIkramReports" style="max-height:180px"></canvas></div>
+    <div class="table-card">
+      <div class="table-header-row">
+        <div class="chart-title">التذاكر التفصيلية — إكرام</div>
+        <button class="export-btn" onclick="exportCSV('tblAdmIkram','إدارات_إكرام')">⬇ CSV</button>
+      </div>
+      <div class="table-overflow"><table id="tblAdmIkram"><thead><tr><th>الإدارة</th><th>التذاكر</th><th>النسبة</th></tr></thead><tbody id="tblAdmIkramBody"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="sub-panel" id="adm-rihlat">
+    <div class="alert-banner alert-blue"><span>ℹ️</span>إدارات الرحلات لم تسجل تذاكر أو محاضر حتى تاريخ التحديث — البيانات الأساسية: <strong style="margin:0 4px">1,588</strong> استمارة من إدارة الإسكان</div>
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">الاستمارات — رحلات (إدارة الإسكان)</div></div><canvas id="admRihlatForms"></canvas></div>
+      <div class="chart-card"><div class="chart-header"><div class="chart-title">توزيع الإدارات المسجلة</div></div><canvas id="admRihlatDepts"></canvas></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header-row"><div class="chart-title">إدارات الرحلات</div></div>
+      <div class="table-overflow"><table id="tblAdmRihlat"><thead><tr><th>الإدارة</th><th>التذاكر</th><th>المحاضر</th><th>الاستمارات</th></tr></thead><tbody id="tblAdmRihlatBody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+const COLORS = {gold:'#C9A227',emerald:'#22C55E',ruby:'#E74C3C',sapphire:'#3498DB',amber:'#F39C12',purple:'#9B59B6',teal:'#1ABC9C',pink:'#E91E63'};
+const PAL = Object.values(COLORS);
+const NAT_COLORS = {
+  'مصر':'#C9A227','تونس':'#22C55E','عمان':'#3498DB','روسيا':'#E74C3C','موريتانيا':'#9B59B6',
+  'إرتريا':'#1ABC9C','بنجلاديش':'#F39C12','الهند':'#E91E63','أخرى':'#78909C',
+  'فلسطين':'#00BCD4','المغرب':'#8BC34A','باكستان':'#FF5722','سريلانكا':'#FF9800',
+  'قرغيزستان':'#673AB7','تشاد':'#795548','موريتانيا':'#8E44AD'
+};
+
+Chart.defaults.color='#B8B09A';
+Chart.defaults.font.family="'Cairo','Tajawal',sans-serif";
+
+function cOpts(extra={}){
+  return {responsive:true,maintainAspectRatio:true,animation:{duration:700,easing:'easeInOutQuart'},
+    plugins:{legend:{labels:{color:'#B8B09A',font:{family:'Cairo'}}},
+    tooltip:{backgroundColor:'#1A2020',borderColor:'rgba(201,162,39,0.3)',borderWidth:1,titleColor:'#E8C547',bodyColor:'#B8B09A',padding:10}},
+    scales:{x:{ticks:{color:'#6B7068'},grid:{color:'rgba(201,162,39,0.06)'},...(extra.x||{})},
+            y:{ticks:{color:'#6B7068'},grid:{color:'rgba(201,162,39,0.06)'},...(extra.y||{})}},
+    ...extra};
+}
+
+// ===== DATA =====
+const D = {
+  inc_ikram: [
+    {center:'100',nat:'مصر',cap:981,fixed:92,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'101',nat:'مصر',cap:2341,fixed:1782,ambulance:26,admitted:0,death:1,lost:3,total:30},
+    {center:'102',nat:'مصر',cap:4414,fixed:4407,ambulance:74,admitted:2,death:0,lost:3,total:79},
+    {center:'103',nat:'مصر',cap:2963,fixed:2948,ambulance:58,admitted:0,death:0,lost:5,total:63},
+    {center:'104',nat:'مصر',cap:2927,fixed:412,ambulance:5,admitted:0,death:0,lost:2,total:7},
+    {center:'105',nat:'مصر',cap:2971,fixed:2971,ambulance:121,admitted:0,death:0,lost:15,total:136},
+    {center:'106',nat:'مصر',cap:2980,fixed:2058,ambulance:4,admitted:0,death:0,lost:2,total:6},
+    {center:'107',nat:'مصر',cap:2923,fixed:2482,ambulance:19,admitted:0,death:0,lost:0,total:19},
+    {center:'108',nat:'مصر',cap:3006,fixed:3007,ambulance:38,admitted:2,death:0,lost:1,total:41},
+    {center:'109',nat:'موريتانيا',cap:3570,fixed:1905,ambulance:5,admitted:0,death:0,lost:2,total:7},
+    {center:'110',nat:'تونس',cap:3261,fixed:3322,ambulance:3,admitted:1,death:0,lost:0,total:4},
+    {center:'111',nat:'تونس',cap:3171,fixed:3171,ambulance:3,admitted:2,death:0,lost:1,total:6},
+    {center:'112',nat:'تونس',cap:1650,fixed:1427,ambulance:1,admitted:0,death:0,lost:3,total:4},
+    {center:'113',nat:'تونس',cap:113,fixed:1867,ambulance:1,admitted:0,death:1,lost:0,total:2},
+    {center:'114',nat:'تونس',cap:1188,fixed:0,ambulance:1,admitted:0,death:0,lost:0,total:1},
+    {center:'115',nat:'عمان',cap:2603,fixed:1956,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'116',nat:'عمان',cap:2850,fixed:2,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'117',nat:'عمان',cap:2850,fixed:818,ambulance:2,admitted:0,death:0,lost:0,total:2},
+    {center:'118',nat:'عمان',cap:2850,fixed:0,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'119',nat:'عمان',cap:2850,fixed:0,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'120',nat:'روسيا',cap:3735,fixed:1661,ambulance:4,admitted:1,death:0,lost:0,total:5},
+    {center:'121',nat:'روسيا',cap:3810,fixed:2931,ambulance:1,admitted:0,death:0,lost:3,total:4},
+    {center:'122',nat:'روسيا',cap:3595,fixed:2534,ambulance:0,admitted:1,death:0,lost:0,total:1},
+    {center:'123',nat:'روسيا',cap:3081,fixed:1656,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'125',nat:'إرتريا',cap:717,fixed:603,ambulance:0,admitted:3,death:0,lost:2,total:5},
+    {center:'150',nat:'أخرى',cap:1195,fixed:16,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'152',nat:'أخرى',cap:0,fixed:252,ambulance:3,admitted:0,death:0,lost:0,total:3},
+    {center:'160',nat:'بنجلاديش',cap:3144,fixed:1953,ambulance:5,admitted:1,death:0,lost:0,total:6},
+    {center:'161',nat:'بنجلاديش',cap:2683,fixed:1244,ambulance:0,admitted:0,death:1,lost:0,total:2},
+    {center:'162',nat:'بنجلاديش',cap:1372,fixed:803,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'163',nat:'بنجلاديش',cap:312,fixed:312,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'164',nat:'بنجلاديش',cap:564,fixed:448,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'مركز ضيافة 1',nat:'مصر',cap:26572,fixed:1447,ambulance:1,admitted:0,death:0,lost:0,total:1},
+    {center:'مركز ضيافة 2',nat:'أخرى',cap:22586,fixed:6133,ambulance:2,admitted:4,death:1,lost:0,total:7},
+    {center:'مركز ضيافة 3',nat:'أخرى',cap:19455,fixed:1856,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'لايوجد',nat:'مصر',cap:0,fixed:0,ambulance:10,admitted:1,death:0,lost:2,total:13},
+    {center:'لايوجد',nat:'عمان',cap:0,fixed:0,ambulance:3,admitted:0,death:0,lost:0,total:3},
+    {center:'لايوجد',nat:'النمسا',cap:0,fixed:0,ambulance:1,admitted:0,death:0,lost:0,total:1},
+    {center:'لايوجد',nat:'المملكة المتحدة',cap:0,fixed:0,ambulance:1,admitted:0,death:0,lost:0,total:1},
+    {center:'لايوجد',nat:'الجبل الأسود',cap:0,fixed:0,ambulance:1,admitted:0,death:0,lost:1,total:1},
+  ],
+  inc_rihlat: [
+    {center:'201',nat:'فلسطين',cap:3496,fixed:2832,ambulance:16,admitted:7,death:0,lost:1,total:26},
+    {center:'202',nat:'فلسطين',cap:3170,fixed:2445,ambulance:26,admitted:0,death:0,lost:1,total:28},
+    {center:'203',nat:'المغرب',cap:3299,fixed:1043,ambulance:6,admitted:1,death:0,lost:0,total:7},
+    {center:'204',nat:'المغرب',cap:292,fixed:115,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'206',nat:'قرغيزستان',cap:3506,fixed:1435,ambulance:2,admitted:0,death:0,lost:0,total:2},
+    {center:'207',nat:'قرغيزستان',cap:3079,fixed:337,ambulance:0,admitted:0,death:0,lost:1,total:1},
+    {center:'209',nat:'تشاد',cap:3795,fixed:836,ambulance:6,admitted:0,death:0,lost:1,total:7},
+    {center:'210',nat:'تشاد',cap:3325,fixed:1023,ambulance:7,admitted:2,death:0,lost:1,total:10},
+    {center:'221',nat:'باكستان',cap:1393,fixed:935,ambulance:1,admitted:0,death:0,lost:0,total:1},
+    {center:'222',nat:'باكستان',cap:2012,fixed:1966,ambulance:14,admitted:2,death:1,lost:1,total:18},
+    {center:'223',nat:'باكستان',cap:1269,fixed:1259,ambulance:12,admitted:0,death:0,lost:3,total:15},
+    {center:'224',nat:'باكستان',cap:921,fixed:850,ambulance:16,admitted:2,death:0,lost:2,total:20},
+    {center:'225',nat:'باكستان',cap:1427,fixed:1268,ambulance:12,admitted:0,death:0,lost:0,total:12},
+    {center:'226',nat:'باكستان',cap:1300,fixed:1288,ambulance:5,admitted:0,death:0,lost:3,total:8},
+    {center:'227',nat:'باكستان',cap:302,fixed:285,ambulance:2,admitted:0,death:0,lost:0,total:2},
+    {center:'228',nat:'باكستان',cap:277,fixed:229,ambulance:0,admitted:0,death:0,lost:0,total:0},
+    {center:'230',nat:'سريلانكا',cap:2910,fixed:2577,ambulance:78,admitted:9,death:1,lost:0,total:88},
+    {center:'231',nat:'سريلانكا',cap:1115,fixed:1104,ambulance:7,admitted:0,death:0,lost:0,total:7},
+    {center:'لايوجد',nat:'فلسطين',cap:0,fixed:0,ambulance:8,admitted:0,death:0,lost:1,total:10},
+    {center:'لايوجد',nat:'تشاد',cap:0,fixed:0,ambulance:7,admitted:5,death:0,lost:1,total:13},
+    {center:'لايوجد',nat:'قرغيزستان',cap:0,fixed:0,ambulance:6,admitted:0,death:1,lost:2,total:9},
+    {center:'لايوجد',nat:'المغرب',cap:0,fixed:0,ambulance:8,admitted:6,death:1,lost:0,total:14},
+  ],
+  centers_ikram: [
+    {id:'100',cap:981,reports:11,contracts:21,tickets:6,housing:11,forms:286,p90:257,p80:9},
+    {id:'101',cap:2341,reports:2,contracts:8,tickets:84,housing:5,forms:127,p90:116,p80:11},
+    {id:'102',cap:4414,reports:2,contracts:1,tickets:244,housing:1,forms:109,p90:108,p80:0},
+    {id:'103',cap:2963,reports:0,contracts:0,tickets:231,housing:0,forms:87,p90:85,p80:2},
+    {id:'104',cap:2927,reports:2,contracts:3,tickets:180,housing:3,forms:57,p90:46,p80:7},
+    {id:'105',cap:2971,reports:16,contracts:3,tickets:180,housing:3,forms:72,p90:65,p80:4},
+    {id:'106',cap:2980,reports:1,contracts:2,tickets:150,housing:2,forms:31,p90:31,p80:0},
+    {id:'107',cap:2923,reports:2,contracts:2,tickets:216,housing:2,forms:49,p90:31,p80:10},
+    {id:'108',cap:3006,reports:1,contracts:4,tickets:141,housing:4,forms:59,p90:58,p80:0},
+    {id:'109',cap:3570,reports:8,contracts:32,tickets:25,housing:18,forms:79,p90:74,p80:4},
+    {id:'110',cap:3261,reports:0,contracts:2,tickets:34,housing:1,forms:31,p90:21,p80:3},
+    {id:'111',cap:3171,reports:1,contracts:3,tickets:18,housing:2,forms:33,p90:32,p80:0},
+    {id:'112',cap:1650,reports:4,contracts:3,tickets:20,housing:2,forms:50,p90:33,p80:10},
+    {id:'113',cap:1878,reports:0,contracts:2,tickets:9,housing:1,forms:50,p90:33,p80:13},
+    {id:'114',cap:1188,reports:1,contracts:8,tickets:0,housing:2,forms:26,p90:20,p80:4},
+    {id:'115',cap:2603,reports:17,contracts:39,tickets:4,housing:18,forms:70,p90:58,p80:6},
+    {id:'116',cap:2850,reports:13,contracts:21,tickets:4,housing:13,forms:54,p90:38,p80:3},
+    {id:'117',cap:2850,reports:13,contracts:28,tickets:3,housing:12,forms:28,p90:14,p80:8},
+    {id:'118',cap:2850,reports:16,contracts:15,tickets:3,housing:12,forms:52,p90:40,p80:6},
+    {id:'119',cap:2850,reports:21,contracts:53,tickets:1,housing:33,forms:57,p90:45,p80:8},
+    {id:'120',cap:3735,reports:9,contracts:7,tickets:5,housing:6,forms:41,p90:38,p80:2},
+    {id:'121',cap:3810,reports:6,contracts:5,tickets:5,housing:5,forms:48,p90:42,p80:4},
+    {id:'122',cap:3595,reports:6,contracts:10,tickets:7,housing:8,forms:41,p90:33,p80:3},
+    {id:'123',cap:3081,reports:7,contracts:5,tickets:3,housing:5,forms:60,p90:54,p80:5},
+    {id:'125',cap:717,reports:5,contracts:5,tickets:6,housing:2,forms:67,p90:56,p80:7},
+    {id:'150',cap:1195,reports:1,contracts:31,tickets:0,housing:10,forms:113,p90:109,p80:1},
+    {id:'151',cap:3500,reports:1,contracts:30,tickets:111,housing:9,forms:4,p90:4,p80:0},
+    {id:'152',cap:3600,reports:0,contracts:1,tickets:160,housing:1,forms:10,p90:10,p80:0},
+    {id:'160',cap:3144,reports:13,contracts:43,tickets:33,housing:23,forms:113,p90:112,p80:1},
+    {id:'161',cap:2683,reports:4,contracts:74,tickets:17,housing:32,forms:196,p90:111,p80:2},
+    {id:'162',cap:1372,reports:7,contracts:33,tickets:8,housing:25,forms:71,p90:68,p80:3},
+    {id:'163',cap:312,reports:6,contracts:37,tickets:1,housing:27,forms:77,p90:72,p80:5},
+    {id:'164',cap:564,reports:0,contracts:0,tickets:0,housing:0,forms:18,p90:18,p80:0},
+    {id:'مركز ضيافة 1',cap:26572,reports:0,contracts:158,tickets:18,housing:25,forms:0,p90:0,p80:0},
+    {id:'مركز ضيافة 2',cap:22586,reports:0,contracts:365,tickets:5,housing:105,forms:0,p90:0,p80:0},
+    {id:'مركز ضيافة 3',cap:19455,reports:0,contracts:146,tickets:16,housing:28,forms:0,p90:0,p80:0},
+  ],
+  centers_rihlat: [
+    {id:'201',cap:3496,reports:0,contracts:5,tickets:0,housing:4,forms:44,p90:44,p80:0},
+    {id:'202',cap:3170,reports:0,contracts:3,tickets:0,housing:3,forms:26,p90:26,p80:0},
+    {id:'203',cap:3266,reports:0,contracts:206,tickets:0,housing:25,forms:174,p90:174,p80:0},
+    {id:'204',cap:292,reports:0,contracts:61,tickets:0,housing:4,forms:39,p90:38,p80:1},
+    {id:'206',cap:3506,reports:0,contracts:16,tickets:0,housing:12,forms:141,p90:125,p80:16},
+    {id:'207',cap:3079,reports:0,contracts:14,tickets:0,housing:11,forms:15,p90:11,p80:4},
+    {id:'209',cap:3795,reports:0,contracts:1,tickets:0,housing:1,forms:13,p90:13,p80:0},
+    {id:'210',cap:3325,reports:0,contracts:2,tickets:0,housing:2,forms:30,p90:30,p80:0},
+    {id:'221',cap:1393,reports:0,contracts:196,tickets:0,housing:24,forms:92,p90:92,p80:0},
+    {id:'222',cap:2012,reports:0,contracts:47,tickets:0,housing:17,forms:96,p90:96,p80:0},
+    {id:'223',cap:1269,reports:0,contracts:93,tickets:0,housing:15,forms:211,p90:211,p80:0},
+    {id:'224',cap:921,reports:0,contracts:64,tickets:0,housing:11,forms:91,p90:91,p80:0},
+    {id:'225',cap:1427,reports:0,contracts:134,tickets:0,housing:13,forms:32,p90:32,p80:0},
+    {id:'226',cap:1300,reports:0,contracts:181,tickets:0,housing:24,forms:70,p90:70,p80:0},
+    {id:'227',cap:302,reports:0,contracts:37,tickets:0,housing:8,forms:60,p90:60,p80:0},
+    {id:'228',cap:277,reports:0,contracts:91,tickets:0,housing:8,forms:57,p90:57,p80:0},
+    {id:'230',cap:2910,reports:0,contracts:184,tickets:0,housing:27,forms:296,p90:296,p80:0},
+    {id:'231',cap:1115,reports:0,contracts:149,tickets:0,housing:12,forms:97,p90:97,p80:0},
+    {id:'فريق عمل ضيافة 1',cap:2829,reports:0,contracts:0,tickets:0,housing:0,forms:0,p90:0,p80:0},
+    {id:'فريق عمل ضيافة 2',cap:1914,reports:0,contracts:0,tickets:0,housing:0,forms:0,p90:0,p80:0},
+    {id:'فريق عمل ضيافة 3',cap:1189,reports:0,contracts:0,tickets:0,housing:0,forms:0,p90:0,p80:0},
+  ],
+  contracts: [
+    {nat:'مصر',req:505721,done:76299,rate:0.1509,centers:8,complete:104,incomplete:193},
+    {nat:'تونس',req:265230,done:32846,rate:0.1238,centers:5,complete:30,incomplete:179},
+    {nat:'عمان',req:354015,done:71779,rate:0.2028,centers:5,complete:54,incomplete:193},
+    {nat:'روسيا',req:387901,done:0,rate:0,centers:4,complete:0,incomplete:177},
+    {nat:'موريتانيا',req:104141,done:0,rate:0,centers:1,complete:0,incomplete:47},
+    {nat:'إرتريا',req:29387,done:0,rate:0,centers:1,complete:0,incomplete:102},
+  ],
+  admin_ikram: {
+    tickets:[
+      {dept:'علاقات العملاء CRM',count:2139},{dept:'التخطيط والتطوير B2C',count:217},
+      {dept:'مركز بطاقات نسك',count:139},{dept:'العناية بالمستفيدين',count:82},
+      {dept:'البلاغات والشكاوي',count:47},{dept:'مكتب الرئيس',count:38},
+      {dept:'إدارة نسك وامتثال',count:13},{dept:'مراكز الضيافة',count:6},
+      {dept:'إدارة الاسكان',count:3},{dept:'الموارد البشرية',count:3},
+      {dept:'مراكز الطوارئ',count:3},{dept:'التغذية',count:1},{dept:'الحج المباشر B2C',count:1},
+    ],
+    forms:[
+      {dept:'نسك وامتثال',count:866},{dept:'الانشاءات والتجهيزات',count:654},
+      {dept:'إدارة الإسكان',count:377},{dept:'التفويج والسلامة',count:214},
+      {dept:'غير مسند',count:207},{dept:'التغذية',count:3},{dept:'الطوارئ والسلامة',count:1},
+    ],
+    reports:[
+      {dept:'ادارة الإسكان',count:177},{dept:'نسك وامتثال',count:13},
+      {dept:'الإنشاءات والتجهيزات',count:4},{dept:'مركز طوارئ وسلامة',count:2},{dept:'التغذية',count:1},
+    ]
+  },
+  admin_rihlat: {
+    depts:[
+      {dept:'ادارة التذاكر',tickets:0,reports:0,forms:0},
+      {dept:'ادارة النقل والتفويج',tickets:0,reports:0,forms:0},
+      {dept:'الخدمات العامة',tickets:0,reports:0,forms:0},
+      {dept:'نسك (خدمات المستفيدين)',tickets:0,reports:0,forms:0},
+      {dept:'سلاسل الامداد',tickets:0,reports:0,forms:0},
+      {dept:'قطاع B2B',tickets:0,reports:0,forms:0},
+      {dept:'ادارة الإسكان',tickets:0,reports:0,forms:1588},
+    ]
+  }
+};
+
+// ===== TABS =====
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.top-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  else document.querySelector(`[onclick="showTab('${id}',this)"]`)?.classList.add('active');
+}
+
+function showSub(group, id, btn){
+  const prefix = group+'-';
+  document.querySelectorAll(`[id^="${prefix}"]`).forEach(p=>p.classList.remove('active'));
+  document.getElementById(prefix+id).classList.add('active');
+  btn.closest('.sub-tabs').querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== CHARTS =====
+function initCharts(){
+  // Overview charts
+  const ikramByNat = {};
+  D.inc_ikram.forEach(d=>{if(!ikramByNat[d.nat]) ikramByNat[d.nat]=0; ikramByNat[d.nat]+=d.total;});
+  const ikramNats = Object.entries(ikramByNat).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a);
+  new Chart(document.getElementById('overviewIkramNat'),{type:'bar',data:{labels:ikramNats.map(([k])=>k),datasets:[{label:'وقوعات إكرام',data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+
+  const rihlatByNat = {};
+  D.inc_rihlat.forEach(d=>{if(!rihlatByNat[d.nat]) rihlatByNat[d.nat]=0; rihlatByNat[d.nat]+=d.total;});
+  const rihlatNats = Object.entries(rihlatByNat).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a);
+  new Chart(document.getElementById('overviewRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات رحلات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+
+  new Chart(document.getElementById('overviewContracts'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'نسبة الإنجاز %',data:D.contracts.map(c=>+(c.rate*100).toFixed(1)),backgroundColor:D.contracts.map(c=>c.rate>0.15?'#22C55EBB':c.rate>0?'#C9A227BB':'#E74C3CBB'),borderColor:D.contracts.map(c=>c.rate>0.15?'#22C55E':c.rate>0?'#C9A227':'#E74C3C'),borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{max:25,ticks:{callback:v=>v+'%',color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.x}%`}}}}});
+
+  new Chart(document.getElementById('overviewContractsBar'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'المطلوب',data:D.contracts.map(c=>c.req),backgroundColor:'#C9A22755',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'المنجز',data:D.contracts.map(c=>c.done),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{callback:v=>(v/1000).toFixed(0)+'k',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+
+  // Incidents charts
+  const iAmb=D.inc_ikram.reduce((s,d)=>s+d.ambulance,0),iAdm=D.inc_ikram.reduce((s,d)=>s+d.admitted,0),iDth=D.inc_ikram.reduce((s,d)=>s+d.death,0),iLst=D.inc_ikram.reduce((s,d)=>s+d.lost,0);
+  new Chart(document.getElementById('incIkramTypes'),{type:'doughnut',data:{labels:[`إسعاف (${iAmb})`,`تنويم (${iAdm})`,`وفاة (${iDth})`,`تائه (${iLst})`],datasets:[{data:[iAmb,iAdm,iDth,iLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incIkramNat'),{type:'pie',data:{labels:ikramNats.map(([k])=>k),datasets:[{data:ikramNats.map(([,v])=>v),backgroundColor:ikramNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:ikramNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+
+  const rAmb=D.inc_rihlat.reduce((s,d)=>s+d.ambulance,0),rAdm=D.inc_rihlat.reduce((s,d)=>s+d.admitted,0),rDth=D.inc_rihlat.reduce((s,d)=>s+d.death,0),rLst=D.inc_rihlat.reduce((s,d)=>s+d.lost,0);
+  new Chart(document.getElementById('incRihlatNat'),{type:'bar',data:{labels:rihlatNats.map(([k])=>k),datasets:[{label:'وقوعات',data:rihlatNats.map(([,v])=>v),backgroundColor:rihlatNats.map(([k])=>(NAT_COLORS[k]||'#78909C')+'BB'),borderColor:rihlatNats.map(([k])=>NAT_COLORS[k]||'#78909C'),borderWidth:2,borderRadius:7}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('incRihlatTypes'),{type:'doughnut',data:{labels:[`إسعاف (${rAmb})`,`تنويم (${rAdm})`,`وفاة (${rDth})`,`تائه (${rLst})`],datasets:[{data:[rAmb,rAdm,rDth,rLst],backgroundColor:['#E74C3CBB','#3498DBBB','#2C3E50BB','#F39C12BB'],borderColor:['#E74C3C','#3498DB','#2C3E50','#F39C12'],borderWidth:2}]},options:{...cOpts(),cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#B8B09A',font:{size:11}}},tooltip:cOpts().plugins.tooltip}}});
+
+  // Centers charts
+  const topCen = D.centers_ikram.filter(c=>typeof c.id==='string'&&!c.id.includes('ضيافة')).sort((a,b)=>b.forms-a.forms).slice(0,12);
+  new Chart(document.getElementById('cenIkramCap'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'السقف',data:topCen.map(c=>c.cap),backgroundColor:'#C9A22733',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'الاستمارات',data:topCen.map(c=>c.forms),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenIkramAct'),{type:'bar',data:{labels:topCen.map(c=>'م '+c.id),datasets:[{label:'محاضر',data:topCen.map(c=>c.reports),backgroundColor:'#9B59B6BB',borderColor:'#9B59B6',borderWidth:2,borderRadius:5},{label:'عقود',data:topCen.map(c=>c.contracts),backgroundColor:'#1ABC9CBB',borderColor:'#1ABC9C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+
+  const rihlat12 = D.centers_rihlat.slice(0,12);
+  new Chart(document.getElementById('cenRihlatForms'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'الاستمارات',data:rihlat12.map(c=>c.forms),backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:6},{label:'العقود',data:rihlat12.map(c=>c.contracts),backgroundColor:'#FF980099',borderColor:'#FF9800',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('cenRihlatCap'),{type:'bar',data:{labels:rihlat12.map(c=>'م '+c.id),datasets:[{label:'السقف',data:rihlat12.map(c=>c.cap),backgroundColor:'#673AB7BB',borderColor:'#673AB7',borderWidth:2,borderRadius:6}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:30}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+
+  // Contracts charts
+  new Chart(document.getElementById('conProgress'),{type:'bar',data:{labels:D.contracts.map(c=>c.nat),datasets:[{label:'مكتملة',data:D.contracts.map(c=>c.complete),backgroundColor:'#22C55EBB',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'ناقصة',data:D.contracts.map(c=>c.incomplete),backgroundColor:'#E74C3CBB',borderColor:'#E74C3C',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('conShare'),{type:'pie',data:{labels:D.contracts.map(c=>c.nat),datasets:[{data:D.contracts.map(c=>c.req),backgroundColor:D.contracts.map(c=>(NAT_COLORS[c.nat]||'#78909C')+'BB'),borderColor:D.contracts.map(c=>NAT_COLORS[c.nat]||'#78909C'),borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${ctx.parsed.toLocaleString('ar-SA')}`}}}}});
+  new Chart(document.getElementById('conMashaar'),{type:'bar',data:{labels:['منى','عرفة','مزدلفة'],datasets:[{label:'مصر',data:[0.12946,0.17568,0],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.09685,0.17155,0],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.21077,0.18658,0],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{max:0.25,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
+  new Chart(document.getElementById('conService'),{type:'bar',data:{labels:['الخدمات الأمنية','تجهيزات مخيم','الضيافة والتغذية','النظافة','لوازم النوم'],datasets:[{label:'مصر',data:[0.433,0.653,0.037,0.329,0.606],backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:5},{label:'تونس',data:[0.097,0.318,0,0.045,0.724],backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:5},{label:'عمان',data:[0.251,0.289,0.187,0.2,0.254],backgroundColor:'#3498DB99',borderColor:'#3498DB',borderWidth:2,borderRadius:5}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A',maxRotation:20}},y:{max:1,ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#6B7068'}}}}),plugins:{legend:{display:true,labels:{color:'#B8B09A'}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${(ctx.parsed.y*100).toFixed(1)}%`}}}}});
+
+  // Admin charts
+  const admT=D.admin_ikram.tickets.slice(0,8);
+  new Chart(document.getElementById('admIkramTickets'),{type:'bar',data:{labels:admT.map(t=>t.dept.length>12?t.dept.slice(0,12)+'...':t.dept),datasets:[{label:'التذاكر',data:admT.map(t=>t.count),backgroundColor:'#C9A22799',borderColor:'#C9A227',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admIkramForms'),{type:'bar',data:{labels:D.admin_ikram.forms.map(f=>f.dept.length>12?f.dept.slice(0,12)+'...':f.dept),datasets:[{label:'الاستمارات',data:D.admin_ikram.forms.map(f=>f.count),backgroundColor:'#22C55E99',borderColor:'#22C55E',borderWidth:2,borderRadius:7}]},options:{indexAxis:'y',...cOpts({scales:{x:{ticks:{color:'#6B7068'}},y:{ticks:{color:'#B8B09A'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admIkramReports'),{type:'doughnut',data:{labels:D.admin_ikram.reports.map(r=>r.dept),datasets:[{data:D.admin_ikram.reports.map(r=>r.count),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),cutout:'50%',plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:10}}},tooltip:cOpts().plugins.tooltip}}});
+
+  new Chart(document.getElementById('admRihlatForms'),{type:'bar',data:{labels:['إدارة الإسكان'],datasets:[{label:'الاستمارات',data:[1588],backgroundColor:'#00BCD4BB',borderColor:'#00BCD4',borderWidth:2,borderRadius:10}]},options:{...cOpts({scales:{x:{ticks:{color:'#B8B09A'}},y:{ticks:{color:'#6B7068'}}}}),plugins:{legend:{display:false},tooltip:cOpts().plugins.tooltip}}});
+  new Chart(document.getElementById('admRihlatDepts'),{type:'pie',data:{labels:D.admin_rihlat.depts.map(d=>d.dept),datasets:[{data:D.admin_rihlat.depts.map(d=>1),backgroundColor:PAL.map(c=>c+'BB'),borderColor:PAL,borderWidth:2}]},options:{...cOpts(),plugins:{legend:{position:'right',labels:{color:'#B8B09A',font:{size:10}}},tooltip:{...cOpts().plugins.tooltip,callbacks:{label:ctx=>` ${D.admin_rihlat.depts[ctx.dataIndex].dept}`}}}}});
+}
+
+// ===== TABLES =====
+let pages={};
+const PER=12;
+
+function renderTable(tbodyId, data, renderRow, infoId, pagesId){
+  const tbody=document.getElementById(tbodyId);
+  tbody.innerHTML='';
+  data.forEach(d=>{ tbody.innerHTML+=renderRow(d); });
+  if(infoId) document.getElementById(infoId).textContent=`${data.length} سجل`;
+}
+
+function renderIncRow(d, colorFn){
+  const c = (NAT_COLORS[d.nat]||'#78909C');
+  const tc = d.total>50?'#FC8181':d.total>10?'#F6C90E':d.total>0?'#B8B09A':'#4ADE80';
+  return `<tr>
+    <td><strong style="color:var(--gold-light)">${d.center}</strong></td>
+    <td><span class="nat-dot" style="background:${c}"></span>${d.nat}</td>
+    <td>${(d.cap||0).toLocaleString('ar-SA')}</td>
+    <td>${(d.fixed||0).toLocaleString('ar-SA')}</td>
+    <td style="color:#FC8181">${d.ambulance}</td>
+    <td style="color:#3498DB">${d.admitted}</td>
+    <td style="color:var(--text-muted)">${d.death}</td>
+    <td style="color:#F39C12">${d.lost}</td>
+    <td><strong style="color:${tc}">${d.total}</strong></td>
+  </tr>`;
+}
+
+function renderCenRow(c, maxForms){
+  const pct=Math.round((c.forms/(maxForms||1))*100);
+  return `<tr>
+    <td><strong style="color:var(--gold-light)">${c.id}</strong></td>
+    <td>${(c.cap||0).toLocaleString('ar-SA')}</td>
+    <td>${c.reports}</td><td>${c.contracts}</td><td>${c.tickets}</td><td>${c.housing}</td>
+    <td>${c.forms} <div class="progress-bar" style="margin-right:6px"><div class="progress-fill" style="width:${pct}%;background:var(--emerald-light)"></div></div></td>
+    <td>${c.p90}</td><td>${c.p80}</td>
+  </tr>`;
+}
+
+function initTables(){
+  // Inc Ikram
+  renderTable('tblIncIkramBody', D.inc_ikram, d=>renderIncRow(d), 'incIkramInfo');
+  // Inc Rihlat
+  renderTable('tblIncRihlatBody', D.inc_rihlat, d=>renderIncRow(d));
+
+  // Centers Ikram
+  const maxFI = Math.max(...D.centers_ikram.map(c=>c.forms));
+  renderTable('tblCenIkramBody', D.centers_ikram, c=>renderCenRow(c,maxFI), 'cenIkramInfo');
+  // Centers Rihlat
+  const maxFR = Math.max(...D.centers_rihlat.map(c=>c.forms));
+  renderTable('tblCenRihlatBody', D.centers_rihlat, c=>renderCenRow(c,maxFR));
+
+  // Contracts
+  const conBody = document.getElementById('tblContractsBody');
+  D.contracts.forEach(c=>{
+    const pct=(c.rate*100).toFixed(1);
+    const clr = c.rate>0.15?'#4ADE80':c.rate>0?'#E8C547':'#FC8181';
+    const badge = c.rate>0.15?'badge-green مُنجز جيد':c.rate>0?'badge-gold جارٍ':'badge-red لم يبدأ';
+    const [cls,lbl] = badge.split(' ');
+    conBody.innerHTML+=`<tr>
+      <td><span class="nat-dot" style="background:${NAT_COLORS[c.nat]||'#78909C'}"></span><strong>${c.nat}</strong></td>
+      <td>${c.req.toLocaleString('ar-SA')}</td>
+      <td style="color:#4ADE80">${c.done.toLocaleString('ar-SA')}</td>
+      <td>${(c.req-c.done).toLocaleString('ar-SA')}</td>
+      <td><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(pct,100)}%;background:${clr}"></div></div> <span style="color:${clr};font-weight:700">${pct}%</span></td>
+      <td>${c.centers}</td><td style="color:#4ADE80">${c.complete}</td><td style="color:#FC8181">${c.incomplete}</td>
+      <td><span class="badge ${cls}">${lbl}</span></td>
+    </tr>`;
+  });
+
+  // Admin Ikram tickets
+  const admBody=document.getElementById('tblAdmIkramBody');
+  const total=D.admin_ikram.tickets.reduce((s,t)=>s+t.count,0);
+  D.admin_ikram.tickets.forEach(t=>{
+    const pct=((t.count/total)*100).toFixed(1);
+    const cls=t.count>500?'badge-red عالي':t.count>50?'badge-gold متوسط':'badge-gray منخفض';
+    const [c,l]=cls.split(' ');
+    admBody.innerHTML+=`<tr>
+      <td>${t.dept}</td>
+      <td><strong style="color:var(--gold-light)">${t.count.toLocaleString('ar-SA')}</strong></td>
+      <td><div class="progress-bar" style="width:100px"><div class="progress-fill" style="width:${pct}%;background:var(--gold)"></div></div> ${pct}%</td>
+    </tr>`;
+  });
+
+  // Admin Rihlat
+  const admRBody=document.getElementById('tblAdmRihlatBody');
+  D.admin_rihlat.depts.forEach(d=>{
+    admRBody.innerHTML+=`<tr><td>${d.dept}</td><td>${d.tickets}</td><td>${d.reports}</td><td><strong style="color:${d.forms>0?'var(--gold-light)':'var(--text-muted)'}">${d.forms.toLocaleString('ar-SA')}</strong></td></tr>`;
+  });
+}
+
+// ===== FILTERS & SORTING =====
+function filterTableDirect(tableId, q){
+  const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+  rows.forEach(r=>{ r.style.display=r.textContent.includes(q)?'':'none'; });
+}
+function filterByNatDirect(tableId, val, col){
+  const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+  rows.forEach(r=>{ r.style.display=(!val||r.textContent.includes(val))?'':'none'; });
+}
+let sortDirs={};
+function sortTbl(id, col){
+  const k=id+col; sortDirs[k]=!sortDirs[k];
+  const tbody=document.querySelector(`#${id} tbody`);
+  const rows=Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a,b)=>{
+    const av=a.cells[col]?.textContent.trim().replace(/,/g,'')||'';
+    const bv=b.cells[col]?.textContent.trim().replace(/,/g,'')||'';
+    const an=parseFloat(av),bn=parseFloat(bv);
+    if(!isNaN(an)&&!isNaN(bn)) return sortDirs[k]?an-bn:bn-an;
+    return sortDirs[k]?av.localeCompare(bv,'ar'):bv.localeCompare(av,'ar');
+  });
+  rows.forEach(r=>tbody.appendChild(r));
+}
+function exportCSV(tableId, name){
+  const table=document.getElementById(tableId);
+  let csv='';
+  table.querySelectorAll('tr').forEach(r=>{
+    const cells=Array.from(r.querySelectorAll('th,td')).map(c=>'"'+c.textContent.trim().replace(/"/g,'""')+'"');
+    csv+=cells.join(',')+'\n';
+  });
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name+'.csv'; a.click();
+}
+
+// ===== BOOT =====
+window.addEventListener('DOMContentLoaded',()=>{ initCharts(); initTables(); });
+</script>
+</body>
+</html>
