@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التقرير اليومي لعمليات الحج</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>:root{--gold:#B8891A;--gl:#A0720F;--emr:#16A34A;--bg:#EEF1F5;--card:#fff;--t1:#1A2332;--t2:#3D4F63;--t3:#6B7C93;--bdr:rgba(160,114,15,0.18);--ruby:#C0392B;--sph:#1D6FA4;--amb:#C07000;--prp:#7B2D8B;--tel:#0D7A6B;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:#fff;border-bottom:1px solid var(--bdr);box-shadow:0 1px 8px rgba(0,0,0,.07);position:sticky;top:0;z-index:20;}
+.hbrand{display:flex;align-items:center;gap:13px;}
+.hlogo{width:46px;height:46px;object-fit:contain;}
+.htitle h1{font-size:18px;font-weight:900;color:var(--gl);}
+.htitle p{font-size:11px;color:var(--t3);margin-top:1px;}
+.hbadge{display:flex;align-items:center;gap:7px;padding:6px 13px;border-radius:20px;background:rgba(184,137,26,.08);border:1px solid var(--bdr);font-size:12px;color:var(--gl);}
+.dot{width:7px;height:7px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.nav{display:flex;gap:2px;padding:7px 32px;background:rgba(255,255,255,.93);border-bottom:1px solid var(--bdr);position:sticky;top:75px;z-index:19;backdrop-filter:blur(10px);overflow-x:auto;}
+.ntab{padding:7px 15px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--t3);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ntab:hover{background:rgba(184,137,26,.07);color:var(--t2);}
+.ntab.on{background:linear-gradient(135deg,rgba(184,137,26,.17),rgba(22,163,74,.11));color:var(--gl);border-color:rgba(184,137,26,.33);}
+main{padding:24px 32px;}
+.panel{display:none;}.panel.on{display:block;}
+.stabs{display:flex;gap:6px;margin-bottom:16px;}
+.stab{padding:5px 15px;border-radius:20px;border:1px solid var(--bdr);background:transparent;color:var(--t3);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.stab.on{background:rgba(184,137,26,.11);color:var(--gl);border-color:rgba(184,137,26,.33);}
+.spanel{display:none;}.spanel.on{display:block;}
+.stitle{font-size:15px;font-weight:900;color:var(--t1);margin-bottom:14px;display:flex;align-items:center;gap:9px;}
+.stitle::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bdr),transparent);}
+.hero{background:linear-gradient(135deg,rgba(184,137,26,.07),rgba(22,163,74,.07));border:1px solid var(--bdr);border-radius:13px;padding:20px 26px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hero h2{font-size:21px;font-weight:900;background:linear-gradient(135deg,#A0720F,#16A34A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px;}
+.hero p{font-size:11px;color:var(--t3);}
+.hdiv{width:1px;height:44px;background:var(--bdr);}
+.hm{text-align:center;min-width:76px;}
+.hv{font-size:22px;font-weight:900;color:var(--gl);display:block;}
+.hl{font-size:10px;color:var(--t3);margin-top:2px;}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:11px;margin-bottom:18px;}
+.sc{background:#fff;border:1px solid var(--bdr);border-radius:11px;padding:15px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 7px rgba(0,0,0,.05);}
+.sc:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.09);}
+.sc::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 11px 0 60px;opacity:.09;}
+.sc.gld::before{background:var(--gold)}.sc.emr::before{background:#22C55E}.sc.rby::before{background:var(--ruby)}.sc.sph::before{background:var(--sph)}.sc.amb::before{background:var(--amb)}.sc.prp::before{background:var(--prp)}.sc.tel::before{background:var(--tel)}
+.si2{font-size:21px;margin-bottom:6px;display:block;}
+.sl{font-size:10px;color:var(--t3);font-weight:700;text-transform:uppercase;margin-bottom:3px;}
+.sv{font-size:24px;font-weight:900;line-height:1;margin-bottom:2px;}
+.ss{font-size:10px;color:var(--t3);}
+.sc.gld .sv{color:var(--gl)}.sc.emr .sv{color:#16A34A}.sc.rby .sv{color:var(--ruby)}.sc.sph .sv{color:var(--sph)}.sc.amb .sv{color:var(--amb)}.sc.prp .sv{color:var(--prp)}.sc.tel .sv{color:var(--tel)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:16px;}
+.cg.t{grid-template-columns:2fr 1fr;}
+.cg.f{grid-column:1/-1;}
+.cc{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:11px;padding:17px;box-shadow:0 2px 9px rgba(0,0,0,.05);}
+.cc.full{grid-column:1/-1;}
+.ch{display:flex;align-items:center;margin-bottom:13px;}
+.ct{font-size:12px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:7px;}
+.ct::before{content:'';width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--gold),#16A34A);}
+canvas{max-height:255px;}
+.alr{border-radius:9px;padding:11px 15px;margin-bottom:13px;display:flex;align-items:center;gap:9px;font-size:12px;}
+.ar{background:rgba(254,226,226,.8);border:1px solid rgba(220,38,38,.2);color:var(--ruby);}
+.ab{background:rgba(219,234,254,.8);border:1px solid rgba(37,99,235,.2);color:var(--sph);}
+.tc{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:11px;overflow:hidden;box-shadow:0 2px 9px rgba(0,0,0,.05);margin-bottom:16px;}
+.th{padding:11px 17px;border-bottom:1px solid var(--bdr);background:#F8FAFC;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;}
+.tc2{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.si{padding:6px 11px;border-radius:7px;border:1px solid var(--bdr);background:#F8FAFC;color:var(--t1);font-family:'Cairo',sans-serif;font-size:12px;outline:none;width:170px;}
+.si:focus{border-color:var(--gold);}
+.si::placeholder{color:var(--t3);}
+.fs{padding:5px 9px;border-radius:7px;border:1px solid var(--bdr);background:#F8FAFC;color:var(--t1);font-family:'Cairo',sans-serif;font-size:12px;outline:none;cursor:pointer;}
+.eb{padding:5px 13px;border-radius:7px;border:1px solid rgba(184,137,26,.4);background:rgba(184,137,26,.1);color:var(--gl);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.eb:hover{background:rgba(184,137,26,.19);}
+.tov{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead tr{background:#F1F5F9;}
+th{padding:9px 13px;text-align:right;font-weight:700;color:var(--gl);font-size:11px;border-bottom:1px solid var(--bdr);cursor:pointer;white-space:nowrap;}
+th:hover{color:var(--gold);}
+td{padding:8px 13px;border-bottom:1px solid rgba(0,0,0,.05);color:var(--t2);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(184,137,26,.03);color:var(--t1);}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;}
+.bg{background:rgba(22,163,74,.12);color:#16A34A;border:1px solid rgba(22,163,74,.22);}
+.bo{background:rgba(184,137,26,.12);color:var(--gl);border:1px solid rgba(184,137,26,.22);}
+.br{background:rgba(192,57,43,.12);color:var(--ruby);border:1px solid rgba(192,57,43,.22);}
+.bb{background:rgba(29,111,164,.12);color:var(--sph);border:1px solid rgba(29,111,164,.22);}
+.bgr{background:rgba(107,124,147,.15);color:var(--t3);border:1px solid rgba(107,124,147,.25);}
+.pb{height:5px;border-radius:3px;background:#E2E8F0;display:inline-block;vertical-align:middle;}
+.pf{height:100%;border-radius:3px;}
+.nd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-left:5px;}
+::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-track{background:#E8ECF0;}::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px;}::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+@media(max-width:768px){.hdr{padding:11px 14px;}.nav{padding:7px 11px;top:68px;}main{padding:13px;}.cg{grid-template-columns:1fr;}.cg.t{grid-template-columns:1fr;}.sg{grid-template-columns:repeat(2,1fr);}.hero{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hbrand">
+    <img src="data:image/png;base64,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" class="hlogo" alt="logo">
+    <div class="htitle">
+      <h1>التقرير اليومي لعمليات الحج</h1>
+      <p>فريق عمليات الحج — متابعة العمليات</p>
+    </div>
+  </div>
+  <div class="hbadge"><div class="dot"></div> 5 ذو الحجة 1447هـ</div>
+</header>
+<nav class="nav">
+  <button class="ntab on" onclick="showTab('overview',this)">📊 نظرة عامة</button>
+  <button class="ntab" onclick="showTab('incidents',this)">🚨 الوقوعات</button>
+  <button class="ntab" onclick="showTab('centers',this)">🏕 المراكز</button>
+  <button class="ntab" onclick="showTab('contracts',this)">📋 عقود الخدمة</button>
+  <button class="ntab" onclick="showTab('admin',this)">🗂 الإدارات</button>
+  <button class="ntab" onclick="showTab('kpi',this)">🎯 مؤشرات الأداء</button>
+</nav>
+<main>
+
+<!-- ===== OVERVIEW ===== -->
+<div class="panel on" id="tab-overview">
+  <div class="hero" style="justify-content:center;text-align:center;">
+    <div><h2 style="-webkit-text-fill-color:unset;color:var(--gl);font-size:26px;">التقرير اليومي — 5 ذو الحجة 1447هـ</h2></div>
+  </div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('ov','ikram',this)">🕋 إكرام</button>
+    <button class="stab" onclick="showSub('ov','rihlat',this)">🚌 رحلات</button>
+  </div>
+  <div class="spanel on" id="ov-ikram">
+    <div class="sg" style="grid-template-columns:repeat(5,1fr)">
+      <div class="sc gld"><span class="si2">🎫</span><div class="sl">التذاكر</div><div class="sv" id="ov_tik_i">-</div></div>
+      <div class="sc emr"><span class="si2">📝</span><div class="sl">الاستمارات</div><div class="sv" id="ov_frm_i">-</div></div>
+      <div class="sc sph"><span class="si2">📜</span><div class="sl">المحاضر</div><div class="sv" id="ov_rep_i">-</div></div>
+      <div class="sc tel"><span class="si2">🏕</span><div class="sl">عدد المراكز</div><div class="sv">33</div></div>
+      <div class="sc rby"><span class="si2">📊</span><div class="sl">مجموع الوقوعات</div><div class="sv" id="ov_inc_i">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">وقوعات حسب الجنسية</div></div><canvas id="c_ovINat"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">التذاكر حسب الإدارة</div></div><canvas id="c_ovITick"></canvas></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">أداء مراكز الخدمة</div></div><canvas id="c_ovICen"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع أنواع الوقوعات</div></div><canvas id="c_ovITypes"></canvas></div>
+    </div>
+  </div>
+  <div class="spanel" id="ov-rihlat">
+    <div class="sg" style="grid-template-columns:repeat(5,1fr)">
+      <div class="sc gld"><span class="si2">🎫</span><div class="sl">التذاكر</div><div class="sv" id="ov_tik_r">-</div></div>
+      <div class="sc emr"><span class="si2">📝</span><div class="sl">الاستمارات</div><div class="sv" id="ov_frm_r">-</div></div>
+      <div class="sc sph"><span class="si2">📜</span><div class="sl">المحاضر</div><div class="sv" id="ov_rep_r">-</div></div>
+      <div class="sc tel"><span class="si2">🚐</span><div class="sl">عدد المراكز</div><div class="sv">21</div></div>
+      <div class="sc rby"><span class="si2">📊</span><div class="sl">مجموع الوقوعات</div><div class="sv" id="ov_inc_r">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">وقوعات حسب الجنسية</div></div><canvas id="c_ovRNat"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">التذاكر حسب الإدارة</div></div><canvas id="c_ovRTick"></canvas></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">أداء مراكز الخدمة</div></div><canvas id="c_ovRCen"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع أنواع الوقوعات</div></div><canvas id="c_ovRTypes"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INCIDENTS ===== -->
+<div class="panel" id="tab-incidents">
+  <div class="stitle">🚨 تقرير الوقوعات مع حركة الحجاج</div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('inc','ikram',this)">🕋 إكرام (33 مركز)</button>
+    <button class="stab" onclick="showSub('inc','rihlat',this)">🚌 رحلات (21 مركز)</button>
+  </div>
+  <div class="spanel on" id="inc-ikram">
+    <div class="sg" style="grid-template-columns:repeat(4,1fr)">
+      <div class="sc rby"><span class="si2">🚑</span><div class="sl">إسعاف</div><div class="sv" id="inc_am_i">-</div></div>
+      <div class="sc sph"><span class="si2">🏥</span><div class="sl">تنويم</div><div class="sv" id="inc_ad_i">-</div></div>
+      <div class="sc" style="border-color:rgba(107,112,104,.3)"><span class="si2">⚫</span><div class="sl">وفاة</div><div class="sv" style="color:#6B7C93" id="inc_dt_i">-</div></div>
+      <div class="sc amb"><span class="si2">📊</span><div class="sl">إجمالي الوقوعات</div><div class="sv" id="inc_tot_i">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">الوقوعات حسب الجنسية</div></div><canvas id="c_incINat"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع أنواع الوقوعات</div></div><canvas id="c_incITypes"></canvas></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">تفاصيل وقوعات إكرام</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 بحث..." oninput="ftbl('tbIncI',this.value)">
+          <select class="fs" onchange="ftbl('tbIncI',this.value)"><option value="">كل الجنسيات</option><option>مصر</option><option>تونس</option><option>عمان</option><option>روسيا</option><option>موريتانيا</option><option>إرتريا</option><option>بنجلاديش</option></select>
+          <button class="eb" onclick="exportCSV('tbIncI','وقوعات_إكرام')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbIncI"><thead><tr>
+        <th onclick="srt('tbIncI',0)">المركز</th><th>الجنسية</th>
+        <th onclick="srt('tbIncI',2)">السقف</th><th onclick="srt('tbIncI',3)">المثبت</th>
+        <th onclick="srt('tbIncI',4)">إسعاف</th><th onclick="srt('tbIncI',5)">تنويم</th>
+        <th onclick="srt('tbIncI',6)">وفاة</th><th onclick="srt('tbIncI',7)">تائه</th>
+        <th onclick="srt('tbIncI',8)">الإجمالي</th>
+      </tr></thead><tbody id="b_incI"></tbody></table></div>
+    </div>
+  </div>
+  <div class="spanel" id="inc-rihlat">
+    <div class="sg" style="grid-template-columns:repeat(4,1fr)">
+      <div class="sc rby"><span class="si2">🚑</span><div class="sl">إسعاف</div><div class="sv" id="inc_am_r">-</div></div>
+      <div class="sc sph"><span class="si2">🏥</span><div class="sl">تنويم</div><div class="sv" id="inc_ad_r">-</div></div>
+      <div class="sc" style="border-color:rgba(107,112,104,.3)"><span class="si2">⚫</span><div class="sl">وفاة</div><div class="sv" style="color:#6B7C93" id="inc_dt_r">-</div></div>
+      <div class="sc tel"><span class="si2">📊</span><div class="sl">إجمالي الوقوعات</div><div class="sv" id="inc_tot_r">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">الوقوعات حسب الجنسية</div></div><canvas id="c_incRNat"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع أنواع الوقوعات</div></div><canvas id="c_incRTypes"></canvas></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">تفاصيل وقوعات الرحلات</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 بحث..." oninput="ftbl('tbIncR',this.value)">
+          <button class="eb" onclick="exportCSV('tbIncR','وقوعات_رحلات')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbIncR"><thead><tr>
+        <th>المركز</th><th>الجنسية</th><th>السقف</th><th>المثبت</th>
+        <th>إسعاف</th><th>تنويم</th><th>وفاة</th><th>تائه</th><th>الإجمالي</th>
+      </tr></thead><tbody id="b_incR"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CENTERS ===== -->
+<div class="panel" id="tab-centers">
+  <div class="stitle">🏕 تقرير المراكز</div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('cen','ikram',this)">🕋 إكرام (33 مركز)</button>
+    <button class="stab" onclick="showSub('cen','rihlat',this)">🚌 رحلات (21 مركز)</button>
+  </div>
+  <div class="spanel on" id="cen-ikram">
+    <div class="tc">
+      <div class="th"><div class="ct">بيانات مراكز إكرام</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 رقم المركز..." oninput="ftbl('tbCenI',this.value);updateCenChart('I')">
+          <button class="eb" onclick="exportCSV('tbCenI','مراكز_إكرام')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbCenI"><thead><tr>
+        <th onclick="srt('tbCenI',0);updateCenChart('I')">المركز</th>
+        <th onclick="srt('tbCenI',1);updateCenChart('I')">الجنسية</th>
+        <th onclick="srt('tbCenI',2);updateCenChart('I')">السقف</th>
+        <th onclick="srt('tbCenI',3);updateCenChart('I')">المحاضر</th>
+        <th onclick="srt('tbCenI',4);updateCenChart('I')">التذاكر</th>
+        <th onclick="srt('tbCenI',5);updateCenChart('I')">اثبات الخدمة</th>
+        <th onclick="srt('tbCenI',6);updateCenChart('I')">بطاقات نسك</th>
+        <th onclick="srt('tbCenI',7);updateCenChart('I')">الاستمارات</th>
+      </tr></thead><tbody id="b_cenI"></tbody></table></div>
+    </div>
+    <div class="cc" style="margin-top:16px">
+      <div class="ch">
+        <div class="ct">رسم بياني تفاعلي — بيانات المراكز</div>
+        <div style="display:flex;gap:6px;align-items:center;margin-right:auto">
+          <select class="fs" id="cenIMetric" onchange="updateCenChart('I')">
+            <option value="frm">الاستمارات</option>
+            <option value="svc">اثبات الخدمة</option>
+            <option value="nsk">بطاقات نسك</option>
+            <option value="tik">التذاكر</option>
+            <option value="rep">المحاضر</option>
+            <option value="cap">السقف</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="c_cenILive" style="max-height:300px"></canvas>
+    </div>
+  </div>
+  <div class="spanel" id="cen-rihlat">
+    <div class="tc">
+      <div class="th"><div class="ct">بيانات مراكز الرحلات</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 رقم المركز..." oninput="ftbl('tbCenR',this.value);updateCenChart('R')">
+          <button class="eb" onclick="exportCSV('tbCenR','مراكز_رحلات')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbCenR"><thead><tr>
+        <th onclick="srt('tbCenR',0);updateCenChart('R')">المركز</th>
+        <th onclick="srt('tbCenR',1);updateCenChart('R')">الجنسية</th>
+        <th onclick="srt('tbCenR',2);updateCenChart('R')">السقف</th>
+        <th onclick="srt('tbCenR',3);updateCenChart('R')">المحاضر</th>
+        <th onclick="srt('tbCenR',4);updateCenChart('R')">التذاكر</th>
+        <th onclick="srt('tbCenR',5);updateCenChart('R')">اثبات الخدمة</th>
+        <th onclick="srt('tbCenR',6);updateCenChart('R')">بطاقات نسك</th>
+        <th onclick="srt('tbCenR',7);updateCenChart('R')">الاستمارات</th>
+      </tr></thead><tbody id="b_cenR"></tbody></table></div>
+    </div>
+    <div class="cc" style="margin-top:16px">
+      <div class="ch">
+        <div class="ct">رسم بياني تفاعلي — بيانات المراكز</div>
+        <div style="display:flex;gap:6px;align-items:center;margin-right:auto">
+          <select class="fs" id="cenRMetric" onchange="updateCenChart('R')">
+            <option value="frm">الاستمارات</option>
+            <option value="svc">اثبات الخدمة</option>
+            <option value="nsk">بطاقات نسك</option>
+            <option value="tik">التذاكر</option>
+            <option value="rep">المحاضر</option>
+            <option value="cap">السقف</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="c_cenRLive" style="max-height:300px"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONTRACTS ===== -->
+<div class="panel" id="tab-contracts">
+  <div class="stitle">📋 تحليل عقود الخدمة 1447هـ</div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('con','ikram',this)">🕋 إكرام</button>
+    <button class="stab" onclick="showSub('con','rihlat',this)">🚌 رحلات</button>
+  </div>
+  <div class="spanel on" id="con-ikram">
+    <div class="sg" style="grid-template-columns:repeat(2,1fr)">
+      <div class="sc gld"><span class="si2">🌍</span><div class="sl">الجنسيات</div><div class="sv">6</div></div>
+      <div class="sc sph"><span class="si2">🏕</span><div class="sl">المراكز</div><div class="sv">33</div></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">ملخص عقود إكرام</div><button class="eb" onclick="exportCSV('tbConI','عقود_إكرام')">⬇ CSV</button></div>
+      <div class="tov"><table id="tbConI"><thead><tr>
+        <th>الجنسية</th><th>المطلوب</th><th>المنجز</th><th>المتبقي</th><th>نسبة الإنجاز</th><th>مراكز</th><th>مكتملة</th><th>ناقصة</th><th>الحالة</th>
+      </tr></thead><tbody id="b_conI"></tbody></table></div>
+    </div>
+  </div>
+  <div class="spanel" id="con-rihlat">
+    <div class="sg" style="grid-template-columns:repeat(2,1fr)">
+      <div class="sc gld"><span class="si2">🌍</span><div class="sl">الجنسيات</div><div class="sv">8</div></div>
+      <div class="sc sph"><span class="si2">🏕</span><div class="sl">المراكز</div><div class="sv">21</div></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">ملخص عقود رحلات ومنافع</div><button class="eb" onclick="exportCSV('tbConR','عقود_رحلات')">⬇ CSV</button></div>
+      <div class="tov"><table id="tbConR"><thead><tr>
+        <th>الجنسية</th><th>السقف</th><th>اثبات الخدمة</th><th>المتبقي</th><th>نسبة الإنجاز</th><th>مراكز</th><th>الحالة</th>
+      </tr></thead><tbody id="b_conR"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN ===== -->
+<div class="panel" id="tab-admin">
+  <div class="stitle">🗂 تقرير الإدارات — 5 ذو الحجة 1447هـ</div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('adm','ikram',this)">🕋 إكرام</button>
+    <button class="stab" onclick="showSub('adm','rihlat',this)">🚌 رحلات</button>
+  </div>
+  <div class="spanel on" id="adm-ikram">
+    <div class="sg" style="grid-template-columns:repeat(3,1fr)">
+      <div class="sc gld"><span class="si2">🎫</span><div class="sl">التذاكر</div><div class="sv" id="adm_tik_i">-</div></div>
+      <div class="sc emr"><span class="si2">📝</span><div class="sl">الاستمارات</div><div class="sv" id="adm_frm_i">-</div></div>
+      <div class="sc sph"><span class="si2">📜</span><div class="sl">المحاضر</div><div class="sv" id="adm_rep_i">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">التذاكر حسب الإدارة</div></div><canvas id="c_admIT"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">الاستمارات حسب الإدارة</div></div><canvas id="c_admIF"></canvas></div>
+    </div>
+    <div class="cc" style="margin-bottom:16px"><div class="ch"><div class="ct">المحاضر حسب الإدارة</div></div><canvas id="c_admIR" style="max-height:160px"></canvas></div>
+  </div>
+  <div class="spanel" id="adm-rihlat">
+    <div class="sg" style="grid-template-columns:repeat(3,1fr)">
+      <div class="sc gld"><span class="si2">🎫</span><div class="sl">التذاكر</div><div class="sv" id="adm_tik_r">-</div></div>
+      <div class="sc emr"><span class="si2">📝</span><div class="sl">الاستمارات</div><div class="sv" id="adm_frm_r">-</div></div>
+      <div class="sc sph"><span class="si2">📜</span><div class="sl">المحاضر</div><div class="sv" id="adm_rep_r">-</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">التذاكر حسب الإدارة</div></div><canvas id="c_admRT"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">الاستمارات حسب الإدارة</div></div><canvas id="c_admRF"></canvas></div>
+    </div>
+    <div class="cc" style="margin-bottom:16px"><div class="ch"><div class="ct">المحاضر حسب الإدارة</div></div><canvas id="c_admRR" style="max-height:160px"></canvas></div>
+  </div>
+</div>
+
+<!-- ===== KPI ===== -->
+<div class="panel" id="tab-kpi">
+  <div class="stitle">🎯 مؤشرات أداء مراكز الخدمة</div>
+  <div class="stabs">
+    <button class="stab on" onclick="showSub('kpi','ikram',this)">🕋 إكرام (33 مركز)</button>
+    <button class="stab" onclick="showSub('kpi','rihlat',this)">🚌 رحلات (21 مركز)</button>
+  </div>
+  <div class="spanel on" id="kpi-ikram">
+    <div class="sg" style="grid-template-columns:repeat(5,1fr)">
+      <div class="sc emr"><span class="si2">⭐</span><div class="sl">متميز +75%</div><div class="sv" id="ki_exc">-</div><div class="ss" id="ki_exc_lbl" style="font-size:11px;margin-top:4px;color:#16A34A;line-height:1.4"></div></div>
+      <div class="sc gld"><span class="si2">✅</span><div class="sl">جيد 50-74%</div><div class="sv" id="ki_gd">-</div><div class="ss" id="ki_gd_lbl" style="font-size:11px;margin-top:4px;color:var(--gl);line-height:1.4"></div></div>
+      <div class="sc sph"><span class="si2">⚠️</span><div class="sl">مقبول 1-49%</div><div class="sv" id="ki_av">-</div><div class="ss" id="ki_av_lbl" style="font-size:11px;margin-top:4px;color:var(--sph);line-height:1.4"></div></div>
+      <div class="sc rby"><span class="si2">❌</span><div class="sl">ضعيف 0%</div><div class="sv" id="ki_wk">-</div><div class="ss" id="ki_wk_lbl" style="font-size:11px;margin-top:4px;color:var(--ruby);line-height:1.4"></div></div>
+      <div class="sc amb"><span class="si2">📈</span><div class="sl">متوسط الأداء</div><div class="sv" id="ki_avg">-</div></div>
+    </div>
+    <div class="cg"><div class="cc full"><div class="ch"><div class="ct">النهائية — الأداء الكلي لكل مركز</div></div><canvas id="c_kpiIBar" style="max-height:290px"></canvas></div></div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">جاهزية السكن</div></div><canvas id="c_kpiIHs"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع مستويات الأداء</div></div><canvas id="c_kpiIDist"></canvas></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">تفاصيل مؤشرات إكرام</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 اسم المركز..." oninput="ftbl('tbKpiI',this.value)">
+          <select class="fs" onchange="ftblKpi('tbKpiI',this.value)"><option value="">كل المستويات</option><option value="متميز">⭐ متميز</option><option value="جيد">✅ جيد</option><option value="مقبول">⚠️ مقبول</option><option value="ضعيف">❌ ضعيف</option></select>
+          <button class="eb" onclick="exportCSV('tbKpiI','أداء_إكرام')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbKpiI"><thead><tr>
+        <th onclick="srt('tbKpiI',0)">المركز</th><th onclick="srt('tbKpiI',1)">الجنسية</th>
+        <th onclick="srt('tbKpiI',2)">جاهزية السكن</th><th onclick="srt('tbKpiI',3)">تسكين الحجاج</th>
+        <th onclick="srt('tbKpiI',4)">بطاقات نسك</th><th onclick="srt('tbKpiI',5)">بنود الخدمة</th>
+        <th onclick="srt('tbKpiI',6)">النهائية ▼</th><th>المستوى</th>
+      </tr></thead><tbody id="b_kpiI"></tbody></table></div>
+    </div>
+  </div>
+  <div class="spanel" id="kpi-rihlat">
+    <div class="sg" style="grid-template-columns:repeat(5,1fr)">
+      <div class="sc emr"><span class="si2">⭐</span><div class="sl">متميز +75%</div><div class="sv" id="kr_exc">-</div><div class="ss" id="kr_exc_lbl" style="font-size:11px;margin-top:4px;color:#16A34A;line-height:1.4"></div></div>
+      <div class="sc gld"><span class="si2">✅</span><div class="sl">جيد 50-74%</div><div class="sv" id="kr_gd">-</div><div class="ss" id="kr_gd_lbl" style="font-size:11px;margin-top:4px;color:var(--gl);line-height:1.4"></div></div>
+      <div class="sc sph"><span class="si2">⚠️</span><div class="sl">مقبول 1-49%</div><div class="sv" id="kr_av">-</div><div class="ss" id="kr_av_lbl" style="font-size:11px;margin-top:4px;color:var(--sph);line-height:1.4"></div></div>
+      <div class="sc rby"><span class="si2">❌</span><div class="sl">ضعيف 0%</div><div class="sv" id="kr_wk">-</div><div class="ss" id="kr_wk_lbl" style="font-size:11px;margin-top:4px;color:var(--ruby);line-height:1.4"></div></div>
+      <div class="sc amb"><span class="si2">📈</span><div class="sl">متوسط الأداء</div><div class="sv" id="kr_avg">-</div></div>
+    </div>
+    <div class="cg"><div class="cc full"><div class="ch"><div class="ct">النهائية — الأداء الكلي لكل مركز</div></div><canvas id="c_kpiRBar" style="max-height:270px"></canvas></div></div>
+    <div class="cg">
+      <div class="cc"><div class="ch"><div class="ct">جاهزية السكن</div></div><canvas id="c_kpiRHs"></canvas></div>
+      <div class="cc"><div class="ch"><div class="ct">توزيع مستويات الأداء</div></div><canvas id="c_kpiRDist"></canvas></div>
+    </div>
+    <div class="tc">
+      <div class="th"><div class="ct">تفاصيل مؤشرات الرحلات</div>
+        <div class="tc2">
+          <input class="si" placeholder="🔍 اسم المركز..." oninput="ftbl('tbKpiR',this.value)">
+          <select class="fs" onchange="ftblKpi('tbKpiR',this.value)"><option value="">كل المستويات</option><option value="متميز">⭐ متميز</option><option value="جيد">✅ جيد</option><option value="مقبول">⚠️ مقبول</option><option value="ضعيف">❌ ضعيف</option></select>
+          <button class="eb" onclick="exportCSV('tbKpiR','أداء_رحلات')">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="tov"><table id="tbKpiR"><thead><tr>
+        <th onclick="srt('tbKpiR',0)">المركز</th><th onclick="srt('tbKpiR',1)">الجنسية</th>
+        <th onclick="srt('tbKpiR',2)">تأكيد البنود</th><th onclick="srt('tbKpiR',3)">بطاقات نسك</th>
+        <th onclick="srt('tbKpiR',4)">تسكين الحجاج</th><th onclick="srt('tbKpiR',5)">جاهزية السكن</th>
+        <th onclick="srt('tbKpiR',6)">النهائية ▼</th><th>المستوى</th>
+      </tr></thead><tbody id="b_kpiR"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+var D = {"cen_i": [{"id": "100", "nat": "مصر سياحة", "cap": 981, "rep": 13, "tik": 6, "frm": 327, "svc": 115, "nsk": 110}, {"id": "101", "nat": "مصر قرعة", "cap": 2341, "rep": 2, "tik": 86, "frm": 136, "svc": 2006, "nsk": 1966}, {"id": "102", "nat": "مصر قرعة", "cap": 4414, "rep": 2, "tik": 246, "frm": 113, "svc": 4407, "nsk": 4407}, {"id": "103", "nat": "مصر قرعة", "cap": 2963, "rep": 0, "tik": 233, "frm": 88, "svc": 2948, "nsk": 2948}, {"id": "104", "nat": "مصر قرعة", "cap": 2927, "rep": 2, "tik": 183, "frm": 58, "svc": 1892, "nsk": 413}, {"id": "105", "nat": "مصر قرعة", "cap": 2971, "rep": 16, "tik": 157, "frm": 76, "svc": 2973, "nsk": 2973}, {"id": "106", "nat": "مصر قرعة", "cap": 2980, "rep": 1, "tik": 155, "frm": 34, "svc": 2764, "nsk": 2792}, {"id": "107", "nat": "مصر قرعة", "cap": 2923, "rep": 2, "tik": 217, "frm": 54, "svc": 2882, "nsk": 2881}, {"id": "108", "nat": "مصر قرعة", "cap": 3006, "rep": 1, "tik": 143, "frm": 59, "svc": 3007, "nsk": 2996}, {"id": "109", "nat": "موريتانيا", "cap": 3570, "rep": 8, "tik": 27, "frm": 80, "svc": 2127, "nsk": 2125}, {"id": "110", "nat": "تونس", "cap": 3261, "rep": 0, "tik": 35, "frm": 35, "svc": 3322, "nsk": 3322}, {"id": "111", "nat": "تونس", "cap": 3171, "rep": 1, "tik": 22, "frm": 33, "svc": 3171, "nsk": 3171}, {"id": "112", "nat": "تونس", "cap": 1650, "rep": 4, "tik": 23, "frm": 52, "svc": 1648, "nsk": 1646}, {"id": "113", "nat": "تونس", "cap": 1878, "rep": 0, "tik": 10, "frm": 55, "svc": 1867, "nsk": 1867}, {"id": "114", "nat": "تونس", "cap": 1188, "rep": 1, "tik": 3, "frm": 36, "svc": 0, "nsk": 0}, {"id": "115", "nat": "عمان", "cap": 2603, "rep": 17, "tik": 4, "frm": 70, "svc": 2603, "nsk": 2603}, {"id": "116", "nat": "عمان", "cap": 2850, "rep": 13, "tik": 6, "frm": 65, "svc": 138, "nsk": 0}, {"id": "117", "nat": "عمان", "cap": 2850, "rep": 13, "tik": 5, "frm": 31, "svc": 1542, "nsk": 1538}, {"id": "118", "nat": "عمان", "cap": 2850, "rep": 16, "tik": 4, "frm": 55, "svc": 258, "nsk": 0}, {"id": "119", "nat": "عمان", "cap": 2850, "rep": 21, "tik": 10, "frm": 60, "svc": 0, "nsk": 0}, {"id": "120", "nat": "روسيا", "cap": 3735, "rep": 9, "tik": 5, "frm": 52, "svc": 2209, "nsk": 2207}, {"id": "121", "nat": "روسيا", "cap": 3810, "rep": 6, "tik": 8, "frm": 62, "svc": 3231, "nsk": 3230}, {"id": "122", "nat": "روسيا", "cap": 3595, "rep": 6, "tik": 7, "frm": 48, "svc": 2903, "nsk": 2895}, {"id": "123", "nat": "روسيا", "cap": 3081, "rep": 7, "tik": 7, "frm": 67, "svc": 2738, "nsk": 1601}, {"id": "125", "nat": "إرتريا", "cap": 717, "rep": 5, "tik": 6, "frm": 71, "svc": 717, "nsk": 717}, {"id": "150", "nat": "أخرى", "cap": 1195, "rep": 1, "tik": 0, "frm": 124, "svc": 43, "nsk": 42}, {"id": "151", "nat": "أخرى", "cap": 3500, "rep": 2, "tik": 128, "frm": 12, "svc": 1, "nsk": 1}, {"id": "152", "nat": "أخرى", "cap": 3600, "rep": 0, "tik": 169, "frm": 12, "svc": 347, "nsk": 250}, {"id": "160", "nat": "بنجلاديش", "cap": 3144, "rep": 13, "tik": 38, "frm": 140, "svc": 2841, "nsk": 2841}, {"id": "161", "nat": "بنجلاديش", "cap": 2683, "rep": 4, "tik": 18, "frm": 220, "svc": 2107, "nsk": 2107}, {"id": "162", "nat": "بنجلاديش", "cap": 1372, "rep": 7, "tik": 8, "frm": 73, "svc": 1217, "nsk": 1217}, {"id": "163", "nat": "بنجلاديش", "cap": 312, "rep": 6, "tik": 1, "frm": 106, "svc": 312, "nsk": 312}, {"id": "164", "nat": "بنجلاديش", "cap": 564, "rep": 0, "tik": 0, "frm": 21, "svc": 518, "nsk": 518}, {"id": "مركز ضيافة 1", "nat": "مصر", "cap": 26572, "rep": 0, "tik": 18, "frm": 0, "svc": 753, "nsk": 696}, {"id": "مركز ضيافة 2", "nat": "أخرى", "cap": 22586, "rep": 0, "tik": 5, "frm": 0, "svc": 3321, "nsk": 3271}, {"id": "مركز ضيافة3", "nat": "أخرى", "cap": 19455, "rep": 0, "tik": 16, "frm": 0, "svc": 1661, "nsk": 1650}], "cen_r": [{"id": "201", "nat": "فلسطين", "cap": 3496, "rep": 0, "tik": 0, "svc": 2886, "nsk": 2, "frm": 48}, {"id": "202", "nat": "فلسطين", "cap": 3170, "rep": 0, "tik": 0, "svc": 2686, "nsk": 2, "frm": 26}, {"id": "203", "nat": "المغرب", "cap": 3266, "rep": 0, "tik": 0, "svc": 2602, "nsk": 85, "frm": 198}, {"id": "204", "nat": "المغرب", "cap": 292, "rep": 0, "tik": 0, "svc": 206, "nsk": 0, "frm": 43}, {"id": "206", "nat": "قرغيزستان", "cap": 3506, "rep": 0, "tik": 0, "svc": 1435, "nsk": 0, "frm": 141}, {"id": "207", "nat": "قرغيزستان", "cap": 3079, "rep": 0, "tik": 0, "svc": 2946, "nsk": 2946, "frm": 18}, {"id": "209", "nat": "تشاد", "cap": 3795, "rep": 0, "tik": 0, "svc": 836, "nsk": 0, "frm": 13}, {"id": "210", "nat": "تشاد", "cap": 3325, "rep": 0, "tik": 0, "svc": 1023, "nsk": 1023, "frm": 32}, {"id": "221", "nat": "باكستان", "cap": 1393, "rep": 0, "tik": 0, "svc": 1111, "nsk": 83, "frm": 97}, {"id": "222", "nat": "باكستان", "cap": 2012, "rep": 0, "tik": 0, "svc": 2009, "nsk": 1200, "frm": 97}, {"id": "223", "nat": "باكستان", "cap": 1269, "rep": 0, "tik": 0, "svc": 1264, "nsk": 1259, "frm": 226}, {"id": "224", "nat": "باكستان", "cap": 921, "rep": 0, "tik": 0, "svc": 850, "nsk": 0, "frm": 102}, {"id": "225", "nat": "باكستان", "cap": 1427, "rep": 0, "tik": 0, "svc": 1275, "nsk": 684, "frm": 32}, {"id": "226", "nat": "باكستان", "cap": 1300, "rep": 0, "tik": 0, "svc": 1290, "nsk": 0, "frm": 70}, {"id": "227", "nat": "باكستان", "cap": 302, "rep": 0, "tik": 0, "svc": 285, "nsk": 66, "frm": 52}, {"id": "228", "nat": "باكستان", "cap": 277, "rep": 0, "tik": 0, "svc": 237, "nsk": 0, "frm": 65}, {"id": "230", "nat": "سريلانكا", "cap": 2910, "rep": 0, "tik": 0, "svc": 2736, "nsk": 2734, "frm": 323}, {"id": "231", "nat": "سريلانكا", "cap": 1115, "rep": 0, "tik": 0, "svc": 1110, "nsk": 1104, "frm": 97}, {"id": "فريق عمل الضيافة 1", "nat": "الهند", "cap": 2829, "rep": 0, "tik": 0, "svc": 0, "nsk": 0, "frm": 0}, {"id": "فريق عمل الضيافة 2", "nat": "الهند", "cap": 1914, "rep": 0, "tik": 0, "svc": 0, "nsk": 0, "frm": 0}, {"id": "فريق عمل الضيافة 3", "nat": "بنجلاديش", "cap": 1189, "rep": 0, "tik": 0, "svc": 0, "nsk": 0, "frm": 0}], "inc_i": [{"c": "100", "nat": "مصر", "cap": 981.0, "fx": 92.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "101", "nat": "مصر", "cap": 2341.0, "fx": 1782.0, "am": 27.0, "ad": 0.0, "dt": 1.0, "ls": 3.0, "tot": 31.0}, {"c": "102", "nat": "مصر", "cap": 4414.0, "fx": 4407.0, "am": 78.0, "ad": 2.0, "dt": 0.0, "ls": 3.0, "tot": 83.0}, {"c": "103", "nat": "مصر", "cap": 2963.0, "fx": 2948.0, "am": 64.0, "ad": 0.0, "dt": 0.0, "ls": 6.0, "tot": 70.0}, {"c": "104", "nat": "مصر", "cap": 2927.0, "fx": 412.0, "am": 18.0, "ad": 1.0, "dt": 0.0, "ls": 2.0, "tot": 21.0}, {"c": "105", "nat": "مصر", "cap": 2971.0, "fx": 2971.0, "am": 134.0, "ad": 0.0, "dt": 0.0, "ls": 15.0, "tot": 149.0}, {"c": "106", "nat": "مصر", "cap": 2980.0, "fx": 2058.0, "am": 4.0, "ad": 0.0, "dt": 0.0, "ls": 2.0, "tot": 6.0}, {"c": "107", "nat": "مصر", "cap": 2923.0, "fx": 2482.0, "am": 21.0, "ad": 1.0, "dt": 0.0, "ls": 1.0, "tot": 23.0}, {"c": "108", "nat": "مصر", "cap": 3006.0, "fx": 3007.0, "am": 39.0, "ad": 3.0, "dt": 1.0, "ls": 1.0, "tot": 44.0}, {"c": "109", "nat": "موريتانيا", "cap": 3570.0, "fx": 1905.0, "am": 6.0, "ad": 0.0, "dt": 0.0, "ls": 2.0, "tot": 8.0}, {"c": "110", "nat": "تونس", "cap": 3261.0, "fx": 3322.0, "am": 4.0, "ad": 3.0, "dt": 0.0, "ls": 0.0, "tot": 7.0}, {"c": "111", "nat": "تونس", "cap": 3171.0, "fx": 3171.0, "am": 3.0, "ad": 2.0, "dt": 0.0, "ls": 1.0, "tot": 6.0}, {"c": "112", "nat": "تونس", "cap": 1650.0, "fx": 1427.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 3.0, "tot": 4.0}, {"c": "113", "nat": "تونس", "cap": 113.0, "fx": 1867.0, "am": 1.0, "ad": 0.0, "dt": 1.0, "ls": 0.0, "tot": 2.0}, {"c": "114", "nat": "تونس", "cap": 1188.0, "fx": 0.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 1.0}, {"c": "115", "nat": "عمان", "cap": 2603.0, "fx": 1956.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 1.0}, {"c": "116", "nat": "عمان", "cap": 2850.0, "fx": 2.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "117", "nat": "عمان", "cap": 2850.0, "fx": 818.0, "am": 2.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 2.0}, {"c": "118", "nat": "عمان", "cap": 2850.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "119", "nat": "عمان", "cap": 2850.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "120", "nat": "روسيا", "cap": 3735.0, "fx": 1661.0, "am": 4.0, "ad": 1.0, "dt": 0.0, "ls": 0.0, "tot": 5.0}, {"c": "121", "nat": "روسيا", "cap": 3810.0, "fx": 2931.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 3.0, "tot": 4.0}, {"c": "122", "nat": "روسيا", "cap": 3595.0, "fx": 2534.0, "am": 0.0, "ad": 2.0, "dt": 0.0, "ls": 0.0, "tot": 2.0}, {"c": "123", "nat": "روسيا", "cap": 3081.0, "fx": 1656.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 1.0, "tot": 1.0}, {"c": "125", "nat": "إرتريا", "cap": 717.0, "fx": 603.0, "am": 0.0, "ad": 3.0, "dt": 0.0, "ls": 3.0, "tot": 6.0}, {"c": "150", "nat": "أخرى", "cap": 1195.0, "fx": 16.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "151", "nat": "أخرى", "cap": 0.0, "fx": 1.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "152", "nat": "أخرى", "cap": 0.0, "fx": 252.0, "am": 3.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 3.0}, {"c": "160", "nat": "بنجلاديش", "cap": 3144.0, "fx": 1953.0, "am": 7.0, "ad": 2.0, "dt": 0.0, "ls": 0.0, "tot": 9.0}, {"c": "161", "nat": "بنجلاديش", "cap": 2683.0, "fx": 1244.0, "am": 0.0, "ad": 0.0, "dt": 2.0, "ls": 0.0, "tot": 3.0}, {"c": "162", "nat": "بنجلاديش", "cap": 1372.0, "fx": 803.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "163", "nat": "بنجلاديش", "cap": 312.0, "fx": 312.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "164", "nat": "بنجلاديش", "cap": 564.0, "fx": 448.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "301", "nat": "الهند", "cap": 3262.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "302", "nat": "الهند", "cap": 3843.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "303", "nat": "الهند", "cap": 1704.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "304", "nat": "بنجلاديش", "cap": 1174.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "305", "nat": "بنجلاديش", "cap": 1864.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "306", "nat": "بنجلاديش", "cap": 1678.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "مركز ضيافة 1", "nat": "مصر", "cap": 26572.0, "fx": 1117.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 1.0}, {"c": "مركز ضيافة 2", "nat": "أخرى", "cap": 22586.0, "fx": 4255.0, "am": 0.0, "ad": 3.0, "dt": 1.0, "ls": 0.0, "tot": 4.0}, {"c": "مركز ضيافة 3", "nat": "أخرى", "cap": 19455.0, "fx": 1872.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "مصر", "cap": 0.0, "fx": 0.0, "am": 10.0, "ad": 1.0, "dt": 0.0, "ls": 2.0, "tot": 13.0}, {"c": "لايوجد", "nat": "عمان", "cap": 0.0, "fx": 0.0, "am": 3.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 3.0}, {"c": "لايوجد", "nat": "النمسا", "cap": 0.0, "fx": 0.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 1.0}, {"c": "لايوجد", "nat": "المملكة المتحدة", "cap": 0.0, "fx": 0.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 1.0}, {"c": "لايوجد", "nat": "الجبل الأسود", "cap": 0.0, "fx": 0.0, "am": 1.0, "ad": 0.0, "dt": 0.0, "ls": 1.0, "tot": 1.0}], "inc_r": [{"c": "201", "nat": "فلسطين", "cap": 3496.0, "fx": 2832.0, "am": 2.0, "ad": 2830.0, "dt": 17.0, "ls": 3.0, "tot": 27.0}, {"c": "202", "nat": "فلسطين", "cap": 3170.0, "fx": 2565.0, "am": 2.0, "ad": 2563.0, "dt": 27.0, "ls": 1.0, "tot": 30.0}, {"c": "203", "nat": "المغرب", "cap": 3299.0, "fx": 2119.0, "am": 42.0, "ad": 2102.0, "dt": 8.0, "ls": 0.0, "tot": 10.0}, {"c": "204", "nat": "المغرب", "cap": 292.0, "fx": 166.0, "am": 0.0, "ad": 166.0, "dt": 2.0, "ls": 0.0, "tot": 2.0}, {"c": "206", "nat": "قرغيزستان", "cap": 3506.0, "fx": 1435.0, "am": 0.0, "ad": 1435.0, "dt": 5.0, "ls": 0.0, "tot": 8.0}, {"c": "207", "nat": "قرغيزستان", "cap": 3079.0, "fx": 2943.0, "am": 2943.0, "ad": 0.0, "dt": 6.0, "ls": 0.0, "tot": 7.0}, {"c": "209", "nat": "تشاد", "cap": 3795.0, "fx": 836.0, "am": 0.0, "ad": 836.0, "dt": 7.0, "ls": 0.0, "tot": 10.0}, {"c": "210", "nat": "تشاد", "cap": 3325.0, "fx": 1023.0, "am": 1023.0, "ad": 0.0, "dt": 2.0, "ls": 0.0, "tot": 2.0}, {"c": "221", "nat": "باكستان", "cap": 1393.0, "fx": 1111.0, "am": 83.0, "ad": 1028.0, "dt": 14.0, "ls": 0.0, "tot": 18.0}, {"c": "222", "nat": "باكستان", "cap": 2012.0, "fx": 2005.0, "am": 1200.0, "ad": 805.0, "dt": 12.0, "ls": 0.0, "tot": 15.0}, {"c": "223", "nat": "باكستان", "cap": 1269.0, "fx": 1259.0, "am": 1259.0, "ad": 0.0, "dt": 16.0, "ls": 0.0, "tot": 20.0}, {"c": "224", "nat": "باكستان", "cap": 921.0, "fx": 850.0, "am": 0.0, "ad": 850.0, "dt": 12.0, "ls": 0.0, "tot": 12.0}, {"c": "225", "nat": "باكستان", "cap": 1427.0, "fx": 1268.0, "am": 684.0, "ad": 584.0, "dt": 5.0, "ls": 0.0, "tot": 8.0}, {"c": "226", "nat": "باكستان", "cap": 1300.0, "fx": 1288.0, "am": 0.0, "ad": 1288.0, "dt": 2.0, "ls": 0.0, "tot": 2.0}, {"c": "227", "nat": "باكستان", "cap": 302.0, "fx": 285.0, "am": 0.0, "ad": 285.0, "dt": 78.0, "ls": 0.0, "tot": 88.0}, {"c": "228", "nat": "باكستان", "cap": 277.0, "fx": 229.0, "am": 0.0, "ad": 229.0, "dt": 7.0, "ls": 0.0, "tot": 7.0}, {"c": "230", "nat": "سريلانكا", "cap": 2910.0, "fx": 2705.0, "am": 2705.0, "ad": 0.0, "dt": 78.0, "ls": 0.0, "tot": 88.0}, {"c": "231", "nat": "سريلانكا", "cap": 1115.0, "fx": 1104.0, "am": 1104.0, "ad": 0.0, "dt": 7.0, "ls": 0.0, "tot": 7.0}, {"c": "فريق عمل الضيافة1", "nat": "الهند", "cap": 2829.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "فريق عمل الضيافة2", "nat": "الهند", "cap": 1914.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "فريق عمل الضيافة3", "nat": "بنجلاديش", "cap": 1189.0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "فلسطين", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 8.0, "ls": 0.0, "tot": 10.0}, {"c": "لايوجد", "nat": "تشاد", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 7.0, "ls": 0.0, "tot": 13.0}, {"c": "لايوجد", "nat": "قرغيزستان", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 6.0, "ls": 0.0, "tot": 9.0}, {"c": "لايوجد", "nat": "المغرب", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 4.0, "ls": 0.0, "tot": 7.0}, {"c": "لايوجد", "nat": "سريلانكا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "استراليا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "الإمارات العربية المتحدة", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "ألبانيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "البوسنة والهرسك", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "السودان", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "المغرب", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 4.0, "ls": 0.0, "tot": 7.0}, {"c": "لايوجد", "nat": "المملكة المتحدة", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "الهند", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "الولايات المتحدة الأمريكية", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "إندونيسيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "اوكرانيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "باكستان", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "بنجلادش", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "تايلاند", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "تونس", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "سنغافورة", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "صربيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "غامبيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "فرنسا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "كوت دايفوار", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "لبنان", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "ماليزيا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}, {"c": "لايوجد", "nat": "نيجيريا", "cap": 0, "fx": 0.0, "am": 0.0, "ad": 0.0, "dt": 0.0, "ls": 0.0, "tot": 0.0}], "adm_i": {"tickets": [{"d": "إدارة الإسكان", "v": 3}, {"d": "إدارة الموارد البشرية", "v": 3}, {"d": "إدارة نسك وامتثال", "v": 14}, {"d": "العناية بالمستفيدين", "v": 90}, {"d": "التغذية", "v": 1}, {"d": "التخطيط والتطوير B2C", "v": 233}, {"d": "الحج المباشر B2C", "v": 1}, {"d": "علاقات العملاء CRM", "v": 2181}, {"d": "البلاغات والشكاوي (مدينه)", "v": 48}, {"d": "مراكز الضيافة", "v": 6}, {"d": "مراكز الطوارئ و السلامة", "v": 4}, {"d": "مركز بطاقات نسك", "v": 162}, {"d": "مكتب الرئيس", "v": 45}], "forms": [{"d": "نسك وامتثال", "v": 948}, {"d": "إدارة الإسكان", "v": 439}, {"d": "إدارة الانشاءات والتجهيزات", "v": 711}, {"d": "إدارة التفويج والسلامة", "v": 237}, {"d": "التغذية", "v": 3}, {"d": "غير مسند لإدارة", "v": 207}], "reports": [{"d": "ادارة الإسكان", "v": 177}, {"d": "مركز طوارئ وسلامة", "v": 2}, {"d": "التغذية", "v": 1}, {"d": "إدارة الإنشاءات والتجهيزات", "v": 4}, {"d": "نسك وامتثال", "v": 16}]}, "adm_r": {"tickets": [{"d": "ادارة التذاكر", "v": 0}, {"d": "ادارة النقل والتفويج", "v": 0}, {"d": "الخدمات العامة", "v": 0}, {"d": "نسك (خدمات المستفيدين)", "v": 0}, {"d": "سلاسل الامداد والتغذية", "v": 0}, {"d": "الاستقبال و الاستعداد المسبق", "v": 0}, {"d": "قطاع B2B", "v": 0}, {"d": "العمليات اللاسلكية", "v": 0}, {"d": "المتابعة الميدانية", "v": 0}, {"d": "قطاع المشاعر المقدسة", "v": 0}, {"d": "قطاع B2C", "v": 0}], "forms": [{"d": "ادارة الاسكان", "v": 1697}], "reports": [{"d": "ادارة الإسكان", "v": 0}, {"d": "أشرقت", "v": 0}, {"d": "المتابعة الميدانية", "v": 0}, {"d": "قطاع المشاعر المقدسة", "v": 0}]}, "kpi_i": [{"c": "100", "nat": "مصر سياحة", "hs": 100.0, "pl": 89.57, "cd": 95.65, "sv": 0.0, "fn": 71.305}, {"c": "101", "nat": "مصر قرعة", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 19.69, "fn": 79.9225}, {"c": "102", "nat": "مصر قرعة", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 75.0}, {"c": "103", "nat": "مصر قرعة", "hs": 0.0, "pl": 100.0, "cd": 100.0, "sv": 21.19, "fn": 55.2975}, {"c": "104", "nat": "مصر قرعة", "hs": 100.0, "pl": 30.25, "cd": 30.25, "sv": 4.98, "fn": 41.37}, {"c": "105", "nat": "مصر قرعة", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.02, "fn": 75.005}, {"c": "106", "nat": "مصر قرعة", "hs": 100.0, "pl": 99.74, "cd": 100.0, "sv": 39.59, "fn": 84.83250000000001}, {"c": "107", "nat": "مصر قرعة", "hs": 100.0, "pl": 99.97, "cd": 99.97, "sv": 19.76, "fn": 79.925}, {"c": "108", "nat": "مصر قرعة", "hs": 100.0, "pl": 99.77, "cd": 99.63, "sv": 24.64, "fn": 81.00999999999999}, {"c": "109", "nat": "موريتانيا", "hs": 100.0, "pl": 99.9, "cd": 99.9, "sv": 0.0, "fn": 74.95}, {"c": "110", "nat": "تونس", "hs": 100.0, "pl": 99.97, "cd": 100.0, "sv": 17.89, "fn": 79.465}, {"c": "111", "nat": "تونس", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 27.18, "fn": 81.795}, {"c": "112", "nat": "تونس", "hs": 100.0, "pl": 100.0, "cd": 99.88, "sv": 17.28, "fn": 79.28999999999999}, {"c": "113", "nat": "تونس", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 75.0}, {"c": "114", "nat": "تونس", "hs": 100.0, "pl": 0.0, "cd": 0.0, "sv": 8.49, "fn": 27.1225}, {"c": "115", "nat": "عمان", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 100.0, "fn": 100.0}, {"c": "116", "nat": "عمان", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "117", "nat": "عمان", "hs": 100.0, "pl": 9.0, "cd": 97.24, "sv": 7.95, "fn": 53.5475}, {"c": "118", "nat": "عمان", "hs": 100.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 25.0}, {"c": "119", "nat": "عمان", "hs": 50.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 12.5}, {"c": "120", "nat": "روسيا", "hs": 0.0, "pl": 99.86, "cd": 99.91, "sv": 0.0, "fn": 49.942499999999995}, {"c": "121", "nat": "روسيا", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 75.0}, {"c": "122", "nat": "روسيا", "hs": 0.0, "pl": 97.24, "cd": 98.04, "sv": 0.0, "fn": 48.82}, {"c": "123", "nat": "روسيا", "hs": 100.0, "pl": 99.96, "cd": 66.17, "sv": 0.0, "fn": 66.5325}, {"c": "125", "nat": "إرتريا", "hs": 100.0, "pl": 84.1, "cd": 100.0, "sv": 0.0, "fn": 71.025}, {"c": "150", "nat": "أخرى", "hs": 100.0, "pl": 100.0, "cd": 97.67, "sv": 0.0, "fn": 74.4175}, {"c": "151", "nat": "أخرى", "hs": 0.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 50.0}, {"c": "152", "nat": "أخرى", "hs": 0.0, "pl": 0.0, "cd": 99.21, "sv": 0.0, "fn": 24.8025}, {"c": "160", "nat": "بنجلاديش", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 75.0}, {"c": "161", "nat": "بنجلاديش", "hs": 100.0, "pl": 99.94, "cd": 100.0, "sv": 0.0, "fn": 74.985}, {"c": "162", "nat": "بنجلاديش", "hs": 0.0, "pl": 99.88, "cd": 100.0, "sv": 0.0, "fn": 49.97}, {"c": "163", "nat": "بنجلاديش", "hs": 100.0, "pl": 99.68, "cd": 100.0, "sv": 0.0, "fn": 74.92}, {"c": "164", "nat": "بنجلاديش", "hs": 100.0, "pl": 100.0, "cd": 100.0, "sv": 0.0, "fn": 75.0}, {"c": "301", "nat": "الهند", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "302", "nat": "الهند", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "303", "nat": "الهند", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "304", "nat": "بنجلاديش", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "305", "nat": "بنجلاديش", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "306", "nat": "بنجلاديش", "hs": 0.0, "pl": 0.0, "cd": 0.0, "sv": 0.0, "fn": 0.0}, {"c": "مركز ضيافة 1", "nat": "مصر", "hs": 0.0, "pl": 91.36, "cd": 100.0, "sv": 0.0, "fn": 47.84}, {"c": "مركز ضيافة 2", "nat": "أخرى", "hs": 0.0, "pl": 100.0, "cd": 99.98, "sv": 0.0, "fn": 49.995000000000005}, {"c": "مركز ضيافة 3", "nat": "أخرى", "hs": 0.0, "pl": 99.42, "cd": 99.42, "sv": 0.0, "fn": 49.71}], "kpi_r": [{"c": "201", "nat": "فلسطين", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "202", "nat": "فلسطين", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "203", "nat": "المغرب", "cf": 0.0, "cd": 3.77, "pl": 0.0, "hs": 100.0, "fn": 25.9425}, {"c": "204", "nat": "المغرب", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "206", "nat": "قرغيزستان", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "207", "nat": "قرغيزستان", "cf": 0.0, "cd": 100.0, "pl": 0.0, "hs": 100.0, "fn": 50.0}, {"c": "209", "nat": "تشاد", "cf": 0.0, "cd": 100.0, "pl": 0.3, "hs": 100.0, "fn": 50.075}, {"c": "210", "nat": "تشاد", "cf": 0.0, "cd": 100.0, "pl": 1.27, "hs": 100.0, "fn": 50.317499999999995}, {"c": "221", "nat": "باكستان", "cf": 0.0, "cd": 7.47, "pl": 0.0, "hs": 100.0, "fn": 26.8675}, {"c": "222", "nat": "باكستان", "cf": 0.0, "cd": 59.85, "pl": 0.0, "hs": 100.0, "fn": 39.9625}, {"c": "223", "nat": "باكستان", "cf": 0.0, "cd": 100.0, "pl": 0.56, "hs": 100.0, "fn": 50.14}, {"c": "224", "nat": "باكستان", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "225", "nat": "باكستان", "cf": 0.0, "cd": 53.94, "pl": 0.63, "hs": 100.0, "fn": 38.6425}, {"c": "226", "nat": "باكستان", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "227", "nat": "باكستان", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "228", "nat": "باكستان", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 100.0, "fn": 25.0}, {"c": "230", "nat": "سريلانكا", "cf": 0.0, "cd": 100.0, "pl": 100.0, "hs": 100.0, "fn": 75.0}, {"c": "231", "nat": "سريلانكا", "cf": 0.0, "cd": 100.0, "pl": 0.0, "hs": 100.0, "fn": 50.0}, {"c": "فريق عمل الضيافة 1", "nat": "الهند", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 0.0, "fn": 0.0}, {"c": "فريق عمل الضيافة 2", "nat": "الهند", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 0.0, "fn": 0.0}, {"c": "فريق عمل الضيافة 3", "nat": "بنجلاديش", "cf": 0.0, "cd": 0.0, "pl": 0.0, "hs": 0.0, "fn": 0.0}], "contracts": [{"n": "مصر", "req": 505721, "done": 76299, "rate": 15.087172571437609, "cen": 8, "ok": 104, "ng": 193}, {"n": "تونس", "req": 265230, "done": 42434, "rate": 15.998944312483504, "cen": 5, "ok": 36, "ng": 173}, {"n": "عمان", "req": 354015, "done": 71779, "rate": 20.27569453271754, "cen": 5, "ok": 54, "ng": 193}, {"n": "روسيا", "req": 387901, "done": 0, "rate": 0.0, "cen": 4, "ok": 0, "ng": 177}, {"n": "موريتانيا", "req": 104141, "done": 0, "rate": 0.0, "cen": 1, "ok": 0, "ng": 47}, {"n": "إرتريا", "req": 29387, "done": 0, "rate": 0.0, "cen": 1, "ok": 0, "ng": 102}], "totals": {"centers_i": 33, "centers_r": 21, "tik": 2791, "frm": 4242, "rep": 200, "inc": 922, "tik_i": 2791, "frm_i": 2545, "rep_i": 200, "inc_i": 515, "tik_r": 0, "frm_r": 1697, "rep_r": 0, "inc_r": 407}, "contracts_r": [{"n": "باكستان", "req": 8901, "done": 8321, "rate": 93.48, "cen": 8, "ok": 0, "ng": 0}, {"n": "فلسطين", "req": 6666, "done": 5572, "rate": 83.59, "cen": 2, "ok": 0, "ng": 0}, {"n": "المغرب", "req": 3558, "done": 2808, "rate": 78.92, "cen": 2, "ok": 0, "ng": 0}, {"n": "قرغيزستان", "req": 6585, "done": 4381, "rate": 66.53, "cen": 2, "ok": 0, "ng": 0}, {"n": "تشاد", "req": 7120, "done": 1859, "rate": 26.11, "cen": 2, "ok": 0, "ng": 0}, {"n": "سريلانكا", "req": 4025, "done": 3846, "rate": 95.55, "cen": 2, "ok": 0, "ng": 0}, {"n": "الهند", "req": 4743, "done": 0, "rate": 0.0, "cen": 2, "ok": 0, "ng": 0}, {"n": "بنجلاديش", "req": 1189, "done": 0, "rate": 0.0, "cen": 1, "ok": 0, "ng": 0}]};
+var NC={'مصر':'#C9A227','تونس':'#22C55E','عمان':'#3498DB','روسيا':'#E74C3C','موريتانيا':'#9B59B6','إرتريا':'#1ABC9C','بنجلاديش':'#F39C12','الهند':'#E91E63','أخرى':'#78909C','فلسطين':'#00BCD4','المغرب':'#8BC34A','باكستان':'#FF5722','سريلانكا':'#FF9800','قرغيزستان':'#673AB7','تشاد':'#795548','مصر سياحة':'#C9A227','مصر قرعة':'#D4AC30'};
+var PAL=['#C9A227','#22C55E','#3498DB','#E74C3C','#F39C12','#9B59B6','#1ABC9C','#E91E63','#00BCD4','#8BC34A','#FF5722','#FF9800'];
+
+Chart.defaults.color='#4A5568';
+Chart.defaults.font.family="'Cairo',sans-serif";
+
+function co(ex){
+  ex=ex||{};
+  var xScale={ticks:{color:ex.xc||'#6B7C93'},grid:{color:'rgba(0,0,0,.05)'}};
+  if(ex.mr) xScale.ticks.maxRotation=ex.mr;
+  return {responsive:true,maintainAspectRatio:true,animation:{duration:600},
+    plugins:{
+      legend:{labels:{color:'#3D4F63',font:{family:'Cairo',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'rgba(184,137,26,.25)',borderWidth:1,titleColor:'#A0720F',bodyColor:'#4A5568',padding:10}
+    },
+    scales:{x:xScale,y:{ticks:{color:'#6B7C93'},grid:{color:'rgba(0,0,0,.05)'},max:ex.max}}};
+}
+function nc(n){return NC[n]||'#78909C';}
+function kc(s){return s>=75?'#16A34A':s>=50?'#B8891A':s>0?'#1D6FA4':'#C0392B';}
+function klv(s){if(s>=75)return{l:'متميز',c:'bg'};if(s>=50)return{l:'جيد',c:'bo'};if(s>0)return{l:'مقبول',c:'bb'};return{l:'ضعيف',c:'br'};}
+function pb(v,w){w=w||65;return '<div class="pb" style="width:'+w+'px"><div class="pf" style="width:'+Math.min(v,100)+'%;background:'+kc(v)+'"></div></div>';}
+function toAr(n){return Number(n).toLocaleString('ar-SA');}
+function fmt(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':String(v);}
+
+function gbn(arr){
+  var m={};
+  arr.forEach(function(d){if(!m[d.nat])m[d.nat]=0;m[d.nat]+=d.tot;});
+  return Object.entries(m).filter(function(e){return e[1]>0;}).sort(function(a,b){return b[1]-a[1];});
+}
+
+function mkBar(id,labels,datasets,opts){
+  var el=document.getElementById(id);if(!el)return;
+  var o=co(opts||{});
+  if(opts&&opts.noLeg)o.plugins.legend.display=false;
+  if(opts&&opts.horiz)o.indexAxis='y';
+  if(opts&&opts.pct){if(!o.scales.y)o.scales.y={};o.scales.y.ticks={callback:function(v){return v+'%';},color:'#6B7C93'};if(opts.max)o.scales.y.max=opts.max;}
+  new Chart(el,{type:'bar',data:{labels:labels,datasets:datasets},options:o});
+}
+function mkDo(id,labels,data,colors){
+  var el=document.getElementById(id);if(!el)return;
+  new Chart(el,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:colors.map(function(c){return c+'BB';}),borderColor:colors,borderWidth:2}]},
+    options:{responsive:true,cutout:'55%',plugins:{legend:{position:'bottom',labels:{color:'#3D4F63',font:{size:11,family:'Cairo'}}},tooltip:{backgroundColor:'#fff',borderColor:'rgba(184,137,26,.25)',borderWidth:1,titleColor:'#A0720F',bodyColor:'#4A5568',padding:10}}}});
+}
+function mkPie(id,labels,data,colors){
+  var el=document.getElementById(id);if(!el)return;
+  new Chart(el,{type:'pie',data:{labels:labels,datasets:[{data:data,backgroundColor:colors.map(function(c){return c+'BB';}),borderColor:colors,borderWidth:2}]},
+    options:{responsive:true,plugins:{legend:{position:'right',labels:{color:'#3D4F63',font:{size:11,family:'Cairo'}}},tooltip:{backgroundColor:'#fff',borderColor:'rgba(184,137,26,.25)',borderWidth:1,titleColor:'#A0720F',bodyColor:'#4A5568',padding:10}}}});
+}
+
+function initCharts(){
+  var T=D.totals;
+  // Hero
+  setText('ov_tik', toAr(T.tik));
+  setText('ov_frm', toAr(T.frm));
+  setText('ov_rep', toAr(T.rep));
+  setText('ov_inc', toAr(T.inc));
+  // Overview ikram cards
+  setText('ov_tik_i', toAr(T.tik_i));
+  setText('ov_frm_i', toAr(T.frm_i));
+  setText('ov_rep_i', toAr(T.rep_i));
+  setText('ov_inc_i', toAr(T.inc_i));
+  // Overview rihlat cards
+  setText('ov_tik_r', toAr(T.tik_r));
+  setText('ov_frm_r', toAr(T.frm_r));
+  setText('ov_rep_r', toAr(T.rep_r));
+  setText('ov_inc_r', toAr(T.inc_r));
+  // Incidents cards
+  var ia=sum(D.inc_i,'am'),iad=sum(D.inc_i,'ad'),idt=sum(D.inc_i,'dt'),itot=sum(D.inc_i,'tot');
+  var ra=sum(D.inc_r,'am'),rad=sum(D.inc_r,'ad'),rdt=sum(D.inc_r,'dt'),rtot=sum(D.inc_r,'tot');
+  setText('inc_am_i',ia);setText('inc_ad_i',iad);setText('inc_dt_i',idt);setText('inc_tot_i',itot);
+  setText('inc_am_r',ra);setText('inc_ad_r',rad);setText('inc_dt_r',rdt);setText('inc_tot_r',rtot);
+  // Contracts cards
+  var ok=D.contracts.reduce(function(s,c){return s+c.ok;},0);
+  var ng=D.contracts.reduce(function(s,c){return s+c.ng;},0);
+  setText('con_ok',toAr(ok)); setText('con_ng',toAr(ng));
+  // Admin cards
+  setText('adm_tik_i', toAr(T.tik_i));
+  setText('adm_frm_i', toAr(T.frm_i));
+  setText('adm_rep_i', toAr(T.rep_i));
+  setText('adm_tik_r', toAr(T.tik_r));
+  setText('adm_frm_r', toAr(T.frm_r));
+  setText('adm_rep_r', toAr(T.rep_r));
+
+  // === OVERVIEW IKRAM CHARTS ===
+  var iByN=gbn(D.inc_i);
+  mkBar('c_ovINat',iByN.map(function(e){return e[0];}),
+    [{label:'وقوعات',data:iByN.map(function(e){return e[1];}),backgroundColor:iByN.map(function(e){return nc(e[0])+'BB';}),borderColor:iByN.map(function(e){return nc(e[0]);}),borderWidth:2,borderRadius:7}],
+    {noLeg:true,mr:30});
+  mkBar('c_ovITick',D.adm_i.tickets.slice(0,8).map(function(t){return t.d.length>14?t.d.slice(0,14)+'...':t.d;}),
+    [{label:'التذاكر',data:D.adm_i.tickets.slice(0,8).map(function(t){return t.v;}),backgroundColor:'#B8891ABB',borderColor:'#B8891A',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  var topCenI=D.cen_i.sort(function(a,b){return b.frm-a.frm;}).slice(0,12);
+  mkBar('c_ovICen',topCenI.map(function(c){return c.id;}),
+    [{label:'الاستمارات',data:topCenI.map(function(c){return c.frm;}),backgroundColor:'#16A34ABB',borderColor:'#16A34A',borderWidth:2,borderRadius:6},
+     {label:'التذاكر',data:topCenI.map(function(c){return c.tik;}),backgroundColor:'#1D6FA4BB',borderColor:'#1D6FA4',borderWidth:2,borderRadius:6}],{mr:30});
+  mkDo('c_ovITypes',['اسعاف('+ia+')','تنويم('+iad+')','وفاة('+idt+')'],[ia,iad,idt],['#C0392B','#1D6FA4','#2C3E50']);
+
+  // === OVERVIEW RIHLAT CHARTS ===
+  var rByN=gbn(D.inc_r);
+  mkBar('c_ovRNat',rByN.map(function(e){return e[0];}),
+    [{label:'وقوعات',data:rByN.map(function(e){return e[1];}),backgroundColor:rByN.map(function(e){return nc(e[0])+'BB';}),borderColor:rByN.map(function(e){return nc(e[0]);}),borderWidth:2,borderRadius:7}],
+    {noLeg:true,mr:30});
+  mkBar('c_ovRTick',D.adm_r.tickets.slice(0,8).map(function(t){return t.d.length>14?t.d.slice(0,14)+'...':t.d;}),
+    [{label:'التذاكر',data:D.adm_r.tickets.slice(0,8).map(function(t){return t.v;}),backgroundColor:'#0D7A6BBB',borderColor:'#0D7A6B',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  var topCenR=D.cen_r.sort(function(a,b){return b.frm-a.frm;}).slice(0,12);
+  mkBar('c_ovRCen',topCenR.map(function(c){return c.id;}),
+    [{label:'الاستمارات',data:topCenR.map(function(c){return c.frm;}),backgroundColor:'#0D7A6BBB',borderColor:'#0D7A6B',borderWidth:2,borderRadius:6},
+     {label:'التذاكر',data:topCenR.map(function(c){return c.tik;}),backgroundColor:'#7B2D8BBB',borderColor:'#7B2D8B',borderWidth:2,borderRadius:6}],{mr:30});
+  mkDo('c_ovRTypes',['اسعاف('+ra+')','تنويم('+rad+')','وفاة('+rdt+')'],[ra,rad,rdt],['#C0392B','#1D6FA4','#2C3E50']);
+
+  // === INCIDENTS ===
+  mkPie('c_incINat',iByN.map(function(e){return e[0];}),iByN.map(function(e){return e[1];}),iByN.map(function(e){return nc(e[0]);}));
+  mkDo('c_incITypes',['اسعاف('+ia+')','تنويم('+iad+')','وفاة('+idt+')'],[ia,iad,idt],['#C0392B','#1D6FA4','#2C3E50']);
+  mkPie('c_incRNat',rByN.map(function(e){return e[0];}),rByN.map(function(e){return e[1];}),rByN.map(function(e){return nc(e[0]);}));
+  mkDo('c_incRTypes',['اسعاف('+ra+')','تنويم('+rad+')','وفاة('+rdt+')'],[ra,rad,rdt],['#C0392B','#1D6FA4','#2C3E50']);
+
+  // === CONTRACTS ===
+  mkBar('c_conProg',D.contracts.map(function(c){return c.n;}),
+    [{label:'مكتملة',data:D.contracts.map(function(c){return c.ok;}),backgroundColor:'#16A34ABB',borderColor:'#16A34A',borderWidth:2,borderRadius:5},
+     {label:'ناقصة',data:D.contracts.map(function(c){return c.ng;}),backgroundColor:'#C0392BBB',borderColor:'#C0392B',borderWidth:2,borderRadius:5}],{});
+  mkPie('c_conShare',D.contracts.map(function(c){return c.n;}),D.contracts.map(function(c){return c.req;}),D.contracts.map(function(c){return NC[c.n]||'#78909C';}));
+
+  // === ADMIN ===
+  mkBar('c_admIT',D.adm_i.tickets.map(function(t){return t.d.length>14?t.d.slice(0,14)+'...':t.d;}),
+    [{label:'التذاكر',data:D.adm_i.tickets.map(function(t){return t.v;}),backgroundColor:'#B8891A99',borderColor:'#B8891A',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  mkBar('c_admIF',D.adm_i.forms.map(function(f){return f.d.length>14?f.d.slice(0,14)+'...':f.d;}),
+    [{label:'الاستمارات',data:D.adm_i.forms.map(function(f){return f.v;}),backgroundColor:'#16A34A99',borderColor:'#16A34A',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  mkBar('c_admIR',D.adm_i.reports.map(function(r){return r.d.length>14?r.d.slice(0,14)+'...':r.d;}),
+    [{label:'المحاضر',data:D.adm_i.reports.map(function(r){return r.v;}),backgroundColor:'#7B2D8B99',borderColor:'#7B2D8B',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  // Rihlat admin
+  var rtData=D.adm_r.tickets.filter(function(t){return t.v>0;});
+  var rfData=D.adm_r.forms.filter(function(f){return f.v>0;});
+  var rrData=D.adm_r.reports.filter(function(r){return r.v>0;});
+  if(rtData.length===0)rtData=[{d:'لا يوجد',v:0}];
+  if(rfData.length===0)rfData=D.adm_r.forms.slice(0,5);
+  if(rrData.length===0)rrData=[{d:'لا يوجد',v:0}];
+  mkBar('c_admRT',rtData.map(function(t){return t.d.length>14?t.d.slice(0,14)+'...':t.d;}),
+    [{label:'التذاكر',data:rtData.map(function(t){return t.v;}),backgroundColor:'#B8891A99',borderColor:'#B8891A',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  mkBar('c_admRF',rfData.map(function(f){return f.d.length>14?f.d.slice(0,14)+'...':f.d;}),
+    [{label:'الاستمارات',data:rfData.map(function(f){return f.v;}),backgroundColor:'#16A34A99',borderColor:'#16A34A',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+  mkBar('c_admRR',rrData.map(function(r){return r.d.length>14?r.d.slice(0,14)+'...':r.d;}),
+    [{label:'المحاضر',data:rrData.map(function(r){return r.v;}),backgroundColor:'#7B2D8B99',borderColor:'#7B2D8B',borderWidth:2,borderRadius:7}],
+    {noLeg:true,horiz:true});
+
+  // === KPI ===
+  kpiCharts(D.kpi_i,'ki','c_kpiIBar','c_kpiIHs','c_kpiIDist');
+  kpiCharts2(D.kpi_r,'kr','c_kpiRBar','c_kpiRHs','c_kpiRDist');
+}
+
+function kpiCharts(data,prefix,barId,hsId,distId){
+  var sorted=[].concat(data).sort(function(a,b){return b.fn-a.fn;});
+  mkBar(barId,sorted.map(function(r){return r.c;}),
+    [{label:'النهائية %',data:sorted.map(function(r){return r.fn;}),backgroundColor:sorted.map(function(r){return kc(r.fn)+'BB';}),borderColor:sorted.map(function(r){return kc(r.fn);}),borderWidth:2,borderRadius:6}],
+    {noLeg:true,pct:true,max:100,mr:45,xc:'#3D4F63'});
+  mkBar(hsId,data.map(function(r){return r.c;}),
+    [{label:'جاهزية السكن',data:data.map(function(r){return r.hs;}),backgroundColor:'#1D6FA4BB',borderColor:'#1D6FA4',borderWidth:2,borderRadius:5}],
+    {noLeg:true,pct:true,max:100,mr:45,xc:'#3D4F63'});
+  var exc=data.filter(function(r){return r.fn>=75;}).length;
+  var gd=data.filter(function(r){return r.fn>=50&&r.fn<75;}).length;
+  var av=data.filter(function(r){return r.fn>0&&r.fn<50;}).length;
+  var wk=data.filter(function(r){return r.fn===0;}).length;
+  mkDo(distId,['متميز('+exc+')','جيد('+gd+')','مقبول('+av+')','ضعيف('+wk+')'],[exc,gd,av,wk],['#16A34A','#B8891A','#1D6FA4','#C0392B']);
+  setText(prefix+'_exc',exc);setText(prefix+'_gd',gd);setText(prefix+'_av',av);setText(prefix+'_wk',wk);
+  setText(prefix+'_avg',(data.reduce(function(s,r){return s+r.fn;},0)/data.length).toFixed(1)+'%');
+  // Top 3 labels
+  var top3e=data.filter(function(r){return r.fn>=75;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3g=data.filter(function(r){return r.fn>=50&&r.fn<75;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3a=data.filter(function(r){return r.fn>0&&r.fn<50;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3w=data.filter(function(r){return r.fn===0;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  setText(prefix+'_exc_lbl',top3e);setText(prefix+'_gd_lbl',top3g);setText(prefix+'_av_lbl',top3a);setText(prefix+'_wk_lbl',top3w);
+}
+
+function kpiCharts2(data,prefix,barId,hsId,distId){
+  var sorted=[].concat(data).sort(function(a,b){return b.fn-a.fn;});
+  mkBar(barId,sorted.map(function(r){return r.c;}),
+    [{label:'النهائية %',data:sorted.map(function(r){return r.fn;}),backgroundColor:sorted.map(function(r){return kc(r.fn)+'BB';}),borderColor:sorted.map(function(r){return kc(r.fn);}),borderWidth:2,borderRadius:6}],
+    {noLeg:true,pct:true,max:100,mr:45,xc:'#3D4F63'});
+  mkBar(hsId,data.map(function(r){return r.c;}),
+    [{label:'جاهزية السكن',data:data.map(function(r){return r.hs;}),backgroundColor:'#0D7A6BBB',borderColor:'#0D7A6B',borderWidth:2,borderRadius:5}],
+    {noLeg:true,pct:true,max:100,mr:45,xc:'#3D4F63'});
+  var exc=data.filter(function(r){return r.fn>=75;}).length;
+  var gd=data.filter(function(r){return r.fn>=50&&r.fn<75;}).length;
+  var av=data.filter(function(r){return r.fn>0&&r.fn<50;}).length;
+  var wk=data.filter(function(r){return r.fn===0;}).length;
+  mkDo(distId,['متميز('+exc+')','جيد('+gd+')','مقبول('+av+')','ضعيف('+wk+')'],[exc,gd,av,wk],['#16A34A','#B8891A','#1D6FA4','#C0392B']);
+  setText(prefix+'_exc',exc);setText(prefix+'_gd',gd);setText(prefix+'_av',av);setText(prefix+'_wk',wk);
+  setText(prefix+'_avg',(data.reduce(function(s,r){return s+r.fn;},0)/data.length).toFixed(1)+'%');
+  var top3e=data.filter(function(r){return r.fn>=75;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3g=data.filter(function(r){return r.fn>=50&&r.fn<75;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3a=data.filter(function(r){return r.fn>0&&r.fn<50;}).sort(function(a,b){return b.fn-a.fn;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  var top3w=data.filter(function(r){return r.fn===0;}).slice(0,3).map(function(r){return r.c;}).join('، ');
+  setText(prefix+'_exc_lbl',top3e);setText(prefix+'_gd_lbl',top3g);setText(prefix+'_av_lbl',top3a);setText(prefix+'_wk_lbl',top3w);
+}
+
+function sum(arr,k){return arr.reduce(function(s,d){return s+(d[k]||0);},0);}
+function setText(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+
+function initTables(){
+  // Incidents - filter out لايوجد rows
+  D.inc_i.filter(function(d){return d.c !== 'لايوجد' && d.c !== 'لا يوجد';}).forEach(function(d){
+    var tc=d.tot>50?'#C0392B':d.tot>10?'#C07000':d.tot>0?'#3D4F63':'#16A34A';
+    document.getElementById('b_incI').innerHTML+='<tr><td><b style="color:#A0720F">'+d.c+'</b></td><td><span class="nd" style="background:'+nc(d.nat)+'"></span>'+d.nat+'</td><td>'+toAr(d.cap)+'</td><td>'+toAr(d.fx)+'</td><td style="color:#C0392B">'+d.am+'</td><td style="color:#1D6FA4">'+d.ad+'</td><td style="color:#6B7C93">'+d.dt+'</td><td style="color:#C07000">'+d.ls+'</td><td><b style="color:'+tc+'">'+d.tot+'</b></td></tr>';
+  });
+  D.inc_r.filter(function(d){return d.c !== 'لايوجد' && d.c !== 'لا يوجد';}).forEach(function(d){
+    var tc=d.tot>50?'#C0392B':d.tot>10?'#C07000':d.tot>0?'#3D4F63':'#16A34A';
+    document.getElementById('b_incR').innerHTML+='<tr><td><b style="color:#A0720F">'+d.c+'</b></td><td><span class="nd" style="background:'+nc(d.nat)+'"></span>'+d.nat+'</td><td>'+toAr(d.cap)+'</td><td>'+toAr(d.fx)+'</td><td style="color:#C0392B">'+d.am+'</td><td style="color:#1D6FA4">'+d.ad+'</td><td style="color:#6B7C93">'+d.dt+'</td><td style="color:#C07000">'+d.ls+'</td><td><b style="color:'+tc+'">'+d.tot+'</b></td></tr>';
+  });
+
+  // Centers - build and then draw initial chart
+  D.cen_i.forEach(function(c){
+    document.getElementById('b_cenI').innerHTML+='<tr><td><b style="color:#A0720F">'+c.id+'</b></td><td>'+c.nat+'</td><td>'+toAr(c.cap)+'</td><td>'+c.rep+'</td><td>'+c.tik+'</td><td>'+toAr(c.svc)+'</td><td>'+toAr(c.nsk)+'</td><td>'+toAr(c.frm)+'</td></tr>';
+  });
+  D.cen_r.forEach(function(c){
+    document.getElementById('b_cenR').innerHTML+='<tr><td><b style="color:#A0720F">'+c.id+'</b></td><td>'+c.nat+'</td><td>'+toAr(c.cap)+'</td><td>'+c.rep+'</td><td>'+c.tik+'</td><td>'+toAr(c.svc)+'</td><td>'+toAr(c.nsk)+'</td><td>'+toAr(c.frm)+'</td></tr>';
+  });
+  setTimeout(function(){updateCenChart('I'); updateCenChart('R');}, 300);
+
+  // Contracts Ikram
+  D.contracts.forEach(function(c){
+    var p=c.rate.toFixed(1);
+    var cl=kc(c.rate);
+    var lv=c.rate>15?{l:'منجز جيد',c:'bg'}:c.rate>0?{l:'جارٍ',c:'bo'}:{l:'لم يبدأ',c:'br'};
+    document.getElementById('b_conI').innerHTML+='<tr><td><span class="nd" style="background:'+(NC[c.n]||'#78909C')+'"></span><b>'+c.n+'</b></td><td>'+toAr(c.req)+'</td><td style="color:#16A34A">'+toAr(c.done)+'</td><td>'+toAr(c.req-c.done)+'</td><td>'+pb(+p,70)+' <b style="color:'+cl+'">'+p+'%</b></td><td>'+c.cen+'</td><td style="color:#16A34A">'+c.ok+'</td><td style="color:#C0392B">'+c.ng+'</td><td><span class="badge '+lv.c+'">'+lv.l+'</span></td></tr>';
+  });
+  // Contracts Rihlat - same structure as ikram using grouped nationality data
+  D.contracts_r.forEach(function(c){
+    var p=c.rate.toFixed(1);
+    var cl=kc(c.rate);
+    var lv=c.rate>15?{l:'منجز جيد',c:'bg'}:c.rate>0?{l:'جارٍ',c:'bo'}:{l:'لم يبدأ',c:'br'};
+    document.getElementById('b_conR').innerHTML+='<tr><td><span class="nd" style="background:'+(NC[c.n]||'#78909C')+'"></span><b>'+c.n+'</b></td><td>'+toAr(c.req)+'</td><td style="color:#16A34A">'+toAr(c.done)+'</td><td>'+toAr(c.req-c.done)+'</td><td>'+pb(+p,70)+' <b style="color:'+cl+'">'+p+'%</b></td><td>'+c.cen+'</td><td><span class="badge '+lv.c+'">'+lv.l+'</span></td></tr>';
+  });
+
+  // KPI tables
+  var kiSorted=[].concat(D.kpi_i).sort(function(a,b){return b.fn-a.fn;});
+  kiSorted.forEach(function(r){
+    var lv=klv(r.fn);
+    document.getElementById('b_kpiI').innerHTML+='<tr><td><b style="color:#A0720F">'+r.c+'</b></td><td>'+r.nat+'</td><td>'+pb(r.hs)+' '+r.hs.toFixed(1)+'%</td><td>'+pb(r.pl)+' '+r.pl.toFixed(1)+'%</td><td>'+pb(r.cd)+' '+r.cd.toFixed(1)+'%</td><td>'+pb(r.sv)+' '+r.sv.toFixed(1)+'%</td><td><b style="color:'+kc(r.fn)+'">'+r.fn.toFixed(2)+'%</b></td><td><span class="badge '+lv.c+'">'+lv.l+'</span></td></tr>';
+  });
+  var krSorted=[].concat(D.kpi_r).sort(function(a,b){return b.fn-a.fn;});
+  krSorted.forEach(function(r){
+    var lv=klv(r.fn);
+    document.getElementById('b_kpiR').innerHTML+='<tr><td><b style="color:#A0720F">'+r.c+'</b></td><td>'+r.nat+'</td><td>'+pb(r.cf)+' '+r.cf.toFixed(1)+'%</td><td>'+pb(r.cd)+' '+r.cd.toFixed(2)+'%</td><td>'+pb(r.pl)+' '+r.pl.toFixed(1)+'%</td><td>'+pb(r.hs)+' '+r.hs.toFixed(1)+'%</td><td><b style="color:'+kc(r.fn)+'">'+r.fn.toFixed(2)+'%</b></td><td><span class="badge '+lv.c+'">'+lv.l+'</span></td></tr>';
+  });
+}
+
+// ===== INTERACTIVE CENTER CHARTS =====
+var cenChartI = null, cenChartR = null;
+
+function updateCenChart(side){
+  var canvasId = 'c_cen'+side+'Live';
+  var metricId = 'cen'+side+'Metric';
+  var metricSel = document.getElementById(metricId);
+  var metric = metricSel ? metricSel.value : 'frm';
+  var metricLabels = {frm:'الاستمارات',svc:'اثبات الخدمة',nsk:'بطاقات نسك',tik:'التذاكر',rep:'المحاضر',cap:'السقف'};
+  var metricColors = {frm:'#16A34A',svc:'#1D6FA4',nsk:'#7B2D8B',tik:'#B8891A',rep:'#C0392B',cap:'#0D7A6B'};
+  var colMap = {frm:7,svc:5,nsk:6,tik:4,rep:3,cap:2};
+  var col = colMap[metric]||7;
+
+  // Read directly from D data (source of truth) not from DOM
+  var srcData = (side==='I') ? D.cen_i : D.cen_r;
+  var keyMap = {frm:'frm',svc:'svc',nsk:'nsk',tik:'tik',rep:'rep',cap:'cap'};
+  var key = keyMap[metric]||'frm';
+
+  var labels = srcData.map(function(c){return c.id;});
+  var values = srcData.map(function(c){return c[key]||0;});
+
+  var color = metricColors[metric]||'#16A34A';
+  var el = document.getElementById(canvasId);
+  if(!el) return;
+
+  if(side==='I' && cenChartI){cenChartI.destroy(); cenChartI=null;}
+  if(side==='R' && cenChartR){cenChartR.destroy(); cenChartR=null;}
+
+  var chart = new Chart(el,{type:'bar',
+    data:{labels:labels,datasets:[{label:metricLabels[metric],data:values,
+      backgroundColor:color+'BB',borderColor:color,borderWidth:2,borderRadius:7}]},
+    options:{responsive:true,maintainAspectRatio:true,animation:{duration:400},
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(184,137,26,.25)',borderWidth:1,
+          titleColor:'#A0720F',bodyColor:'#4A5568',padding:10,
+          callbacks:{label:function(ctx){return ' '+toAr(ctx.parsed.y);}}}},
+      scales:{
+        x:{ticks:{color:'#3D4F63',maxRotation:45,font:{size:10,family:'Cairo'}},grid:{color:'rgba(0,0,0,.05)'}},
+        y:{ticks:{color:'#6B7C93',font:{family:'Cairo'},callback:function(v){return toAr(v);}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  if(side==='I')cenChartI=chart; else cenChartR=chart;
+}
+
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.ntab').forEach(function(t){t.classList.remove('on');});
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='centers'){setTimeout(function(){updateCenChart('I');updateCenChart('R');},50);}
+}
+function showSub(g,id,btn){
+  document.querySelectorAll('[id^="'+g+'-"]').forEach(function(p){p.classList.remove('on');});
+  document.getElementById(g+'-'+id).classList.add('on');
+  btn.closest('.stabs').querySelectorAll('.stab').forEach(function(t){t.classList.remove('on');});
+  btn.classList.add('on');
+}
+function ftbl(tid,q){
+  document.querySelectorAll('#'+tid+' tbody tr').forEach(function(r){r.style.display=r.textContent.includes(q)?'':'none';});
+}
+function ftblKpi(tid,v){
+  document.querySelectorAll('#'+tid+' tbody tr').forEach(function(r){r.style.display=(!v||r.textContent.includes(v))?'':'none';});
+}
+var SD={};
+function srt(id,col){
+  var k=id+col;SD[k]=!SD[k];
+  var tb=document.querySelector('#'+id+' tbody');
+  var rows=Array.from(tb.querySelectorAll('tr')).sort(function(a,b){
+    var av=(a.cells[col]?a.cells[col].textContent.trim().replace(/,/g,'').replace(/%/g,''):'');
+    var bv=(b.cells[col]?b.cells[col].textContent.trim().replace(/,/g,'').replace(/%/g,''):'');
+    var an=parseFloat(av),bn=parseFloat(bv);
+    if(!isNaN(an)&&!isNaN(bn))return SD[k]?an-bn:bn-an;
+    return SD[k]?av.localeCompare(bv,'ar'):bv.localeCompare(av,'ar');
+  });
+  rows.forEach(function(r){tb.appendChild(r);});
+}
+function exportCSV(tid,name){
+  var tbl=document.getElementById(tid);
+  var lines=[];
+  tbl.querySelectorAll('tr').forEach(function(r){
+    var cells=Array.from(r.querySelectorAll('th,td')).map(function(c){return '"'+c.textContent.trim().replace(/"/g,'""')+'"';});
+    lines.push(cells.join(','));
+  });
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'}));
+  a.download=name+'.csv';
+  a.click();
+}
+window.addEventListener('DOMContentLoaded',function(){initCharts();initTables();});
+
+</script>
+</body>
+</html>
