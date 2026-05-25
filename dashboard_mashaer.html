@@ -663,8 +663,8 @@ function updateKPIs() {
   const kitchens = new Set(d.map(r=>r.kitchen).filter(k=>k&&k!=='0'&&k!==0));
 
   document.getElementById('kpiCenters').textContent = d.length;
-  document.getElementById('kpiPilgrims').textContent = Math.round(totalPilgrims).toLocaleString('ar-SA');
-  document.getElementById('kpiForms').textContent = Math.round(totalForms).toLocaleString('ar-SA');
+  document.getElementById('kpiPilgrims').textContent = Math.round(totalPilgrims).toLocaleString('en-US');
+  document.getElementById('kpiForms').textContent = Math.round(totalForms).toLocaleString('en-US');
   document.getElementById('kpiKpi').textContent = avgKpi.toFixed(1)+'%';
   document.getElementById('kpiIssues').textContent = Math.round(totalIssues);
   document.getElementById('kpiKitchens').textContent = kitchens.size;
@@ -848,7 +848,7 @@ function renderTable() {
       const sheetColor = COLORS[RAW.sheets.indexOf(r.sheet)%COLORS.length];
       const flag = SHEET_FLAG[r.sheet]||''
 
-      function numCell(v) { return v>0?'<strong>'+Math.round(v).toLocaleString('ar-SA')+'</strong>':'<span style="color:var(--text-muted)">—</span>'; }
+      function numCell(v) { return v>0?'<strong>'+Math.round(v).toLocaleString('en-US')+'</strong>':'<span style="color:var(--text-muted)">—</span>'; }
       function mealCell(v) {
         const lbl = mealLabel(v);
         if (!lbl) return '<span style="color:var(--text-muted)">—</span>';
@@ -868,7 +868,7 @@ function renderTable() {
             <div class="kpi-bar-track"><div class="kpi-bar-fill" style="width:${kpiPct}%;background:${kpiColor}"></div></div>
           </div>
         </td>
-        <td><strong style="color:var(--accent2)">${r.total_pilgrims>0?Math.round(r.total_pilgrims).toLocaleString('ar-SA'):'<span style="color:var(--text-muted)">—</span>'}</strong></td>
+        <td><strong style="color:var(--accent2)">${r.total_pilgrims>0?Math.round(r.total_pilgrims).toLocaleString('en-US'):'<span style="color:var(--text-muted)">—</span>'}</strong></td>
         <td><span class="badge ${totalForms>0?'badge-blue':'badge-gray'}">${totalForms||'—'}</span></td>
         <td><span class="badge ${issueClass}">${r.total_issues||'✓'}</span></td>
         <td>${mealCell(r.breakfast)}</td>
