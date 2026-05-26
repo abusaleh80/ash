@@ -760,6 +760,14 @@ function updateChartCenters() {
                   '  وقوعات: ' + r.incidents
                 ];
               }
+              if(ctx.dataset.label==='الحجاج') {
+    const r = d[ctx.dataIndex];
+    return [
+      'إجمالي الحجاج: ' + ctx.parsed.y.toLocaleString('en-US'),
+      '  الساكنون (منى): ' + r.mena_resident.toLocaleString('en-US'),
+      '  الساكنون (عرفة): ' + r.arafa_resident.toLocaleString('en-US')
+    ];
+  }
               return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('en-US');
             }
           }
