@@ -715,8 +715,8 @@ function updateChartForms() {
 function updateChartMenaArafa() {
   destroyChart('menaArafa');
   const sheets=[...activeSheets];
-  const mena=sheets.map(s=>filteredData.filter(r=>r.sheet===s).reduce((a,r)=>a+r.total_mena,0));
-  const arafa=sheets.map(s=>filteredData.filter(r=>r.sheet===s).reduce((a,r)=>a+r.total_arafa,0));
+  const mena=sheets.map(s=>filteredData.filter(r=>r.sheet===s).reduce((a,r)=>a+r.mena_resident,0));
+  const arafa=sheets.map(s=>filteredData.filter(r=>r.sheet===s).reduce((a,r)=>a+r.arafa_resident,0));
   charts.menaArafa = new Chart(document.getElementById('chartMenaArafa'),{
     type:'bar',
     data:{labels:sheets,datasets:[
@@ -760,14 +760,6 @@ function updateChartCenters() {
                   '  وقوعات: ' + r.incidents
                 ];
               }
-              if(ctx.dataset.label==='الحجاج') {
-    const r = d[ctx.dataIndex];
-    return [
-      'إجمالي الحجاج: ' + ctx.parsed.y.toLocaleString('en-US'),
-      '  الساكنون (منى): ' + r.mena_resident.toLocaleString('en-US'),
-      '  الساكنون (عرفة): ' + r.arafa_resident.toLocaleString('en-US')
-    ];
-  }
               return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('en-US');
             }
           }
